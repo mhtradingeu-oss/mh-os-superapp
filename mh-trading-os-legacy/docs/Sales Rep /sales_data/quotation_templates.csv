@@ -1,0 +1,3 @@
+name,require_signature,require_payment,active
+Standard Quotation Template,TRUE,FALSE,TRUE
+Partnership Quotation Template,FALSE,FALSE,TRUE

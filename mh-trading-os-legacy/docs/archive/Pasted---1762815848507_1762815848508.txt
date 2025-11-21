@@ -1,0 +1,328 @@
+هذا هو “التصوّر الدقيق” لتعيين وكلاء الذكاء الاصطناعي لكل قسم بحيث يعمل النظام ذاتيًا بالكامل، مع حوكمة الموافقات بيدك فقط، ولوحة مخصصة لكل وكيل (إعدادات + أوامر + طابور مهام + مسودّات + تقارير).
+
+0) إطار التشغيل
+
+التشغيل القياسي: Draft → Review (في AI Crew) → Approve/Reject → Apply.
+
+كل وكيل يكتب دائمًا إلى جداول *_Draft و/أو AI_Outbox؛ التطبيق إلى جداول الإنتاج يتم فقط بعد موافقتك.
+
+كل وكيل لديه: لوحة إعدادات (حدود، مفاتيح، سياسات)، أزرار أفعال، طابور مهام، سجل أخطاء، KPIs.
+
+الحواجز (Guardrails) الشاملة: MAP/السعر الأدنى، حدود الخصم، GDPR للبريد، سقوف الميزانية للإعلانات، وتتبّع التدقيق (Audit Trail).
+
+1) خريطة الأقسام ← الوكلاء (16 وكيلاً)
+
+الصيغة: [AgentID] الاسم — القسم
+المهام الأساسية · يقرأ من · يكتب إلى (بالموافقة) · لوحة الوكيل (UI) · KPIs · الجدولة · الحواجز
+
+1) [A-MGR-000] Orchestrator — الإدارة العامة
+
+المهام: جدولة البلايبوك، توزيع المهام، دمج النتائج، مراقبة الصحة.
+
+يقرأ: Settings, AI_Playbooks, OS_Health, OS_Logs.
+
+يكتب: AI_Crew, AI_Outbox, OS_Health.
+
+لوحته: نظرة عامة على الطوابير + زر “Run Now” + Health Cards + مصفوفة الموافقات.
+
+KPIs: زمن الانتظار/المعالجة، فشل/نجاح، عدد الموافقات.
+
+الجدولة: يومي/أسبوعي (حسب البلايبوك).
+
+الحواجز: منع أي كتابة مباشرة للإنتاج؛ كل شيء عبر الموافقة.
+
+2) [A-PRC-100] Pricing Analyst — التسعير
+
+المهام: UVP/MAP/NET، توصيات خصم بالشرائح، مراقبة المنافسين.
+
+يقرأ: FinalPriceList, Pricing_Params, PartnerTiers, CompetitorPrices, MAP_Guardrails.
+
+يكتب: Pricing_Suggestions_Draft (→ FinalPriceList).
+
+لوحته: نموذج “أعد تسعير” + Diff قبل/بعد + شارات MAP/Floor.
+
+KPIs: هامش متحقق، نسبة اقتراحات مقبولة، زمن تحديث السعر.
+
+الجدولة: يومي 08:00 + يدوي.
+
+الحواجز: MAP، Floor Margin، Promo_Max_Discount.
+
+3) [A-GRW-110] Lead Hunter — النمو/التحصيل
+
+المهام: جمع صالونات (Places API)، إثراء جهات الاتصال، إزالة المكررات.
+
+يقرأ: CRM_Leads, Settings (API_PLACES_KEY), Enums.
+
+يكتب: CRM_Leads_Draft (→ CRM_Leads).
+
+لوحته: بحث حسب مدينة/نطاق + زر “Harvest” + إزالة مكررات + تطبيع العناوين.
+
+KPIs: Leads/أسبوع، نسبة الإثراء، دقة البريد/الهاتف.
+
+الجدولة: أسبوعي (برلين/هامبورغ… إلخ).
+
+الحواجز: GDPR (لا مراسلات دون موافقة لاحقة من Outreach).
+
+4) [A-OUT-120] Outreach Planner — حملات البريد
+
+المهام: قوالب بريد، Sequences، حملات، إعداد طابور الإرسال.
+
+يقرأ: Outreach_Templates, Outreach_Sequences, Outreach_Contacts.
+
+يكتب: Outreach_Templates_Draft, Outreach_Sequences_Draft, Campaigns_Draft (→ الإنتاج).
+
+لوحته: تبويب القوالب/التسلسلات/الحملات + معاينة حيّة + Tokens.
+
+KPIs: Open/Click/Reply، Spam/Bounces، جودة القائمة.
+
+الجدولة: وفق الحملات.
+
+الحواجز: GDPR (Unsubscribe، منع الضغط)، Throttling، سرد الشكاوى.
+
+5) [A-SOC-130] Social Producer — السوشيال
+
+المهام: تقويم 14 يوم، عناوين/وصف، وسوم، اقتراح صور/ريلز.
+
+يقرأ: FinalPriceList, Social_Calendar.
+
+يكتب: Social_Calendar_Draft.
+
+لوحته: تقويم Drag&Drop، توليد دفعات منشورات، Export Scheduler.
+
+KPIs: معدل نشر/التزام، تفاعل.
+
+الجدولة: أسبوعي.
+
+6) [A-SEO-140] SEO Architect — تحسين الظهور
+
+المهام: كلمات DE، عناقيد مواضيع، Meta/Schema، تدقيق صفحات المتجر.
+
+يقرأ: SEO_Keywords, Products (FinalPriceList/Woo_Map).
+
+يكتب: SEO_Assets_Draft.
+
+لوحته: مولّد كلمات، فحص عناوين/وصف، اقتراح تحسينات.
+
+KPIs: نمو الكلمات، CTR، ترتيب.
+
+الجدولة: أسبوعي.
+
+7) [A-ADS-150] Ads Strategist — الإعلانات
+
+المهام: مجموعات إعلانية، كلمات سلبية، CSV Google Ads، ميزانيات.
+
+يقرأ: FinalPriceList, SEO_Keywords, Ads_Campaigns.
+
+يكتب: Ads_Campaigns_Draft (→ Ads_Campaigns).
+
+لوحته: تصميم الحملات + تصدير CSV + تتبّع نتائج أساسية.
+
+KPIs: CPA/ROAS، CTR، كلفة/نقرة.
+
+الجدولة: أسبوعي.
+
+الحواجز: سقف ميزانية يومي/شهري، كلمات حساسة ممنوعة.
+
+8) [A-ECM-160] Merchandiser — التجارة الإلكترونية
+
+المهام: تدقيق Woo/Odoo، خصائص المنتجات، فئات، صور.
+
+يقرأ: Woo_Map, Odoo_Map, FinalPriceList.
+
+يكتب: Catalog_Fixes_Draft (→ Sync_Queue).
+
+لوحته: قائمة مشاكل + زر “Apply Fix via Sync”.
+
+KPIs: اكتمال البيانات، أخطاء المزامنة.
+
+الجدولة: يومي.
+
+9) [A-STN-170] Stand Ops Bot — التوزيع/الستاند
+
+المهام: خطة تعبئة، توقع نفاد، توليد عقد/عرض/فاتورة Stand.
+
+يقرأ: StandSites, AuthorizedAssortment, Orders, FinalPriceList.
+
+يكتب: Stand_Refill_Plans_Draft, Contracts_Draft.
+
+لوحته: خريطة الستاندات + احتياجات التعبئة + أزرار توليد الوثائق (PDF+QR).
+
+KPIs: توفّر الستاند، دوران المخزون، المبيعات/ستاند.
+
+الجدولة: أسبوعي (الأربعاء).
+
+10) [A-SHP-180] Logistics — الشحن
+
+المهام: اقتراح طريقة الشحن/الصندوق، تقدير التكلفة، Manifest/Label.
+
+يقرأ: DHL_Rates, Packaging_Boxes, Orders, Shipments.
+
+يكتب: Shipments_DHL_Draft (→ Shipments_DHL).
+
+لوحته: آلة تقدير الشحن + توليد شحنة + تتبّع.
+
+KPIs: كلفة/شحنة، زمن التسليم، نسبة المرتجعات.
+
+الجدولة: يومي.
+
+11) [A-CRM-190] Helpdesk — خدمة العملاء
+
+المهام: إنشاء/تصنيف تذاكر، تلخيص ردود، مراقبة SLA.
+
+يقرأ: Support_Tickets, SLA_Policies.
+
+يكتب: AI_Outbox (ملخصات/اقتراحات)، Tickets_Draft (لو لزم).
+
+لوحته: لوحة تذاكر + مؤشرات SLA + قوالب رد ذكية.
+
+KPIs: زمن أول رد/إغلاق، رضا العملاء.
+
+الجدولة: دائم.
+
+12) [A-FIN-200] Finance Ops — المالية/العمولات
+
+المهام: أعمار الذمم، كشوف العمولات، نقاط الولاء.
+
+يقرأ: Orders, Commission_Ledger, Loyalty_Ledger.
+
+يكتب: Reports_Finance, Commission_Statements_Draft.
+
+لوحته: تقارير شهرية، تسعير العمولات وفق القواعد.
+
+KPIs: DSO، صافي الهامش، قيمة العمولات.
+
+الجدولة: أسبوعي (الجمعة).
+
+13) [A-LGL-210] Legal — الشؤون القانونية
+
+المهام: قوالب عقود Stand/Partners، مراجعة نصوص، GDPR/ISO.
+
+يقرأ: Legal_Contracts, MAP_Guardrails.
+
+يكتب: Legal_Contracts_Draft.
+
+لوحته: مكتبة عقود + مولّد بنود + تتبّع التوقيع.
+
+KPIs: زمن إصدار/توقيع، معدّل الرفض.
+
+الجدولة: يدوي.
+
+14) [A-EA-220] Executive Assistant — سكرتارية تنفيذية
+
+المهام: تقارير يومية، تذكيرات، ملخص الإدارة.
+
+يقرأ: OS_Logs, OS_Health, Sales_KPIs.
+
+يكتب: AI_Outbox (ملخصات)، Notifications_Draft.
+
+لوحته: موجز يومي، تنبيهات حرجة، قائمة أعمالك.
+
+KPIs: التزام بالتذكيرات، زمن الاستجابة.
+
+الجدولة: يومي 08:30.
+
+15) [A-QA-230] DevOps QA — الجودة التقنية
+
+المهام: رصد أخطاء، اقتراح إصلاحات، مراقبة التزامن.
+
+يقرأ: OS_Logs, Sync_Queue.
+
+يكتب: AI_Outbox (تقارير)، Fixes_Draft.
+
+لوحته: لمحة أخطاء/تحذيرات + توصيات.
+
+KPIs: أخطاء/أسبوع، زمن الإصلاح.
+
+الجدولة: يومي.
+
+16) [A-MOD-240] Moderator — الإشراف
+
+المهام: كشف سبام/لغة حساسة (Outreach/Social)، فلترة قوائم.
+
+يقرأ: AI_Inbox, Outreach_Contacts, Social_Calendar.
+
+يكتب: Flags/AI_Outbox.
+
+لوحته: قائمة تنبيهات + أزرار “Approve/Mask/Remove”.
+
+KPIs: معدّل السبام الممنوع، الدقّة.
+
+الجدولة: دائم.
+
+2) لوحة كل وكيل (مكوّنات UI الموحّدة)
+
+Settings: اختيار Model/حرّافات/حدود (Budget, Throttle, MAP…)، نطاق القراءة/الكتابة.
+
+Quick Actions: أزرار توليد فوري (مثال: “Reprice Now”، “Harvest Leads”).
+
+Queue: المهام قيد التنفيذ + زمن/حالة.
+
+Drafts: جدول المسودات الناتجة مع Diff Viewer.
+
+Reports: مؤشرات الوكيل وHealth.
+
+Logs: أحداث، أخطاء، مراجع.
+
+الموافقات تتم مركزيًا عبر AI Crew (تبويب Pending Approval).
+
+3) مصفوفة الموافقات (نماذج)
+
+تغيير أسعار/خرق MAP: موافقة إلزامية.
+
+إطلاق حملة بريدية/إعلانية: موافقة إلزامية.
+
+توليد عقد/اتفاقية: موافقة إلزامية.
+
+تغييرات كتالوج/مزامنة: موافقة إلزامية.
+
+تقارير/ملخصات: تلقائي إلى AI_Outbox (بدون موافقة).
+
+4) الربط بجداول Google Sheets (نماذج سريعة)
+
+Pricing: FinalPriceList, Pricing_Params, CompetitorPrices, MAP_Guardrails, Pricing_Suggestions_Draft.
+
+Growth/CRM: CRM_Leads, CRM_Leads_Draft, Outreach_Contacts.
+
+Outreach: Outreach_Templates(_Draft), Outreach_Sequences(_Draft), Campaigns(_Draft), Email_Outbox, Unsubscribes.
+
+Social/SEO/Ads: Social_Calendar(_Draft), SEO_Keywords, SEO_Assets(_Draft), Ads_Campaigns(_Draft).
+
+Stands: StandSites, AuthorizedAssortment, Stand_Refill_Plans(_Draft), Contracts(_Draft).
+
+Shipping: DHL_Rates, Packaging_Boxes, Shipments_DHL(_Draft).
+
+Ops: Support_Tickets, SLA_Policies, Sync_Queue, OS_Logs, OS_Health.
+
+Finance: Commission_Ledger, Loyalty_Ledger, Reports_Finance.
+
+5) أوامر جاهزة (أمثلة قصيرة لكل وكيل)
+
+A-PRC-100: «أعد تسعير Beard Care في DE؛ حد الخصم 10%؛ أظهر Diff فقط».
+
+A-GRW-110: «اجمع 200 صالون برلين + هامبورغ؛ استبعد المكررات؛ عبّئ الحقول المفقودة».
+
+A-OUT-120: «اصنع سلسلة 3 رسائل لتعريف المنتج؛ DE؛ بدون ضغط؛ أدخل Tokens».
+
+A-SOC-130: «خطة منشورات 14 يوم لفئة Beard Balm؛ جدولة أيام السبت/الأربعاء».
+
+A-SEO-140: «عنقود كلمات HM-BB-50؛ نية شراء؛ اقتراح Meta/Schema».
+
+A-ADS-150: «مجموعة إعلانية UVP<20€؛ اقتراح سلبية؛ أنشئ CSV».
+
+A-ECM-160: «راجع صور/أوصاف Woo؛ أنشئ Catalog_Fixes_Draft».
+
+A-STN-170: «خطّة تعبئة ST-0003؛ عقد + كوتيشن + فاتورة PDF».
+
+A-SHP-180: «احسب شحن طلب #ORD-1024؛ اقترح صندوق وLabel».
+
+A-CRM-190: «لخّص تذاكر هذا الأسبوع؛ أبرز SLA المهدّدة».
+
+A-FIN-200: «Aging تقرير 30/60/90؛ حساب عمولات أكتوبر».
+
+A-LGL-210: «أنشئ عقد Stand لبرلين؛ شروط جزائية MAP».
+
+A-EA-220: «ملخّص تنفيذي يومي 08:30؛ أهم الانذارات».
+
+A-QA-230: «راجع OS_Logs خلال 24h؛ اقترح إصلاحات».
+
+A-MOD-240: «راجع أحدث قوالب؛ علّم المحتوى الحساس».

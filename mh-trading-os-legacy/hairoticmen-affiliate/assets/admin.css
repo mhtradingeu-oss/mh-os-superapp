@@ -1,0 +1,206 @@
+/**
+ * Admin Styles for Hairoticmen Affiliate Plugin
+ *
+ * @package Hairoticmen_Affiliate
+ * @since 1.0.0
+ */
+
+.hm-affiliate-settings {
+    max-width: 1200px;
+}
+
+.hm-aff-version {
+    font-size: 14px;
+    color: #666;
+    font-weight: normal;
+    margin-left: 10px;
+}
+
+.hm-aff-settings-header {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-left: 4px solid #14b8a6;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 3px;
+}
+
+.hm-aff-settings-header p {
+    margin: 5px 0;
+}
+
+.hm-aff-settings-header strong {
+    color: #14b8a6;
+}
+
+.hm-aff-settings-form {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-top: 20px;
+}
+
+.notice.inline ul {
+    margin: 10px 0 10px 20px;
+    list-style: none;
+}
+
+.notice.inline ul li {
+    padding: 5px 0;
+}
+
+.notice.inline ul li .dashicons {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.notice.inline ul li .dashicons-yes-alt {
+    color: #46b450;
+}
+
+.notice.inline ul li .dashicons-warning {
+    color: #ffb900;
+}
+
+.notice.inline ul li .dashicons-dismiss {
+    color: #dc3232;
+}
+
+.hm-aff-test-connection {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 3px;
+}
+
+.hm-aff-test-connection h2 {
+    margin-top: 0;
+}
+
+#hm-aff-test-result {
+    padding: 10px;
+    border-radius: 3px;
+    display: none;
+}
+
+#hm-aff-test-result.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    display: block;
+}
+
+#hm-aff-test-result.error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    display: block;
+}
+
+#hm-aff-test-result.loading {
+    background: #d1ecf1;
+    border: 1px solid #bee5eb;
+    color: #0c5460;
+    display: block;
+}
+
+#hm-aff-test-result .dashicons {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.hm-aff-usage-instructions {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 3px;
+}
+
+.hm-aff-usage-instructions h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.hm-aff-usage-instructions h3 {
+    color: #14b8a6;
+    margin-top: 20px;
+}
+
+.hm-aff-usage-instructions code {
+    background: #f5f5f5;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: inline-block;
+    margin: 5px 0;
+    font-size: 13px;
+}
+
+.hm-aff-usage-instructions ol,
+.hm-aff-usage-instructions ul {
+    margin-left: 20px;
+}
+
+.hm-aff-usage-instructions li {
+    margin: 8px 0;
+}
+
+/* Form field improvements */
+.hm-aff-settings-form .form-table th {
+    width: 250px;
+}
+
+.hm-aff-settings-form input[type="url"],
+.hm-aff-settings-form input[type="password"],
+.hm-aff-settings-form input[type="text"] {
+    padding: 8px 12px;
+}
+
+.hm-aff-settings-form .description {
+    font-style: italic;
+    color: #666;
+}
+
+.hm-aff-settings-form .description strong {
+    color: #14b8a6;
+    font-style: normal;
+}
+
+/* Section headers */
+.hm-aff-settings-form h2 {
+    border-bottom: 2px solid #14b8a6;
+    padding-bottom: 10px;
+    color: #333;
+}
+
+/* Submit button */
+.hm-aff-settings-form .submit {
+    margin-top: 0;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.hm-aff-settings-form .submit .button-primary {
+    background: #14b8a6;
+    border-color: #0d9488;
+    text-shadow: none;
+    box-shadow: none;
+    padding: 8px 20px;
+    height: auto;
+    font-size: 14px;
+}
+
+.hm-aff-settings-form .submit .button-primary:hover {
+    background: #0d9488;
+    border-color: #0a7a6d;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 782px) {
+    .hm-aff-settings-form .form-table th {
+        width: auto;
+    }
+}

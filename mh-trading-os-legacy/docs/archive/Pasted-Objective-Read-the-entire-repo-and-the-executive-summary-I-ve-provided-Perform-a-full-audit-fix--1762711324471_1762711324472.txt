@@ -1,0 +1,98 @@
+Objective
+Read the entire repo and the executive summary I’ve provided. Perform a full audit → fix → rebuild of the app (backend+frontend) to the final plan, non-destructively, and propose the best AI-powered tools/features/UI. Use only environment secrets; never hardcode keys. Produce a detailed report of what’s done, what’s missing, and your recommendations.
+
+Scope & Tasks
+
+Audit & Inventory
+
+Detect services, routes, env usage, scheduler/cron, webhook endpoints, and Sheets access.
+
+Verify Spreadsheet ID sanitization and connection.
+
+Run a readiness check covering required worksheets, named ranges, and settings.
+
+Data Model & Sheets
+
+Ensure all required tabs exist (24 الأساسية + التوسعات: CRM_Leads, Enrichment_Log, Outreach_* , SEO_*, Social_Calendar, Asset_Library, Stand_Refill_Plan, Routes…).
+
+If missing, create an idempotent migration script to add headers/seed safely (no overwrites).
+
+Validate mappings for Odoo_Map و Woo_Map.
+
+Backend
+
+Confirm or implement 50+ endpoints (pricing, stands, sales, ops, AI, admin) with input validation, auth hooks, and logging.
+
+Ensure pricing engine respects Pricing_Params, MAP, tiers, loyalty, commissions, DHL estimates, and PDF generation + QR.
+
+AI Crew
+
+Implement the AI Crew hub with at least these agents: Orchestrator, Pricing, Growth/Outreach, SEO, Ads, Social, Merchandising, Distribution, Sales Copilot, Helpdesk, Moderator, Finance, Legal, Executive Assistant.
+
+Wire daily/weekly/monthly playbooks; add safe prompts; rate-limit & retries; structured logs to AI_Tasks/AI_Outbox.
+
+Frontend UI
+
+Build a professional control panel: Sidebar nav, Dark mode, EN/AR + RTL, responsive.
+
+Pages: Dashboard / Growth / Outreach / Pricing / Sales Desk / Stands & Distribution / Marketing Studio / Helpdesk & Moderation / Finance & Legal / AI Crew.
+
+Tables with filters, bulk actions, forms, modals, and PDF/QR previews.
+
+Command-K palette for quick actions.
+
+Integrations & Email
+
+Connect Woo/Odoo via env secrets and the mapping sheets.
+
+Email provider via SMTP/Send API; add bounces/complaints webhook and log to OS_Logs/Webhooks_Inbox.
+
+Never expose secrets in code or UI.
+
+Testing & QA
+
+Create TEST_PLAN.md and scripted E2E tests for key flows (harvest→outreach→quote→order→invoice→shipment; pricing with MAP; stand creation/refill; AI playbooks).
+
+Provide Postman collection (or REST Client file) + seed fixtures.
+
+Docs & Deliverables
+
+Update SETUP_GUIDE.md, PROJECT_STATUS.md, and produce IMPLEMENTATION_REPORT.md with:
+
+What was fixed/added, what remains, risks, and your recommendations.
+
+Checklists for deployment, monitoring, and ops runbooks.
+
+Provide an ERD diagram + UI flow map.
+
+Acceptance Criteria
+
+Idempotent sheet setup; no data loss; all required tabs/headers present.
+
+Backend endpoints pass tests; pricing/MAP/tiers/loyalty/commissions work end-to-end.
+
+UI pages fully functional, bilingual (EN/AR + RTL), responsive, with Command-K and bulk actions.
+
+AI Crew operational with scheduled playbooks and observable logs.
+
+Webhooks, email, and integrations verified in logs.
+
+IMPLEMENTATION_REPORT.md clearly lists Done / Pending / Risks / Next recommendations.
+
+Constraints
+
+Use Replit Secrets for all keys.
+
+No destructive migrations.
+
+Be opinionated: suggest and apply better defaults where appropriate, but document all changes.
+
+Output
+
+Updated code, passing tests.
+
+IMPLEMENTATION_REPORT.md + TEST_PLAN.md + updated SETUP_GUIDE.md/PROJECT_STATUS.md.
+
+Postman collection (or .http file).
+
+A short console summary with the final health status.

@@ -1,0 +1,4 @@
+name,type,sale_ok,purchase_ok,list_price,cost,default_code,uom_id/id
+Consultation Service,service,TRUE,FALSE,100,0,CONS-SERV,product.product_uom_hour
+Standard Product,product,TRUE,TRUE,50,20,STD-PROD,product.product_uom_unit
+Subscription Plan (Monthly),service,TRUE,FALSE,30,0,SUB-MONTH,product.product_uom_month

@@ -1,0 +1,14 @@
+Kreis,Type,Area_km2,Population,Distance_from_Berlin_km
+München,Stadtkreis,310.7,1488719,505
+Nürnberg,Stadtkreis,186.4,526606,440
+Augsburg,Stadtkreis,146.9,298972,575
+Regensburg,Stadtkreis,80.7,149664,500
+Ingolstadt,Stadtkreis,133.4,139536,525
+Würzburg,Stadtkreis,87.6,131759,470
+Fürth,Stadtkreis,63.4,131712,440
+Erlangen,Stadtkreis,76.9,115314,450
+Landkreis München,Landkreis,664.3,359000,505
+Landkreis Augsburg,Landkreis,1071.3,254000,575
+Landkreis Regensburg,Landkreis,1392.5,196000,500
+Landkreis Würzburg,Landkreis,968.4,163000,470
+Landkreis Erlangen-Höchstadt,Landkreis,565.4,135000,450

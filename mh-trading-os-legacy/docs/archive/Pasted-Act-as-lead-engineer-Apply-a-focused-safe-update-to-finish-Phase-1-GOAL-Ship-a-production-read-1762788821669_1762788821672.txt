@@ -1,0 +1,89 @@
+Act as lead engineer. Apply a focused, safe update to finish Phase 1:
+
+GOAL
+- Ship a production-ready UI for the existing AI Orchestrator and Guardrails.
+- Keep code secure and backwards compatible (pricing, shipping, sheets).
+- Propose the smartest tools/UX to empower AI agents and human approvals.
+
+SCOPE (DO build)
+1) AI Hub (4 tabs)
+   - Tabs: Pricing Analyst, Stand Ops, Growth Writer, Ops Assistant.
+   - Each tab: a clean form with required inputs (free text + optional JSON),
+     a “Explain inputs” helper, and a “Run with approval” toggle (default ON).
+   - On submit → POST /api/ai/submit { agentId, task, input }.
+   - Show job echo (jobId, Status=DRAFT/QUEUED/RUNNING/COMPLETED/REJECTED),
+     guardrail notes (MAP/GDPR), and link to AI Crew review.
+
+2) AI Crew (Approvals & Jobs)
+   - Table: list pending jobs (Status='DRAFT' or 'QUEUED') with filters
+     (Agent, Task, Owner, Date). Columns: JobID, Agent, Task, CreatedTS,
+     Guardrails, Status, Owner.
+   - Row details drawer: InputJSON, OutputJSON preview, Guardrail findings,
+     history (TS + actor + action).
+   - Buttons: Approve (POST /api/ai/approvals/:id/approve {approvedBy}),
+     Reject (POST /api/ai/approvals/:id/reject {rejectedBy, reason}).
+   - On Approve → Orchestrator applyApprovedJob() writes to production sheets
+     via aiSheetsService (already implemented).
+   - Add “Outbox” pane to view last N COMPLETED jobs with diff preview
+     (what changed in the target sheet).
+
+3) UX & Controls (shared)
+   - Command-K palette: navigate to agents, “Explain price math” for selected SKU,
+     “Open last failed job”, “Re-run with different params”.
+   - Inline JSON editor with schema-aware hints for advanced inputs.
+   - Dark/Light + EN/AR with RTL support (respect existing i18n toggles).
+   - Toasted audit events and OS_Logs write for every approve/reject.
+
+4) Sheets & Single Source
+   - Enforce one spreadsheet only:
+     - Sanitize SHEETS_SPREADSHEET_ID and validate connector health.
+     - If multiple IDs found in code or Settings sheet, warn and auto-use env.
+   - Validate required worksheets exist; auto-create missing headers ONLY;
+     do not delete user data.
+   - Respect AISheetsService whitelist; never let AI write directly to prod sheets.
+
+5) Tests & Health
+   - Add lightweight API tests for /api/ai/submit, /api/ai/jobs, /approve, /reject.
+   - Add E2E smoke: submit → approve → verify prod sheet updated.
+   - Improve rate-limit handling for Sheets with retry/backoff and caching.
+   - Update OS_Health entries for: Orchestrator, Guardrails, AI Hub, AI Crew.
+
+DELIVERABLES
+- UI: pages `client/src/pages/ai.tsx` (Hub) and `client/src/pages/ai-crew.tsx` (Crew),
+  or current routing equivalents, wired to new components.
+- Docs: 
+  - `AI_ORCHESTRATOR_README.md` (how it works + guardrails + flows)
+  - `AI_HUB_USER_GUIDE.md` (how to run jobs and read outputs)
+- Tests:
+  - `tests/api/ai.orchestrator.spec.ts`
+  - `tests/e2e/ai.flow.spec.ts` (submit→approve→write)
+- Changelog: list files changed and migration notes.
+
+SMART SUGGESTIONS (please propose and implement where safe)
+- UI components: data grid with column filters and CSV export; code/JSON viewer; diff viewer.
+- Draft-to-Apply diff preview: show target sheet and the rows/fields to change before approval.
+- Job templates per agent (quick presets); recent prompts history.
+- Caching layer for read-heavy sheets (in-memory TTL + ETag).
+- Failure auto-triage: summarize errors to AI_Outbox + link to fix.
+- Hook “Explain MAP violation” button when validateMAP blocks a change.
+
+CONSTRAINTS
+- Do not remove pricing/shipping logic; keep Bootstrap idempotent.
+- Secrets must come ONLY from env (Replit Secrets). Never write secrets back to Settings.
+- Respect GDPR in outreach tasks (unsubscribe, no aggressive wording).
+- Keep all changes reversible; prefer isolated modules (e.g., routes-ai.ts already used).
+
+ACCEPTANCE CRITERIA
+- From AI Hub, I can submit a job to any agent and see JobID+status.
+- From AI Crew, I can approve/reject and see the change applied in the correct sheet.
+- Guardrails notes visible; MAP violations are explained, not silent.
+- OS_Logs records every action. OS_Health shows “PASS” for Orchestrator, Hub, Crew.
+- Single spreadsheet validated; missing tabs auto-ensured; no duplicates used.
+
+POST-WORK REPORT
+- Produce `PHASE1_DELIVERY_REPORT.md` with:
+  - Screenshots/GIFs of Hub and Crew flows
+  - What was implemented, any trade-offs, and recommended next steps
+  - A short backlog for 2B Outreach + 2C Marketing Studio
+
+Use your best judgement to refine the UI/UX and minor code structure. If you find a safer or cleaner approach, document it in the PR and implement it.

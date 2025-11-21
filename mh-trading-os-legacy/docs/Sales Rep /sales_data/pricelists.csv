@@ -1,0 +1,3 @@
+name,currency_id/id,active
+Standard Pricelist,base.EUR,TRUE
+Partner/Dealer Pricelist,base.EUR,TRUE

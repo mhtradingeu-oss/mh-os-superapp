@@ -1,0 +1,37 @@
+Act as the principal engineer. Do a READ-ONLY deep scan of the entire MH Trading OS repo and produce a single, self-contained Markdown report that proves you fully understand the app and its current state.
+
+Deliverables (do not change code; analyze only):
+1) READINESS_REPORT.md — executive summary (bullet points first), overall readiness score %, and a clear “Since last update” delta.
+2) SYSTEM_MAP.md — concise architecture map (backend services, routes, sheets layer, AI Hub, AI Crew, playbooks, shipping, pricing/MAP, logging, guards).
+3) API_SURFACE.md — list  of endpoints (method+path), grouped by domain, with detected gaps vs our plan.
+4) FRONTEND_ROUTES.md — pages/routes, which ones are wired vs placeholders; note missing forms/tables.
+5) SHEETS_AUDIT.md — verify single spreadsheet in use:
+   - Confirm SHEETS_SPREADSHEET_ID (sanitized) and Google Sheets connector health.
+   - List required worksheets and which exist/missing; sample headers from each.
+6) SECRETS_ENV.md — which secrets are present/absent (OpenAI, SMTP/Brevo, Places, Woo, Odoo, Drive IDs, QR base…), and what features are blocked by each missing secret.
+7) LOGS_HEALTH.md — typical warnings/errors, quota/backoff, and hot spots to fix first.
+8) AI_STATUS.md — current agents (from AI_Crew), playbooks, task engine, guardrails (MAP/GDPR/human-approval). Note what is draft-only vs write-back.
+9) UX_SUGGESTIONS.md — your best recommendations for smart tools, UI and workflows to empower the AI Crew:
+   - Components: data grids with filters, Approve/Apply draft flows, Command-K palette, inline “Explain math”, Outbox review.
+   - Ops tooling: retry/backoff, caching for sheets, safe upsert, diff previews for Woo/Odoo sync.
+10) BACKLOG_NEXT.md — a prioritized, time-boxed backlog (Quick Wins this week, Next 2–3 weeks, Later), each item with acceptance criteria.
+
+Also output:
+- DIFF_SINCE_LAST_UPDATE.md — what actually changed in code/docs since the last commit (high level).
+- RISK_REGISTER.md — risks, likelihood/impact, mitigations.
+- TOOLING_RECS.md — “best stack” for AI agents (models, function-calling, vector/caching), email/webhook handling, Places harvesting, PDF/QR.
+- UI_WIREFRAMES.md — ASCII wireframes for improved AI Hub & AI Crew screens.
+
+Scope to analyze:
+- Backend (sheets service, pricing engine & MAP rules, shipping/DHL, pdf/qr, schedulers).
+- Frontend (7+ pages), AI Hub & AI Crew flows, Admin/Health/Integrations.
+- Google Sheets integration and worksheet structure (24+ core sheets).
+- Secrets/env usage, error handling, quotas, logs.
+
+Constraints:
+- Read-only; no repo changes now.
+- If you detect trivial fixes, propose them as patch diff blocks inside the report, but DO NOT apply.
+- Be concise, evidence-based, and include file paths/line hints where useful.
+
+Finish by printing a one-page executive summary in the console with:
+- Readiness score, top 5 blockers, top 5 quick wins, and your recommended next step.

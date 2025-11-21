@@ -1,0 +1,49 @@
+🔧 Task: Deep Scan & Sync — FinalPriceList & Pricing Engine
+
+Please perform a full smart audit of the "FinalPriceList" sheet and apply the complete Hairoticmen pricing law and policies.
+
+Instructions:
+
+1. ✅ Scan all 90 rows and all columns, detecting:
+   - Missing values
+   - Invalid numbers
+   - Formatting errors
+   - Duplicate SKUs or Name variations (merge if same product with alias)
+
+2. 💡 Auto-fill and normalize:
+   - COGS_EUR, UVP, MAP, Final_Net, Final_Price, TaxPct
+   - Grundpreis (€/L or €/kg)
+   - Margins: Web, Salon, Dealer, Distributor
+   - All cost fields: Amazon_Fee, Ads_Fee, Return_Rate, Stripe_Fee, PayPal_Fee, DHL_Shipping, Packaging_Cost, etc.
+   - Rounding per Pricing_Params settings
+
+3. 🔗 Connect to app:
+   - Pull settings from Pricing_Params, Settings, PartnerTiers, MAP_Guardrails
+   - Apply commission rules from Commission_Rules
+   - Apply loyalty program from Loyalty_Ledger
+   - Match AI pricing suggestions where available
+
+4. 🧠 Pricing Rules Enforcement:
+   - Enforce MAP, Floor_Margin, VAT_Default_Pct
+   - Recalculate margins dynamically
+   - Calculate all tier prices (Basic, Plus, Stand, Distributor)
+   - Flag any violations or bad prices
+
+5. 🧹 Clean & Optimize:
+   - Remove duplicates
+   - Merge similar SKUs with same category or barcode
+   - Ensure all SKUs have required QRUrl or generate if missing
+   - Sort and group by Line, Category, Status
+
+6. 🧩 Interface Integration:
+   - Sync with Price Studio and control panel
+   - Ensure price edit, quote, bundle, refill, order creation are all supported
+   - Add missing columns to control: Bonus eligibility, Promo flags, AutoPriceFlag, Inventory Thresholds
+
+7. 📈 Deliverables:
+   - 100% complete FinalPriceList (cleaned, connected, validated)
+   - Summary of changes (new rows, fixed values, flagged violations)
+   - Suggestions to UI (e.g. drop-downs, search, filters) for Price Studio
+   - Confirmation that Pricing Engine is now in production-ready state
+
+✅ Goal: Make the pricing sheet production-ready, smart, error-free, and fully integrated with the app and all connected systems.

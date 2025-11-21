@@ -1,0 +1,7 @@
+SKU,Product Name,Shipping Class (Woo),Packaging Size (XS/S/M/L/XL/KIT-S/KIT-M/KIT-L),Net Weight (kg),Gross Weight (kg),Length (cm),Width (cm),Height (cm),Volumetric Weight (kg) [calc=(L*W*H)/5000],Free Shipping Eligible (DE),Free Shipping Eligible (EU),HS Code (optional),Country of Origin,Dangerous Goods (Y/N),Notes
+BEARD-OIL-50,Beard Oil 50ml – Magnet Box,retail-standard,XS,0.12,0.18,4,4,10,,Yes,Yes,,AE,N,
+BEARD-SHAMPOO-150,Beard Shampoo 150ml,retail-standard,S,0.20,0.28,5,5,16,,Yes,Yes,,AE,N,
+SHAVING-GEL-500,Shaving Gel 500ml,retail-standard,M,0.60,0.75,7,7,22,,Yes,Yes,,AE,N,
+AFTER-SHAVE-500,After Shave 500ml,retail-fragile,M,0.55,0.70,7,7,22,,Yes,Yes,,AE,N,
+AQUA-WAX-150,Aqua Wax 150ml,retail-standard,S,0.17,0.24,7,7,5,,Yes,Yes,,AE,N,
+BEARD-KIT-6IN1,Beard Kit 6-in-1 (Set),kit-bundle,KIT-M,1.20,1.50,25,20,12,,Yes,Yes,,AE,N,Validate as bundle

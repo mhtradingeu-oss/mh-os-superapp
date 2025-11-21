@@ -1,0 +1,244 @@
+
+1) Tech stack
+
+Backend: Node.js + Express (TypeScript).
+
+Frontend: React + Vite + Tailwind (single-page app).
+
+Persistence: Google Sheets via Google Service Account (Sheets API).
+
+Docs/QR: pdf-lib (PDF), qrcode (QR images as PNG), date-fns.
+
+Auth (basic): email+code or role switch via .env flag (simple RBAC: admin, manager, rep, partner).
+
+AI (optional): OpenAI API for “explain price”, suggestions, emails, content drafts.
+
+Job runner: simple cron endpoints /cron/daily, /cron/weekly, /cron/monthly triggered by Replit pinger.
+
+ENV (Replit Secrets)
+SHEETS_SPREADSHEET_ID=...            # Google Sheets master file
+GOOGLE_SERVICE_ACCOUNT_JSON=...      # JSON string
+OPENAI_API_KEY=...                   # optional, for AI helpers
+APP_BASE_URL=https://<repl>.replit.app
+CURRENCY_DEFAULT=EUR
+TZ=Europe/Berlin
+
+2) Google Sheets — authoritative tables
+
+Use the existing sheets and do not create “*_Table” clones. Read/write exactly these names:
+
+Settings(Key,Value,Notes)
+
+Pricing_Params(Param,Value,Notes)
+
+FinalPriceList(SKU,Name,UVP,VAT%,Weight_g,Barcode,Category,Status,COGS_EUR,AutoPriceFlag,UVP_Recommended,MAP,Price_Web,Price_Amazon,Price_Salon,Net_Dealer_Basic,Net_Dealer_Plus,Net_Stand,Net_Distributor,Competitor_Min,Competitor_Median,Pricing_Version)
+
+CompetitorPrices(SKU,Competitor,URL,Price,Currency,Country,CollectedAt)
+
+PartnerTiers(Tier,DiscountPct,CommissionPct,StandBonusPct,Notes)
+
+PartnerRegistry(PartnerID,PartnerName,Tier,Email,Phone,Owner,Status,Street,Postal,City,CountryCode,Notes,PartnerFolderID,PartnerFolderURL)
+
+StandSites(StandID,Salon,Owner,Street,Postal,City,CountryCode,Status,OpenDate,GeoLat,GeoLng,GeoAccuracy,QRUrl,RefPhotoUrl,Notes)
+
+Stand_Inventory(StandID,SKU,OnHand,Min,Max,LastCountTS,LastRefillTS,Notes)
+
+Stand_Refill_Plans(PlanID,StandID,CreatedTS,NextVisitDue,Picker,SuggestedLinesJSON,Status)
+
+Stand_Visits(VisitID,StandID,Rep,CheckInTS,CheckOutTS,GeoLat,GeoLng,PhotosURLsJSON,Notes)
+
+Stand_KPIs(Month,StandID,RevenueGross,SellThrough%,Stockouts,AvgRefillQty,Visits,GiftsIssued,LoyaltyEarned)
+
+Quotes / QuoteLines / Orders
+
+Commission_Ledger(LedgerID,TS,OrderID,QuoteID,PartnerID,PartnerTier,Type,BaseGross,Rate%,Amount,Owner,Status,Notes)
+
+Loyalty_Ledger(LedgerID,TS,PartnerID,OrderID,PointsEarned,PointsRedeemed,Notes)
+
+DHL_Rates(Zone,Weight_g_Max,Price,Currency,Notes) + DHL_Tariffs(Zone,WeightMax_g,BasePrice_EUR,Surcharge_EUR,Notes) + Shipments_DHL(...)
+
+MAP_Guardrails, Pricing_Suggestions, OS_Logs, OS_Health (as already defined)
+
+Frontend must show “Missing columns” warnings if any sheet is misconfigured; backend never renames/duplicates sheets.
+
+3) Core modules & flows
+A) Pricing Engine
+
+Inputs per SKU: COGS_EUR, Weight_g, VAT% (+ global params from Pricing_Params).
+Steps:
+
+Landed Cost = COGS + FulfillBase + (Weight/100g)*FulfillPer100g, then apply Returns% and Energy% uplifts if set.
+
+UVP_Recommended = Landed / (1 - MarginUVP) → apply rounding rule and min UVP if defined.
+
+MAP = UVP - MAP_Delta (or UVP * (1 - MAP%)) + rounding rule; never below MinMargin% guard.
+
+Channel prices: Web / Salon / Amazon via uplifts/fees defined in params.
+
+Net per Tier: apply PartnerTiers.DiscountPct with bounds (never under MAP unless override).
+
+Competitor compare: compute Competitor_Min, Competitor_Median per SKU; raise guardrail if UVP/MAP below competition policy.
+
+Write back FinalPriceList fields above; stamp Pricing_Version.
+
+Batch actions:
+
+Reprice selected SKUs (AutoPriceFlag=TRUE)
+
+Explain Price (trace formula terms)
+
+Export PriceList PDF (nice layout)
+
+B) Stand Center (dedicated)
+
+Create stand (geo + QR): generate QR using APP_BASE_URL/qr?stand=<StandID>; store PNG under /public/qr/stand/<id>.png and write StandSites.QRUrl.
+
+Set Min/Max per SKU; view Refill Planner (suggested lines from gaps Min/Max & sell-through).
+
+Visit Mode (Rep): check-in (GPS), quick count, photos, refill commit, notes → updates Stand_Inventory + Stand_Visits + creates/updates Stand_Refill_Plans.
+
+KPIs per stand/month (sell-through = outflow/stock window; stockouts; visits; gifts; loyalty).
+
+Assets for stand (posters/QR/promos) with status links.
+
+C) Sales Desk
+
+Quick Quote → apply Discounts (line breaks & invoice breaks), Loyalty (earn/redeem caps), Gifts matrix, MAP guard.
+
+Convert Quote → Order; generate Invoice PDF; push Commission_Ledger rows (Rep commission, Stand bonus if applicable).
+
+Optional DHL estimate from DHL_Rates/Tariffs by total weight & zone.
+
+D) AI Hub (optional)
+
+Pricing Analyst: reprice batch, highlight conflicts, explain price text.
+
+Stand Ops Bot: suggest refill plan, next visit date, stockout alerts.
+
+Growth Writer: 14-day social plan, ad angles, stand promo copy.
+
+Ops Assistant: draft customer/partner emails from order/quote context.
+
+E) QR for Products
+
+Endpoint /api/qrcode/product/:sku → PNG file under /public/qr/sku/<sku>.png and store URL in FinalPriceList (extra column QRUrl if available).
+
+Optional template includes product name, UVP and a short URL.
+
+4) Business rules (encode from Pricing_Params)
+
+Margins: MarginUVP%, channel uplifts, Amazon fee %, rounding (RND_UVP=0.49, RND_NET=0.01 etc).
+
+MAP policy (delta or %, enforce on all channels, exception flag).
+
+Quantity breaks (line-level) e.g. 6/12/24, and invoice breaks (net subtotal thresholds).
+
+Loyalty: LOYALTY_RATE earn per € net; LOYALTY_REDEEM_RATE; LOYALTY_MAX_REDEEM_PCT.
+
+Gifts matrix: threshold → SKU gift + qty.
+
+Commission: default rep %; stand bonus % from PartnerTiers when monthly goals met.
+
+Guardrails: MIN_MARGIN_PCT, COMPETITOR_FLOOR_MODE (at/above competitor median/min), PRICE_LOCK_LIST.
+
+DHL: default zone, table select by weight; prefer DHL_Tariffs when present.
+
+5) REST API (backend)
+
+GET /api/bootstrap → settings, tiers, params, recent suggestions, counts.
+
+Products:
+
+GET /api/products?q=&limit= search FinalPriceList
+
+POST /api/products/reprice {skus:[…]} → write back prices & suggestions
+
+GET /api/products/:sku/explain → price trace
+
+Pricing:
+
+POST /api/price/calc → calculate totals for items + discounts + loyalty + gifts
+
+Quotes/Orders:
+
+POST /api/quote → create header + lines + PDF url
+
+POST /api/order/convert {quoteId} → order + (optional) invoice PDF
+
+Stand:
+
+POST /api/stands create; GET /api/stands list; GET /api/stands/:id detail
+
+POST /api/stands/:id/visit check-in/out, counts, photos
+
+POST /api/stands/:id/refill/plan build & store SuggestedLinesJSON
+
+DHL:
+
+POST /api/dhl/estimate {weight_g, zone}
+
+QR:
+
+GET /api/qrcode/stand/:id → png; GET /api/qrcode/product/:sku
+
+AI (if key present):
+
+POST /api/ai/explain-price
+
+POST /api/ai/stand-refill-suggest
+
+POST /api/ai/social-plan
+
+Cron:
+
+POST /cron/daily → reprice AutoFlag SKUs, update Pricing_Suggestions, rebuild Stand_KPIs, refill suggestions for red/amber stands
+
+POST /cron/weekly → top/low stands report, tier upgrade suggestions
+
+POST /cron/monthly → commission statements, stand bonuses
+
+6) Frontend pages
+
+Dashboard: KPIs (sales, margins, guardrails), stand alerts, tasks.
+
+Pricing Studio: Params editor, catalog table (reprice, explain), competitors tab.
+
+Stand Center: Map + list, profile page, visit mode, refill planner, KPIs, assets.
+
+Sales Desk: Quick Quote → Order/Invoice; loyalty & gifts visible; commission preview.
+
+Operations: DHL estimate, shipments ledger.
+
+AI Hub: pricing/stand/growth helpers console.
+
+Admin: settings, integrations, health, secrets check (read-only state).
+
+7) Minimal seed & user journey (acceptance)
+
+Fill FinalPriceList at least with: SKU,Name,COGS_EUR,VAT%,Weight_g,Barcode,Category,Status=Active,AutoPriceFlag=TRUE.
+
+Fill PartnerTiers (Basic/Plus/Stand/Distributor) and PartnerRegistry (one partner min.).
+
+Fill Pricing_Params with margins/uplifts/MAP/rounding/loyalty/gifts (defaults allowed).
+
+Create one Stand + set Min/Max for a few SKUs.
+
+Use Pricing Studio → “Reprice Auto” → see FinalPriceList filled with UVP/MAP/Net tiers and channel prices.
+
+Create Quote for a partner → convert to Order → generate Invoice PDF.
+
+In Stand Center: Visit → quick count → Refill Plan generated.
+
+Generate QR for the Stand and for one SKU; links stored back to Sheets.
+
+View Competitor compare and guardrail alerts.
+
+8) Non-functional
+
+Never rename/create “*_Table” sheets.
+
+Every write to Sheets logs a row to OS_Logs (TS, Level, Scope, Message, Ref).
+
+Graceful errors with sheet name/columns hints.
+
+Clean UI (Tailwind), responsive, Arabic/English labels support (strings file).

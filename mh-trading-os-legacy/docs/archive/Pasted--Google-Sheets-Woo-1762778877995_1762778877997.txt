@@ -1,0 +1,124 @@
+فلنُشكِّل “فريق الشركة الذكي” كاملًا، جاهزًا للقراءة والكتابة والتكامل مع Google Sheets والموقع وWoo/Odoo وشبكات التواصل والبريد. أدناه هيكل احترافي + ملفات إدخال جاهزة (CSV) يمكنك لصقها مباشرةً في أوراقك: AI_Crew, AI_Playbooks, مع صلاحيات واضحة وحواجز أمان (MAP/GDPR/الموافقة البشرية).
+
+1) الهيكل الإداري (Org Map)
+
+المستويات:
+
+القيادة: المدير العام (Human) + A-MGR-000 Orchestrator
+
+النمو والتسويق: Growth, SEO, Ads, Social, eCom
+
+التسعير والكتالوج: Pricing, Catalog QA
+
+المبيعات: B2B/Stand/Online، عروض أسعار وفواتير
+
+العمليات: الشحن، Stand Center، CRM/Outreach
+
+خدمة العملاء: Helpdesk + Moderation
+
+المالية والقانون: Finance Ops + Legal
+
+البيانات والهندسة: Integrations, Health, Backups
+
+2) فريق الذكاء الاصطناعي — AI_Crew (جاهز للّصق)
+
+الصيغة: AgentID,Name,Role,Model,Permissions(Read),Permissions(Write),ActiveFlag,Notes
+
+AgentID,Name,Role,Model,Permissions(Read),Permissions(Write),ActiveFlag,Notes
+A-MGR-000,Orchestrator,Supervisor,gpt-4o-mini,"Settings,AI_Crew,AI_Playbooks,OS_Logs,OS_Health","AI_Tasks,AI_Playbooks,AI_Outbox",TRUE,"تنسيق المهام والتصعيد والموافقة البشرية"
+A-PRC-100,Pricing Analyst,Pricing,gpt-4o-mini,"Settings,Pricing_Params,FinalPriceList,CompetitorPrices,MAP_Guardrails","Pricing_Suggestions",TRUE,"حساب UVP/MAP/NET ورفع مسودّات فقط"
+A-CAT-110,Catalog Auditor,Catalog QA,gpt-4o-mini,"FinalPriceList,AuthorizedAssortment,PartnerRegistry","AI_Outbox",TRUE,"كشف النواقص/الأخطاء وتوليد تقارير تدقيق"
+A-GRW-120,Growth Hunter,Lead Generation,gpt-4o-mini,"CRM_Leads,Enums,Settings","CRM_Leads",TRUE,"جلب صالونات/باربرز عبر Places API وتحسين البيانات"
+A-OUT-130,Outreach Sequencer,Email Outreach,gpt-4o-mini,"CRM_Leads,Outreach_Campaigns","Outreach_Queue,Email_Outbox",TRUE,"بناء سلاسل بريدية امتثالًا لـGDPR وإرسال عبر SMTP/Brevo"
+A-SEO-140,SEO Architect,SEO,gpt-4o-mini,"FinalPriceList,CompetitorPrices,SEO_Keywords","SEO_Content,AI_Outbox",TRUE,"بحث كلمات ألمانية وكتابة سيو لصفحات المنتجات"
+A-ADS-150,Ads Strategist,Performance Ads,gpt-4o-mini,"FinalPriceList,SEO_Keywords,CompetitorPrices","Ads_Keywords,Ads_Creatives,AI_Outbox",TRUE,"خطط Google/Meta Ads وCSV جاهزة للاستيراد"
+A-SOC-160,Social Producer,Social Content,gpt-4o-mini,"FinalPriceList,Social_Calendar,Brand_Guidelines","Social_Calendar,AI_Outbox",TRUE,"تقويم 14 يوم منشورات DE/EN مع هاشتاغ وروابط"
+A-ECM-170,Merchandiser,eCommerce,gpt-4o-mini,"FinalPriceList,Woo_Map,Odoo_Map","AI_Outbox",TRUE,"مراجعة مزامنة Woo/Odoo واقتراح تحسينات"
+A-SAL-200,Sales Desk,B2B Sales,gpt-4o-mini,"Quotes,QuoteLines,PartnerRegistry,PartnerTiers,Deals","Quotes,QuoteLines,AI_Outbox",TRUE,"مساعدة في تكوين العروض والأسعار والحزم"
+A-STN-210,Stand Ops Bot,Stand Operations,gpt-4o-mini,"StandSites,AuthorizedAssortment,Orders,Shipments_DHL","AI_Outbox",TRUE,"خطط Refill وزيارات وتوقعات نفاد المخزون"
+A-SHP-220,Shipping Planner,Shipping,gpt-4o-mini,"DHL_Rates,DHL_Tariffs,Shipping_Methods,Packaging_Boxes,Orders","Shipments_DHL,AI_Outbox",TRUE,"اقتراح طريقة الشحن والتكلفة والملصق/QR"
+A-CS-230,Helpdesk,Customer Support,gpt-4o-mini,"Support_Tickets,SLA_Policies,OS_Logs","Support_Tickets,AI_Outbox",TRUE,"تصنيف التذاكر والردود الأولية وSLA"
+A-MOD-240,Moderator,Content Moderation,gpt-4o-mini,"AI_Inbox,Email_Outbox,Social_Calendar","AI_Outbox",TRUE,"كشف الرسائل/المحتوى غير الملائم"
+A-FIN-250,Finance Ops,Finance,gpt-4o-mini,"Orders,Commission_Ledger,Loyalty_Ledger,PartnerRegistry","AI_Outbox,Commission_Ledger",TRUE,"تقارير AR/العمولات/النقاط (مسودات)"
+A-LGL-260,Legal Counsel,Legal,gpt-4o-mini,"Legal_Contracts,PartnerRegistry,StandSites,Settings","Legal_Contracts,AI_Outbox",TRUE,"قوالب العقود والامتثال (GDPR/MAP)"
+A-EA-270,Executive Assistant,Exec Assistant,gpt-4o-mini,"OS_Logs,OS_Health,AI_Outbox","Calendar_Tasks,AI_Outbox",TRUE,"ملخّصات، بريد داخلي، جدولة اجتماعات"
+A-DEV-280,DevOps QA,Engineering,gpt-4o-mini,"OS_Logs,OS_Health,Sync_Queue","AI_Outbox",TRUE,"تشخيص الأخطاء والاقتراحات التقنية"
+
+
+الحماية: كل الوكلاء “قراءة فقط” افتراضيًا. الكتابة تتم كمسودّات (Sheets: Pricing_Suggestions, Outreach_Queue, …) ثم موافقة بشرية من لوحة التحكم.
+
+3) Playbooks — AI_Playbooks (جاهزة للّصق)
+
+الصيغة: PlaybookID,Name,TriggerType,SourceSheet,TargetSheet,PromptTemplate,Owner,ActiveFlag,Notes
+
+PlaybookID,Name,TriggerType,SourceSheet,TargetSheet,PromptTemplate,Owner,ActiveFlag,Notes
+PB-PRC-001,Reprice All (MAP Guard),DAILY,FinalPriceList,Pricing_Suggestions,"احسب UVP/NET حسب Pricing_Params ولا تنزل تحت MAP. فسّر السبب.",A-PRC-100,TRUE,"Draft فقط"
+PB-PRC-002,Scan Guardrails,DAILY,MAP_Guardrails,MAP_Guardrails,"حدّث حالة الروابط والأسعار مقابل MAP مع أسباب.",A-PRC-100,TRUE,"تحذيرات فقط"
+PB-CAT-010,Catalog Audit,WEEKLY,FinalPriceList,AI_Outbox,"اكتشف النواقص/التعاقُد غير المنطقي واصنع تقرير PDF.",A-CAT-110,TRUE,"تقرير تدقيق"
+PB-GRW-020,Lead Harvest (DE Salons),DAILY,CRM_Leads,CRM_Leads,"اجلب 50 صالون جديد من Google Places بمدن محددة واغنِ البيانات.",A-GRW-120,TRUE,"مع قيود GDPR"
+PB-OUT-030,Outreach Sequence,WEEKLY,CRM_Leads,Outreach_Queue,"ابنِ سلاسل بريد لشرائح مستهدفة وأرسل مسودات.",A-OUT-130,TRUE,"يتم الإرسال بعد موافقة بشرية"
+PB-SEO-040,Keyword Expansion,WEEKLY,SEO_Keywords,SEO_Content,"ولّد كيوردز ألمانية+Clusters ونصوص Meta.",A-SEO-140,TRUE,"CSV للتصدير"
+PB-ADS-050,Ads Pack Builder,WEEKLY,Ads_Keywords,Ads_Creatives,"ولّد مجموعات إعلانية+نصوص+Extensions جاهزة لـ Google Ads.",A-ADS-150,TRUE,"CSV"
+PB-SOC-060,Social 14-Day Plan,WEEKLY,FinalPriceList,Social_Calendar,"خطط محتوى 14 يوم DE/EN مع CTA وروابط.",A-SOC-160,TRUE,"جدولة"
+PB-ECM-070,eCom Sync Audit,WEEKLY,Woo_Map,AI_Outbox,"قارن Woo/Odoo/Sheet وأخرج فروقات وتوصيات.",A-ECM-170,TRUE,"diff report"
+PB-SAL-080,Quote Assistant,MANUAL,Quotes,Quotes,"اقترح خصومات ضمن السياسات واملأ بنود العرض.",A-SAL-200,TRUE,"مسودّات"
+PB-STN-090,Stand Refill Planner,DAILY,StandSites,AI_Outbox,"خطط تغذية وقائمة تعبئة مع الكميات والأسباب.",A-STN-210,TRUE,"CSV/PDF"
+PB-SHP-100,Shipping Optimizer,DAILY,Orders,AI_Outbox,"اقترح طريقة الشحن والتكلفة والملصق.",A-SHP-220,TRUE,"لاصقات لاحقًا"
+PB-CS-110,Helpdesk Digest,DAILY,Support_Tickets,AI_Outbox,"لخّص الحالات المفتوحة مقابل SLA واقترح ردود.",A-CS-230,TRUE,"يُرسل للإدارة"
+PB-FIN-120,Commission Draft,MONTHLY,Orders,Commission_Ledger,"احسب عمولات المندوبين/الأفلييت مسودّات.",A-FIN-250,TRUE,"Approval"
+PB-FIN-130,Loyalty Bonuses,MONTHLY,Orders,Loyalty_Ledger,"احسب نقاط الولاء وفق Settings.",A-FIN-250,TRUE,"Draft"
+PB-LGL-140,Contract Generator,MANUAL,PartnerRegistry,Legal_Contracts,"ولّد عقد Stand/Distributor من قالب.",A-LGL-260,TRUE,"PDF"
+PB-EA-150,Executive Brief,DAILY,OS_Health,AI_Outbox,"ملخص يومي للإدارة مع مؤشرات حرجة.",A-EA-270,TRUE,"email+pdf"
+PB-DEV-160,Error Triager,DAILY,OS_Logs,AI_Outbox,"عنون الأخطاء واقترح إصلاحات وروابط.",A-DEV-280,TRUE,"للـ Engineering"
+
+4) المطالب (System Prompts) المختصرة (جاهزة للوضع في “Agent Drawer”)
+
+Orchestrator:
+«أنت منسّق الفريق. تُوجّه الطلب للوكلاء المناسبين، وتفرض الموافقة البشرية على أي كتابة، وتلتزم بـMAP/GDPR. لا تكتب إلى Sheets إلا كمسودّات، وسجّل كل فعل في OS_Logs.»
+
+Pricing Analyst:
+«احسب UVP/MAP/NET وفق Pricing_Params وVAT 19% وEUR. فسّر المعادلات، واحترم MAP، واكتب النتائج في Pricing_Suggestions فقط.»
+
+Growth Hunter:
+«اجلب صالونات/Barber في ألمانيا (DE) من Google Places وفق المدن/الأكواد البريدية، ونظّف البيانات، وتحقق من التكرار، واكتب إلى CRM_Leads.»
+
+Outreach Sequencer:
+«ابنِ سلاسل بريدية وفق شرائح CRM_Leads مع متابعة ذكية واحترام GDPR. الإرسال عبر SMTP بعد موافقة بشرية. اكتب queue في Outreach_Queue.»
+
+SEO/Ads/Social:
+«أنشئ محتوى متوافقًا مع السوق الألماني والقوانين الإعلانية، ووفّق الرسائل مع USP/البراند. المخرجات CSV/Calendar/PDF فقط، بدون نشر تلقائي.»
+
+Stand/Shipping/Sales/Helpdesk/Finance/Legal/EA/DevOps:
+مطالب مماثلة كما في أسمائها أعلاه (مرفقة ضمن Playbooks).
+
+5) الأوراق (Sheets) الداعمة السريعة
+
+إذا لم تكن موجودة، أنشئها تلقائيًا عند فتح الصفحات/عند أول تشغيل:
+
+AI_Inbox, AI_Outbox, AI_Tasks (سجل المحادثات والمخرجات والمهام).
+
+CRM_Leads, Outreach_Campaigns, Outreach_Queue, Outreach_Results.
+
+SEO_Keywords, SEO_Content, Ads_Keywords, Ads_Creatives, Social_Calendar.
+
+Support_Tickets, Legal_Contracts.
+
+6) الصلاحيات والتكاملات
+
+Google Sheets: القراءة/الكتابة عبر sheetsService مع validateSheetStructure قبل أي كتابة.
+
+البريد (Brevo/SMTP): إرسال المسودّات فقط من Outbox بعد ضغط “Send Approved”.
+
+Google Places: مفتاح API_PLACES_KEY للوكلاء Growth.
+
+Woo/Odoo: مزامنة مراقَبة (قراءة + تقارير فروقات). الكتابة لاحقًا بعد اعتماد عمليات “Apply Changes”.
+
+7) الحواجز (Guardrails)
+
+MAP & Pricing: لا تحديث مباشر؛ فقط Pricing_Suggestions → Apply.
+
+GDPR: عدم تراسل من لم يوافق—تخزين دلالة “ConsentFlag/Source”.
+
+الموافقة البشرية: Toggle “Require Approval” لكل وكيل يكتب.
+
+التتبّع: كل عملية تُسجّل في OS_Logs وAI_Tasks.

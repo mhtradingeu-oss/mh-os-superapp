@@ -1,0 +1,93 @@
+You are a senior staff engineer and auditor. Produce a FULL, ACTIONABLE technical + data report for the entire Hairoticmen system (codebase + Google Sheets layer).
+
+Context & goals
+- Repo root: {{REPO_ROOT or say "this repl"}}
+- Project: Hairoticmen / MH Trading OS (app + Google Sheets).
+- Primary Sheets (if present/connected): FinalPriceList, Settings, Pricing_Params, plus any others you discover.
+- Target outcome: a single, concise but complete Markdown report with hard facts, risks, and READY-TO-APPLY fixes (code and formulas), not generic advice.
+
+What to do (autodetect languages/tools)
+1) Inventory & map
+   - Recursively scan the repo; list all key services, packages, frameworks, build tools, Docker/compose files, CI pipelines, and any Apps Script files.
+   - Identify entry points, env files (.env/.env.example), and ALL secrets references (never print secrets; just show variable names).
+   - If present, read these docs/reports: SYSTEM_MAP.md, SHEETS_STRUCTURE_REPORT.md, GOOGLE_SHEETS_AUDIT_REPORT.md (or close variants). Summarize how they align with the code.
+   - Output an architecture diagram in Mermaid (components + data flows), and a dependency graph per service.
+
+2) Backend/Frontend deep audit
+   - For each service or app:
+     * Static analysis (structure, layering, code smells, dead code).
+     * Security: auth, input validation, SSRF/SQLi/NoSQLi/XSS risks, secret handling, dependency CVEs.
+     * Reliability: error handling, retries, idempotency, timeouts, logging quality.
+     * Performance: obvious hot paths, N+1 calls, unnecessary sync I/O, bundle size (if frontend), caching opportunities.
+     * Testing: current test coverage (rough), missing critical tests; generate 3–5 minimal smoke tests.
+     * Build/Run: exact commands to run locally in this repl (dev/prod), and Docker if available.
+   - Output concrete code diffs/patches for the top 5 issues (unified diff).
+
+3) API & data layer
+   - Enumerate all API endpoints (REST/GraphQL/RPC): method, path, request/response shape, auth needs.
+   - DB/Storage: show schemas/migrations, indexes, obvious integrity risks, and example queries.
+   - Config & env: table of required env vars with purpose and safe default/example values; propose a clean `.env.example`.
+
+4) Google Sheets integration (very important)
+   - Detect any usage of Google Sheets API / Apps Script / CSV importers.
+   - If you find FinalPriceList/Settings/Pricing_Params:
+     * Print exact schemas (column names + types).
+     * Flag duplicate/ambiguous columns (e.g., QR_URL vs QRUrl), non-numeric numerics (€, thousand separators), missing Weight_kg derived from Weight_g.
+     * Show the exact transformation rules the code applies (or should apply) between app ↔ Sheets.
+   - Propose:
+     * A minimal Apps Script (or Node/py script) to: normalize numerics, add Weight_kg, merge QRUrl→QR_URL, fill Amazon_TierKey and PostChannel_Margin_Pct from defaults/settings, and write an ActionLog tab.
+     * Data validation rules for key columns (types, regexes, allowed lists).
+     * A safe import/export contract (CSV/JSON schemas) and idempotent sync steps.
+
+5) Compliance & Ops
+   - Map findings to OWASP Top 10 and basic GDPR/ISO hygiene (logging of PII, data retention toggles, secrets rotation).
+   - Propose CI/CD (GitHub Actions) with: lint, typecheck, test, build, security scan (npm audit/pip-audit), and release.
+   - Observability: logging format, minimal request IDs, and error budget SLOs.
+
+Deliverables (the report MUST be structured exactly as below)
+# Executive Summary
+- One paragraph + a table with RAG (Green/Amber/Red) for: Architecture, Security, Reliability, Performance, Data Quality, DX.
+- Top 10 issues (ranked) with 1-line impact each.
+
+# Architecture & Inventory
+- Mermaid system diagram.
+- Services/libs table (name, role, entry file, run command).
+- Env var catalog (name, purpose, safe example).
+
+# API & Data
+- Endpoints table.
+- DB/Storage schemas (summarized).
+- Sheets schemas (FinalPriceList, Settings, Pricing_Params if present): columns, inferred types, required/optional, constraints.
+- Data risks (duplicates, bad numerics, missing derived fields).
+
+# Findings → Fixes (Evidence → Patch)
+For each high/medium issue:
+- Evidence (file:line, snippet).
+- Risk (1–2 lines).
+- Fix (unified diff or exact code block).
+- Verification (test or command).
+
+# Google Sheets: Normalization Pack
+- Paste-ready Apps Script or Node/Python script that:
+  1) normalizes currency/decimal separators to numbers,
+  2) adds & fills Weight_kg from Weight_g,
+  3) merges QRUrl → QR_URL and removes the extra column,
+  4) ensures/sets PostChannel_Margin_Pct (from Settings key POSTCHANNEL_MARGIN_DEFAULT_PCT or default 8%),
+  5) sets Amazon_TierKey via simple size/weight rules (configurable),
+  6) writes an ActionLog with timestamp, actor, action, counts.
+- Also include: validation rules and a TSV/CSV contract for safe imports.
+
+# CI/CD & Ops
+- GitHub Actions yaml (ready to drop in) for lint/test/build/audit.
+- Logging/metrics recommendations with sample middleware.
+
+# Roadmap (Prioritized)
+- A 30/60/90 style plan but using **relative sizing (S/M/L)** instead of time estimates.
+- Clear “definition of done” checklist per workstream.
+
+Rules for your analysis
+- Be specific: cite files and lines; show diffs where relevant.
+- If something is missing, state the assumption and provide the best default.
+- Do NOT invent network data. Keep everything repo-local unless a file is present.
+- Keep the whole report under ~1,500 words and focus on actionable changes.
+- Output only the report in Markdown. No extra chatter.

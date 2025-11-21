@@ -1,0 +1,8 @@
+Event;Hook/Source;Points;Limit;Conditions;Log Template (DE);Enabled
+Account Registration;user_register;+20;Once per user;;Willkommen bei HAIROTICMEN! +%plural% für deine Registrierung.;Yes
+First Completed Order;woocommerce_order_status_completed;+50;Once per user;If is_first_order(user);Glückwunsch! Erste Bestellung abgeschlossen: +%plural%.;Yes
+Purchase (per €);woocommerce_order_status_completed;1 per €;Per order;"Subtotal only; exclude shipping/tax";%plural% für Einkauf #%order_id%.;Yes
+Product Review Approved;comment_approved;+10;Max 1 per order/product;If comment_type=review;Danke für deine Produktbewertung: +%plural%.;Yes
+Referral Signup;custom_referral_accepted;+25;Daily cap 1;Validated referral;Freund eingeladen – Bonusgutschrift: +%plural%.;Yes
+Repurchase ≤30 days;custom_repurchase_30d;+15;Once per 30d;If days_between(last_completed_order, current) ≤ 30;Wieder da! Extra‑Bonus: +%plural%.;Yes
+Redeem 100 pts = 5€;checkout_redeem_rule;-100;+∞;"Min cart ≥ 20€; max 20% order value";Punkte eingelöst: −%plural%.;Yes

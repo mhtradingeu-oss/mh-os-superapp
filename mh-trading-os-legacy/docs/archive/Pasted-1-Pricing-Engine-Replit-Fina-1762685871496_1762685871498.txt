@@ -1,0 +1,78 @@
+1) برومبت قسم التسعير (Pricing Engine)
+
+المطلوب من Replit:
+
+أ) بنية البيانات (حدّث/أنشئ وتأكد)
+
+FinalPriceList:
+SKU, Name, COGS_EUR, Factory_Cost_EUR, Packaging_Cost_EUR, Freight_kg_EUR, Import_Duty_Pct, Overhead_Pct, UVP, VAT%, Weight_g, Barcode, Category, Status, AutoPriceFlag, MAP, Price_Web, Price_Amazon, Price_Salon, Net_Dealer_Basic, Net_Dealer_Plus, Net_Stand, Net_Distributor, Competitor_Min, Competitor_Median, Pricing_Version, Notes
+
+Pricing_Params (أمثلة أساسية + اطلب استكمال الناقص):
+
+أهداف هامش: Target_Margin_Web, Target_Margin_Salon, Floor_Margin
+
+منافسة: MAP_Enable, MAP_Delta_EUR أو MAP_Delta_Pct, Competitor_Weighting
+
+تكاليف: Default_Packaging_EUR, Default_Freight_kg_EUR, Import_Duty_Pct_Default, Overhead_Pct_Default
+
+تقريب: Rounding_Step_Web, Rounding_Step_Salon, Rounding_Ending_Web (مثل .49)
+
+خصومات تير: Tier_Discount_*
+
+سياسات عروض: Promo_Max_Discount_Pct, Bundle_Discount_Pct
+
+CompetitorPrices: SKU, Competitor, URL, Price, Currency, Country, CollectedAt
+
+MAP_Guardrails: لنتائج الفحص.
+
+Pricing_Suggestions: لاقتراحات التسعير ومسوّغات التغيير.
+
+ب) خوارزمية التسعير (نفّذ):
+
+التكلفة الحقيقية (Landed COGS) = Factory_Cost + Packaging + Freight(حسب الوزن) + Import Duty + Overhead.
+
+سعر هدف القناة (Web / Salon): اختَر الهامش الهدف، احسب UVP المرشح:
+UVP_candidate = Landed_COGS / (1 - Target_Margin)
+ثم قرّب وفق سياسة القناة (خطوة التقريب + النهايات مثل .49).
+
+MAP: لا تهبط تحت MAP (سواء ثابت أو مشتق من UVP).
+
+المنافسين:
+
+اجلب أقل/وسيط المنافسين (Competitor_Min/Median)
+
+إذا الفارق كبير، اقترح تعديلات UVP ضمن هامش الأمان.
+
+تسعير التير (Net): طبّق تخفيضات التير للوصول لأسعار Net_Dealer_*.
+
+حفظ النتائج في FinalPriceList + سجل في Pricing_Suggestions ما تغيّر ولماذا (مع السبب).
+
+ج) واجهة المستخدم (Pricing Page)
+
+بحث SKU/اسم، جدول بعمود تكلفة هابطة، UVP، MAP، Net لكل تير، منافسين، ملاحظة.
+
+أزرار: Reprice Selected / Reprice All / Export Price List (PDF + CSV).
+
+فلترة: فرق السعر عن المنافس، هامش تحت الحد الأدنى، MAP مخالف.
+
+د) قدرات المساعد الذكي في التسعير
+
+“اكمل بيانات هذا SKU” (عبّئ VAT/وزن/فئة/وصف/USP).
+
+“احسب سعر نهائي لهذه المجموعة” (with/without MAP)، وأعطِ سيناريوهات: سعر منافس/هامش أعلى/منتصف.
+
+“راقب منافسين لهذا الـSKU” وأضِف روابطهم للجدول.
+
+“قارن سعرنا بسوق ألمانيا” واقترح تعديل آمن.
+
+هـ) اختبارات وقبول
+
+سيناريوات:
+
+منتج ناقص بيانات → المساعد يكملها → يُسعر بدقة.
+
+منتج به منافس رخيص جدًا → يحترم MAP ويقترح ملاحظة.
+
+تصدير PDF/CSV يعمل والقيم صحيحة.
+
+سجّل النتائج في TEST_REPORT.md.

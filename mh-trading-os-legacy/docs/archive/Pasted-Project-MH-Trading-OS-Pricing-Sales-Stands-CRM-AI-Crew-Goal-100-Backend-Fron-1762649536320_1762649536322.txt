@@ -1,0 +1,169 @@
+Project: MH Trading OS — Pricing, Sales, Stands, CRM, AI Crew
+Goal: إكمال التطبيق 100% (Backend+Frontend+AI+Integrations) مع اختبارات شاملة ودفتر مخرجات موثّق، وربط حيّ بـ Google Sheets.
+
+0) Context & Constraints
+
+لدينا Google Sheet جاهز ومتصِل (ID: <GOOGLE_SHEET_ID>).
+
+يجب أن يبقى كل شيء idempotent وغير هدّام (لا نحذف بيانات، نضيف الناقص فقط).
+
+سجّل كل خطوة في OS_Logs + نتائج الفحوص في OS_Health.
+
+لا تترك أي “*-Table/_Table” مكرّرات—ادمجها في التبويب الأصلي ثم احذف النسخ.
+
+اجعل كل وظائف الكتابة/التحديث تعمل بوضع Dry-Run اختياري عبر إعداد ENV=staging.
+
+1) Verify & Complete Settings (Auto-Fix)
+
+اقرأ إعدادات Settings وتأكد من المفاتيح التالية وإكمال الناقص تلقائيًا:
+
+HM_CURRENCY, VAT_Default_Pct, HM_DRIVE_ROOT_ID, HM_STAND_QR_BASE
+
+EMAIL_PROVIDER, EMAIL_API_KEY أو SMTP_*
+
+AI_Default_Model (اقترح gpt-4o أو gpt-4o-mini)
+
+API_PLACES_KEY (اختياري)
+
+إذا HM_DRIVE_ROOT_ID فارغ: أنشئ جذر Drive باسم Hairoticmen_OS وأنشئ البنية:
+
+/Inbox, /Exports, /06_Docs/Partners/{Contracts,Orders,Shipments,Marketing,Assets}
+
+اكتب المعرفات في Settings.
+
+ثبّت Triggers تلقائيًا: onOpen + onChange Guard.
+
+أنشئ/حدّث Named Ranges: TIER_LIST, ORDER_STATUS, QUOTE_STATUS, AI_MODELS.
+
+نفّذ HM_Replit_Readiness_Check() وسجّل PASS/FAIL في OS_Health برسالة واضحة.
+
+2) Sheets & Data Model (Create/Repair)
+
+تأكد من وجود الـ 24+ تبويب مع الهيدر الصحيح (FinalPriceList, Pricing_Params, PartnerTiers, PartnerRegistry, StandSites, Quotes, QuoteLines, Orders, Sales_Users, MAP_Guardrails, DHL_Rates, Shipments_DHL, Integrations_Config, Integrations_Endpoints, Sync_Queue, Odoo_Map, Woo_Map, AI_Crew, AI_Playbooks, AI_Tasks, OS_Logs, OS_Health, AI_Inbox, AI_Outbox…).
+
+في حال النقص: أنشئها تلقائيًا واملأ Seed ذكي (منتجين، شريكين، Stand واحد، مستخدمين مبيعات، DHL rates، Playbooks أساسية).
+
+3) Finish Frontend (7 Pages to Production)
+
+حوّل الصفحات من “skeleton” إلى واجهة كاملة متصلة بالـ APIs:
+
+Dashboard: بطاقات إحصائيات حقيقية، رسم بياني Guardrails، أحدث OS_Logs، زر Health Check.
+
+Pricing: بحث SKU/اسم، Reprice (Selected/All)، عرض UVP/MAP/Net لكل Tier، تصدير PDF Price List.
+
+Partners & Stands: CRUD للشركاء + إنشاء مجلد Drive + AuthorizedAssortment + CRUD للستاند + QR + Starter Bundle + Refill Plan/Deliver.
+
+Sales: Create Quote (خصم قيمة/٪، VAT)، QuoteLines، Convert to Order، PDF (Invoice/Delivery/Receipt)، Loyalty + Commission.
+
+Logistics: تقدير DHL، إنشاء Manifest يومي، عرض Shipments_DHL.
+
+AI Crew: تشغيل Playbooks (Daily/Weekly/Monthly)، Dispatch، عرض AI_Tasks، Inbox/Outbox.
+
+Health & Admin: Settings Wizard، Integrations (Woo/Odoo/Email/OpenAI)، Triggers، Backup Now، Validate Sheets.
+
+UI: داكن/فاتح، EN/AR مع RTL، جداول ببحث/فرز/تصفية/Export، تنبيهات أخطاء لطيفة، Retry مع Backoff.
+
+4) Smart Assistant (Command Palette + Chat)
+
+فعّل “مساعد ذكي” يستطيع تنفيذ أوامر مثل:
+
+Create SKU وفق قواعد الخط/الحجم + التحقق من التعارض + كتابة إلى FinalPriceList.
+
+Complete Product Fields (VAT/وزن/فئة/وصف/USP/صور) بقوالب جاهزة.
+
+Price Product(s): احسب UVP/MAP وNet لكل Tier مع Rounding وFloor Margin وMAP Guardrails.
+
+New Partner/Lead: إنشاء شريك/عميل وفق القناة (Field/Web/Stand/Social/WhatsApp) والتصنيف (Salon/Distributor/Dealer) + إنشاء مجلد Drive.
+
+Create Quote→Order→PDF في محادثة واحدة.
+
+Request Stand: إنشاء Stand + ربطه + QR + Starter Bundle + مهمة Refill.
+
+Health & Data Ops: HM_Replit_Readiness_Check، Merge *-Table، Count Rows، Backup.
+
+اجعل كل أمر ينشئ سجلًا واضحًا في OS_Logs + يحدّث OS_Health عند الحاجة.
+
+5) Integrations & Email
+
+OpenAI: استخدم AI_Default_Model.
+
+Email: إذا EMAIL_PROVIDER مضبوط (يفضّل Brevo/Resend)، نفّذ “Send Test Email” وسجّل النتيجة.
+
+Woo/Odoo: اربط الخرائط (Odoo_Map, Woo_Map) وأضف أزرار Stub آمنة (Dry-Run) لتجارب Push/Export.
+
+Places (اختياري): زر “Harvest Salons (City)” يملأ Leads/PartnerRegistry.
+
+6) Testing Plan (Auto & Manual)
+
+ابنِ اختبارات تلقائية (integration/E2E) تشغَّل من زر واحد:
+
+Sheets R/W: أنشئ SKU تجريبي، عدّل سعره، اقرأه ثانية وتحقق من القيم.
+
+Pricing: Reprice Selected/All مع التحقق من MAP/Rounding.
+
+Partners & Stands: أنشئ Partner + Stand + QR + AuthorizedAssortment.
+
+Sales: Quote → Order → PDF (Invoice/Delivery) + Loyalty + Commission قيود.
+
+Logistics: تقدير DHL + Manifest.
+
+AI Crew: Run Daily/Weekly playbooks وراقب AI_Tasks حتى DONE.
+
+Email: Send Test، سجل النتيجة.
+
+Health: HM_Replit_Readiness_Check = PASS.
+
+أخرج TEST_REPORT.md بملخص النتائج + لقطات شاشة إن أمكن.
+
+7) Guardrails, Perf, Security
+
+منع الحذف/الكتابة الخطرة بدون Confirm.
+
+كل عمليات Sheets bulk تستخدم batch/flush لتقليل الاستدعاءات.
+
+Feature flags: FEATURE_COMMISSIONS, FEATURE_RETURNS, GUARDRAIL_ENFORCE_MAP.
+
+Mask الأسرار في السجلات.
+
+تعامل مع أخطاء API بآلية Retry + Backoff + Circuit-breaker مبسط.
+
+8) Deliverables
+
+ربط الصفحات كلها بالـ APIs الحقيقية (لا مكان لأي Placeholder).
+
+CHANGELOG.md بما تم، وSETUP_GUIDE.md محدث، وPROJECT_STATUS.md، وTEST_REPORT.md.
+
+لوحة تحكم نهائية “Production-Ready” + مساعد ذكي فعّال.
+
+رسالة Console ختامية:
+
+DONE ✅ — MH Trading OS is production-ready.
+Health: PASS, Sheets Connected, AI Ready, Email <status>, Woo/Odoo <status>.
+
+9) Inputs to Use
+
+GOOGLE_SHEET_ID = <ضع المعرّف هنا>
+
+EMAIL_PROVIDER = <brevo|resend|sendgrid|smtp>
+
+EMAIL_API_KEY / SMTP_* = <المفتاح أو بيانات SMTP>
+
+AI_Default_Model = <gpt-4o | gpt-4o-mini>
+
+API_PLACES_KEY = <اختياري>
+
+إن كان أي مفتاح ناقص: افتح معالج الإعدادات داخل التطبيق واطلبه من المستخدم، ثم واصل التنفيذ.
+
+معيار القبول:
+
+جميع صفحات الواجهة تعمل وتتواصل مع الـ APIs.
+
+OS_Health = PASS، ولا توجد تحذيرات حرجة.
+
+PDF/QR تعمل، والتسعير يلتزم MAP/Rounding/Tiers، وLoyalty/Commission تتسجّل.
+
+AI Crew ينفّذ Playbooks ويكمل مهامًا إلى DONE.
+
+التقارير والوثائق الأربعة مخرجة ومحدّثة.
+
+اقترح أي تحسينات UI/UX أو أدوات AI إضافية تراها مناسبة—ثم نفّذها طالما لا تكسر أي قيود، وسجّلها في CHANGELOG.

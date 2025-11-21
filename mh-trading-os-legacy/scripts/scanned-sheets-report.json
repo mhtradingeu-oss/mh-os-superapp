@@ -1,0 +1,1954 @@
+[
+  {
+    "name": "README",
+    "sheetId": 0,
+    "headers": [],
+    "rowCount": 1000,
+    "columnCount": 26
+  },
+  {
+    "name": "Settings",
+    "sheetId": 1790196702,
+    "headers": [
+      "Key",
+      "Value",
+      "Description",
+      "Category",
+      "LastModified"
+    ],
+    "rowCount": 1011,
+    "columnCount": 5
+  },
+  {
+    "name": "Pricing_Params",
+    "sheetId": 1722827924,
+    "headers": [
+      "ParamKey",
+      "Value",
+      "Unit",
+      "Category",
+      "Type",
+      "AppliesTo",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "CompetitorPrices",
+    "sheetId": 812266365,
+    "headers": [
+      "SKU",
+      "CompetitorName",
+      "Price",
+      "URL",
+      "LastChecked",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "PartnerTiers",
+    "sheetId": 638838833,
+    "headers": [
+      "Tier",
+      "MinOrderVolume",
+      "DiscountPct",
+      "CommissionPct",
+      "Benefits",
+      "Payment Terms (Days)",
+      "CommissionRate_Pct"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "PartnerRegistry",
+    "sheetId": 808493692,
+    "headers": [
+      "PartnerID",
+      "PartnerName",
+      "Tier",
+      "PartnerType",
+      "Email",
+      "Phone",
+      "Owner",
+      "Status",
+      "Street",
+      "Postal",
+      "City",
+      "CountryCode",
+      "ShippingStreet",
+      "ShippingPostal",
+      "ShippingCity",
+      "ShippingCountryCode",
+      "Notes",
+      "PartnerFolderID",
+      "PartnerFolderURL"
+    ],
+    "rowCount": 1000,
+    "columnCount": 19
+  },
+  {
+    "name": "StandSites",
+    "sheetId": 222550038,
+    "headers": [
+      "StandID",
+      "PartnerID",
+      "Location",
+      "Address",
+      "City",
+      "GooglePlaceID",
+      "Lat",
+      "Lng",
+      "OpenedDate",
+      "Status",
+      "QR_URL",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 12
+  },
+  {
+    "name": "Stand_Inventory",
+    "sheetId": 1931532119,
+    "headers": [
+      "StandID",
+      "SKU",
+      "Qty",
+      "LastRefill",
+      "NextRefill",
+      "Status",
+      "LastUpdated"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "Stand_Refill_Plans",
+    "sheetId": 1764469100,
+    "headers": [
+      "PlanID",
+      "StandID",
+      "SKU",
+      "MinQty",
+      "RefillQty",
+      "Frequency",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "Stand_Visits",
+    "sheetId": 1392416766,
+    "headers": [
+      "VisitID",
+      "StandID",
+      "VisitDate",
+      "RepName",
+      "Notes",
+      "PhotoURLs",
+      "Notes",
+      "PhotoUrls"
+    ],
+    "rowCount": 1000,
+    "columnCount": 8
+  },
+  {
+    "name": "Stand_KPIs",
+    "sheetId": 1767718735,
+    "headers": [
+      "StandID",
+      "Month",
+      "Sales",
+      "Footfall",
+      "ConversionRate",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "AuthorizedAssortment",
+    "sheetId": 917949877,
+    "headers": [
+      "PartnerID",
+      "SKU",
+      "Authorized",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 4
+  },
+  {
+    "name": "StarterBundles",
+    "sheetId": 45777908,
+    "headers": [
+      "BundleID",
+      "Tier",
+      "SKU",
+      "Qty",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 5
+  },
+  {
+    "name": "RefillPlans",
+    "sheetId": 1950427022,
+    "headers": [
+      "PlanID",
+      "PartnerID",
+      "SKU",
+      "MinQty",
+      "RefillQty",
+      "Frequency",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "Quotes",
+    "sheetId": 437665084,
+    "headers": [
+      "QuoteID",
+      "PartnerID",
+      "QuoteDate",
+      "ExpiryDate",
+      "Subtotal",
+      "DiscountPct",
+      "DiscountAmt",
+      "VATRate",
+      "VATAmt",
+      "Total",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 12
+  },
+  {
+    "name": "QuoteLines",
+    "sheetId": 933133498,
+    "headers": [
+      "QuoteID",
+      "LineNum",
+      "SKU",
+      "Qty",
+      "UnitPrice",
+      "Discount",
+      "LineTotal"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "Orders",
+    "sheetId": 1931537797,
+    "headers": [
+      "OrderID",
+      "QuoteID",
+      "PartnerID",
+      "OrderDate",
+      "Subtotal",
+      "DiscountAmt",
+      "VATAmt",
+      "ShippingCost",
+      "Total",
+      "PaymentMethod",
+      "PaymentStatus",
+      "FulfillmentStatus",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 14
+  },
+  {
+    "name": "OrderLines",
+    "sheetId": 1368117465,
+    "headers": [
+      "OrderID",
+      "LineNum",
+      "SKU",
+      "Qty",
+      "UnitPrice",
+      "Discount",
+      "LineTotal"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "Commission_Ledger",
+    "sheetId": 46232631,
+    "headers": [
+      "TxID",
+      "PartnerID",
+      "OrderID",
+      "TxDate",
+      "Amount",
+      "Rate",
+      "Status",
+      "PaidDate",
+      "MonthlyTargetMet",
+      "Multiplier",
+      "PaymentStage",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 12
+  },
+  {
+    "name": "Loyalty_Ledger",
+    "sheetId": 786299986,
+    "headers": [
+      "TxID",
+      "PartnerID",
+      "OrderID",
+      "TxDate",
+      "Points",
+      "Type",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 8
+  },
+  {
+    "name": "DHL_Rates",
+    "sheetId": 285359782,
+    "headers": [
+      "Zone",
+      "Weight_g_Max",
+      "Price",
+      "Currency",
+      "EffectiveFrom"
+    ],
+    "rowCount": 1000,
+    "columnCount": 5
+  },
+  {
+    "name": "DHL_Tariffs",
+    "sheetId": 762846033,
+    "headers": [
+      "Zone",
+      "WeightMax_g",
+      "BasePrice_EUR",
+      "Surcharge_EUR",
+      "EffectiveFrom"
+    ],
+    "rowCount": 1000,
+    "columnCount": 5
+  },
+  {
+    "name": "Shipments_DHL",
+    "sheetId": 389479619,
+    "headers": [
+      "ShipmentID",
+      "OrderID",
+      "PartnerID",
+      "ManifestID",
+      "TrackingNumber",
+      "Carrier",
+      "Weight_g",
+      "Zone",
+      "ShippingCost",
+      "Status",
+      "ShippedDate",
+      "DeliveryDate",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 13
+  },
+  {
+    "name": "MAP_Guardrails",
+    "sheetId": 93258738,
+    "headers": [
+      "SKU",
+      "RaisedTS",
+      "Type",
+      "CurrentValue",
+      "ThresholdValue",
+      "Message",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "Pricing_Suggestions",
+    "sheetId": 780919,
+    "headers": [
+      "SKU",
+      "CreatedTS",
+      "SuggestedUVP",
+      "SuggestedMAP",
+      "Reason",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "Pricing_Suggestions_Draft",
+    "sheetId": 1737369611,
+    "headers": [
+      "DraftID",
+      "SourceAgent",
+      "ActorType",
+      "RequestID",
+      "Status",
+      "CreatedAt",
+      "ReviewedBy",
+      "ReviewedAt",
+      "PromotionRef",
+      "Notes",
+      "SKU",
+      "SuggestionID",
+      "Name",
+      "Category",
+      "Brand",
+      "Barcode",
+      "ProductStatus",
+      "ProductNotes",
+      "Factory_Cost_EUR",
+      "Packaging_Cost_EUR",
+      "Freight_kg_EUR",
+      "Import_Duty_Pct",
+      "Overhead_Pct",
+      "COGS_EUR",
+      "Shipping_Inbound_per_unit",
+      "EPR_LUCID_per_unit",
+      "GS1_per_unit",
+      "Retail_Packaging_per_unit",
+      "QC_PIF_per_unit",
+      "Operations_per_unit",
+      "Marketing_per_unit",
+      "FullCost_EUR",
+      "Weight_g",
+      "Content_ml",
+      "Dims_cm",
+      "VAT%",
+      "Grundpreis",
+      "Grundpreis_Unit",
+      "Amazon_TierKey",
+      "Line",
+      "PostChannel_Margin_Pct",
+      "Guardrail_OK",
+      "UVP_Recommended",
+      "UVP",
+      "MAP",
+      "AutoPriceFlag",
+      "Price_Web",
+      "Price_Amazon",
+      "Price_Salon",
+      "Net_Dealer_Basic",
+      "Net_Dealer_Plus",
+      "Net_Stand",
+      "Net_Distributor",
+      "Competitor_Min",
+      "Competitor_Median",
+      "Pricing_Version",
+      "QRUrl"
+    ],
+    "rowCount": 1000,
+    "columnCount": 57
+  },
+  {
+    "name": "Sales_Suggestions_Draft",
+    "sheetId": 401531009,
+    "headers": [
+      "DraftID",
+      "SourceAgent",
+      "ActorType",
+      "RequestID",
+      "Status",
+      "CreatedAt",
+      "ReviewedBy",
+      "ReviewedAt",
+      "PromotionRef",
+      "Notes",
+      "QuoteID",
+      "PartnerID",
+      "PartnerName",
+      "LinesJSON",
+      "TotalBeforeTax",
+      "TotalAfterTax",
+      "Currency",
+      "Lang",
+      "ValidUntil",
+      "PaymentTerms",
+      "SuggestionReason"
+    ],
+    "rowCount": 1000,
+    "columnCount": 21
+  },
+  {
+    "name": "Outreach_Drafts",
+    "sheetId": 479617324,
+    "headers": [
+      "DraftID",
+      "SourceAgent",
+      "ActorType",
+      "RequestID",
+      "Status",
+      "CreatedAt",
+      "ReviewedBy",
+      "ReviewedAt",
+      "PromotionRef",
+      "Notes",
+      "CampaignID",
+      "Subject",
+      "BodyText",
+      "BodyHTML",
+      "RecipientEmail",
+      "RecipientName",
+      "Lang",
+      "ScheduledFor",
+      "HasUnsubscribe",
+      "Tags"
+    ],
+    "rowCount": 1000,
+    "columnCount": 20
+  },
+  {
+    "name": "OS_Logs",
+    "sheetId": 500399804,
+    "headers": [
+      "Timestamp",
+      "Level",
+      "Scope",
+      "Message",
+      "Ref"
+    ],
+    "rowCount": 2464,
+    "columnCount": 5
+  },
+  {
+    "name": "OS_Health",
+    "sheetId": 1733643402,
+    "headers": [
+      "CheckTS",
+      "Component",
+      "Status",
+      "Message",
+      "Details"
+    ],
+    "rowCount": 1000,
+    "columnCount": 5
+  },
+  {
+    "name": "FinalPriceList",
+    "sheetId": 772061397,
+    "headers": [
+      "SKU",
+      "Name",
+      "Category",
+      "Brand",
+      "Barcode",
+      "Status",
+      "Factory_Cost_EUR",
+      "Packaging_Cost_EUR",
+      "Freight_kg_EUR",
+      "Import_Duty_Pct",
+      "Overhead_Pct",
+      "COGS_EUR",
+      "Shipping_Inbound_per_unit",
+      "EPR_LUCID_per_unit",
+      "GS1_per_unit",
+      "Retail_Packaging_per_unit",
+      "QC_PIF_per_unit",
+      "Operations_per_unit",
+      "Marketing_per_unit",
+      "FullCost_EUR",
+      "FactoryPriceUnit_Manual",
+      "TotalFactoryPriceCarton",
+      "UnitsPerCarton",
+      "FX_BufferPct",
+      "Weight_g",
+      "Content_ml",
+      "Net_Content_ml",
+      "Dims_cm",
+      "VAT%",
+      "Grundpreis",
+      "Grundpreis_Net",
+      "Grundpreis_Unit",
+      "Amazon_TierKey",
+      "Line",
+      "Manual_UVP_Inc",
+      "UVP_Net",
+      "UVP_Inc",
+      "UVP_Inc_99",
+      "UVP_vs_Floor_Flag",
+      "Guardrail_OwnStore_Inc",
+      "Guardrail_Amazon_FBM_Inc",
+      "Guardrail_Amazon_FBA_Inc",
+      "Box_Size",
+      "Box_Cost_Per_Unit",
+      "Gift_Cost_Expected_Unit",
+      "Grundpreis_Inc_Per_L",
+      "Pricing_Engine_Version",
+      "Shipping_Actual_Kg",
+      "Shipping_Volumetric_Kg",
+      "Shipping_Chargeable_Kg",
+      "Shipping_CarrierID",
+      "ShipCost_per_Unit_OwnStore",
+      "ShipCost_per_Unit_FBM",
+      "ShipCost_per_Unit_FBA",
+      "ShipCost_per_Unit_B2B",
+      "Ad_Pct",
+      "Returns_Pct",
+      "Loyalty_Pct",
+      "Payment_Pct",
+      "Amazon_Referral_Pct",
+      "DHL_WeightBand",
+      "DHL_Zone",
+      "Gift_SKU",
+      "Gift_SKU_Cost",
+      "Gift_Attach_Rate",
+      "Gift_Funding_Pct",
+      "Gift_Shipping_Increment",
+      "PostChannel_Margin_Pct",
+      "Floor_B2C_Net",
+      "Guardrail_OK",
+      "UVP_Recommended",
+      "UVP",
+      "MAP",
+      "AutoPriceFlag",
+      "Price_Web",
+      "Price_Amazon",
+      "Price_Salon",
+      "Net_Dealer_Basic",
+      "Net_Dealer_Plus",
+      "Net_Stand",
+      "Net_Distributor",
+      "Competitor_Min",
+      "Competitor_Median",
+      "Pricing_Version",
+      "QRUrl",
+      "Notes",
+      "Carton_L_cm",
+      "Carton_W_cm",
+      "Carton_H_cm",
+      "Carton_Weight_g",
+      "Carton_Cost_EUR",
+      "Unit_From_Carton_Cost",
+      "Carton_UVP_Inc_99",
+      "Carton_Discount_Pct"
+    ],
+    "rowCount": 1000,
+    "columnCount": 95
+  },
+  {
+    "name": "AI_Playbooks",
+    "sheetId": 2044125084,
+    "headers": [
+      "PlaybookID",
+      "Name",
+      "Schedule",
+      "Description",
+      "LastRun",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "AI_Tasks",
+    "sheetId": 1425798578,
+    "headers": [
+      "TaskID",
+      "PlaybookID",
+      "CreatedTS",
+      "Prompt",
+      "Response",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "Sync_Queue",
+    "sheetId": 903638070,
+    "headers": [
+      "QueueID",
+      "Integration",
+      "Operation",
+      "Payload",
+      "Status",
+      "CreatedTS",
+      "ProcessedTS"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "AI_Inbox",
+    "sheetId": 1149613172,
+    "headers": [
+      "MessageID",
+      "TS",
+      "From",
+      "Channel",
+      "Text",
+      "AttachedRef",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "AI_Outbox",
+    "sheetId": 721714128,
+    "headers": [
+      "MessageID",
+      "TS",
+      "To",
+      "Channel",
+      "Text",
+      "AttachedRef",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "AI_Crew",
+    "sheetId": 1231830523,
+    "headers": [
+      "JobID",
+      "CreatedTS",
+      "AgentID",
+      "Task",
+      "InputJSON",
+      "OutputJSON",
+      "Status",
+      "GuardrailsPassed",
+      "RequiresApproval",
+      "ApprovedBy",
+      "ApprovedTS",
+      "AppliedTS",
+      "ErrorMsg",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 14
+  },
+  {
+    "name": "Enums",
+    "sheetId": 2130089787,
+    "headers": [
+      "List",
+      "Key",
+      "Label",
+      "Sort",
+      "Active",
+      "Categories",
+      "Subcategories"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "Bundles",
+    "sheetId": 2087980104,
+    "headers": [
+      "BundleID",
+      "Name",
+      "ItemsJSON",
+      "Channel",
+      "Active",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "Gifts_Bank",
+    "sheetId": 142888327,
+    "headers": [
+      "GiftID",
+      "SKU",
+      "Threshold_EUR",
+      "Channel",
+      "Active",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "Salon_Subscriptions",
+    "sheetId": 1368153804,
+    "headers": [
+      "SubID",
+      "PartnerID",
+      "Plan",
+      "BillingCycle",
+      "Price",
+      "DiscountPct",
+      "BenefitsJSON",
+      "StartTS",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 9
+  },
+  {
+    "name": "Subscription_Invoices",
+    "sheetId": 424062836,
+    "headers": [
+      "InvoiceID",
+      "SubID",
+      "PeriodStart",
+      "PeriodEnd",
+      "Amount",
+      "Status",
+      "PaidTS",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 8
+  },
+  {
+    "name": "Affiliate_Programs",
+    "sheetId": 250622802,
+    "headers": [
+      "AffID",
+      "Name",
+      "RatePct",
+      "CookieDays",
+      "Channel",
+      "Active"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "Affiliate_Leads",
+    "sheetId": 1084727301,
+    "headers": [
+      "LeadID",
+      "AffID",
+      "PartnerID_Email",
+      "Source",
+      "TS",
+      "Status"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "Commission_Rules",
+    "sheetId": 1944697957,
+    "headers": [
+      "RuleID",
+      "Role",
+      "Tier",
+      "Channel",
+      "BaseRatePct",
+      "BonusPct",
+      "CapPct",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 8
+  },
+  {
+    "name": "Email_Queue",
+    "sheetId": 2104053889,
+    "headers": [
+      "MsgID",
+      "TS",
+      "To",
+      "Subject",
+      "Template",
+      "PayloadJSON",
+      "Status",
+      "Error",
+      "CampID",
+      "SeqStep",
+      "Body",
+      "ProviderID",
+      "SentTS",
+      "OpenTS",
+      "ClickTS",
+      "BounceTS",
+      "ComplaintTS",
+      "MessageKey",
+      "Attempts",
+      "NextRetryTS",
+      "LastError"
+    ],
+    "rowCount": 1000,
+    "columnCount": 21
+  },
+  {
+    "name": "Audit_Trail",
+    "sheetId": 183498207,
+    "headers": [
+      "TS",
+      "Actor",
+      "Action",
+      "RefType",
+      "RefID",
+      "DetailJSON"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "Shipping_Methods",
+    "sheetId": 139548028,
+    "headers": [
+      "MethodID",
+      "MethodName_EN",
+      "MethodName_AR",
+      "Active",
+      "DefaultCostEUR",
+      "MinDays",
+      "MaxDays",
+      "Icon",
+      "Description_EN",
+      "Description_AR",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 11
+  },
+  {
+    "name": "Shipping_Rules",
+    "sheetId": 1533941776,
+    "headers": [
+      "RuleID",
+      "RuleName",
+      "MethodID",
+      "PartnerTier",
+      "PartnerType",
+      "MinOrderEUR",
+      "MaxOrderEUR",
+      "Zone",
+      "ShippingCostEUR",
+      "FreeShipping",
+      "Priority",
+      "Active",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 13
+  },
+  {
+    "name": "Packaging_Boxes",
+    "sheetId": 172091964,
+    "headers": [
+      "code",
+      "name",
+      "boxType",
+      "inner_L_cm",
+      "inner_W_cm",
+      "inner_H_cm",
+      "outer_L_cm",
+      "outer_W_cm",
+      "outer_H_cm",
+      "tare_weight_g",
+      "unit_cost_eur",
+      "is_carton",
+      "units_per_carton",
+      "carton_cost_eur",
+      "max_units",
+      "max_weight_kg",
+      "active"
+    ],
+    "rowCount": 1000,
+    "columnCount": 17
+  },
+  {
+    "name": "Shipment_Labels",
+    "sheetId": 1702809512,
+    "headers": [
+      "LabelID",
+      "ShipmentID",
+      "OrderID",
+      "GeneratedTS",
+      "QRCode",
+      "Barcode",
+      "LabelPDF_URL",
+      "PrintedTS",
+      "PrintedBy",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 11
+  },
+  {
+    "name": "Shipments",
+    "sheetId": 2028147475,
+    "headers": [
+      "ShipmentID",
+      "OrderID",
+      "PartnerID",
+      "CreatedTS",
+      "ShippingMethod",
+      "Zone",
+      "Weight_g",
+      "BoxID",
+      "BoxCostEUR",
+      "PackagingCostEUR",
+      "ShippingCostEUR",
+      "TotalCostEUR",
+      "TrackingNumber",
+      "Status",
+      "PickupAddress",
+      "DeliveryAddress",
+      "DriverID",
+      "EstimatedDeliveryDate",
+      "ActualDeliveryDate",
+      "LabelGenerated",
+      "LabelPrinted",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 22
+  },
+  {
+    "name": "CRM_Leads",
+    "sheetId": 962672289,
+    "headers": [
+      "LeadID",
+      "CreatedTS",
+      "Source",
+      "Keyword",
+      "City",
+      "Postal",
+      "CountryCode",
+      "Name",
+      "Category",
+      "Phone",
+      "Email",
+      "Website",
+      "Address",
+      "Lat",
+      "Lng",
+      "Status",
+      "Owner",
+      "Score",
+      "TierHint",
+      "Notes",
+      "LastTouchTS"
+    ],
+    "rowCount": 1000,
+    "columnCount": 21
+  },
+  {
+    "name": "Lead_Touches",
+    "sheetId": 539390076,
+    "headers": [
+      "TouchID",
+      "TS",
+      "LeadID",
+      "Channel",
+      "Action",
+      "Actor",
+      "Notes",
+      "Outcome"
+    ],
+    "rowCount": 1000,
+    "columnCount": 8
+  },
+  {
+    "name": "Territories",
+    "sheetId": 1804318240,
+    "headers": [
+      "TerritoryID",
+      "Name",
+      "Owner",
+      "CountryCode",
+      "CitiesCSV",
+      "PostalRangesJSON",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "Assignment_Rules",
+    "sheetId": 529249670,
+    "headers": [
+      "RuleID",
+      "TerritoryID",
+      "When",
+      "ConditionJSON",
+      "AssignTo",
+      "Priority",
+      "ActiveFlag",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 8
+  },
+  {
+    "name": "Enrichment_Queue",
+    "sheetId": 891358883,
+    "headers": [
+      "JobID",
+      "CreatedTS",
+      "LeadID",
+      "Task",
+      "ParamsJSON",
+      "Status",
+      "Attempts",
+      "LastError"
+    ],
+    "rowCount": 1000,
+    "columnCount": 8
+  },
+  {
+    "name": "Dedupe_Index",
+    "sheetId": 2100876232,
+    "headers": [
+      "IndexKey",
+      "LeadID",
+      "Type",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 4
+  },
+  {
+    "name": "Outreach_Campaigns",
+    "sheetId": 961407683,
+    "headers": [
+      "CampID",
+      "CampaignID",
+      "Name",
+      "SeqID",
+      "SequenceID",
+      "AudienceQueryJSON",
+      "Goal",
+      "Owner",
+      "Channel",
+      "Locale",
+      "ScheduleUTC",
+      "Status",
+      "CreatedTS",
+      "ApprovedTS",
+      "AppliedTS",
+      "StartedTS",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 17
+  },
+  {
+    "name": "Outreach_Sequences",
+    "sheetId": 1037569396,
+    "headers": [
+      "SeqID",
+      "Name",
+      "Purpose",
+      "StepsJSON",
+      "Lang",
+      "Tier",
+      "WarmupFlag",
+      "Status",
+      "Owner",
+      "CreatedTS",
+      "UpdatedTS",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 12
+  },
+  {
+    "name": "Outreach_Templates",
+    "sheetId": 651787991,
+    "headers": [
+      "TemplateID",
+      "Name",
+      "Channel",
+      "Lang",
+      "Locale",
+      "Tier",
+      "Subject",
+      "Body",
+      "BodyMarkdown",
+      "TokensCSV",
+      "Version",
+      "Status",
+      "Owner",
+      "CreatedTS",
+      "UpdatedTS",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 16
+  },
+  {
+    "name": "Outreach_Contacts",
+    "sheetId": 1474249108,
+    "headers": [
+      "ContactID",
+      "Email",
+      "Name",
+      "Company",
+      "City",
+      "Country",
+      "TierGuess",
+      "Source",
+      "OptInFlag",
+      "UnsubscribedFlag",
+      "LastContactTS",
+      "CreatedTS",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 13
+  },
+  {
+    "name": "Outreach_Recipients",
+    "sheetId": 1612305655,
+    "headers": [
+      "RecipientID",
+      "CampaignID",
+      "SourceType",
+      "SourceID",
+      "Email",
+      "Phone",
+      "Name",
+      "City",
+      "CountryCode",
+      "Status",
+      "OptInFlag",
+      "OptInTS",
+      "UnsubFlag",
+      "UnsubTS",
+      "SuppressedFlag",
+      "SuppressReason",
+      "LastSendTS",
+      "LastResult",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 19
+  },
+  {
+    "name": "Outreach_Sends",
+    "sheetId": 1988551409,
+    "headers": [
+      "SendID",
+      "CampaignID",
+      "SequenceID",
+      "RecipientID",
+      "SequenceStep",
+      "TemplateID",
+      "Channel",
+      "Subject",
+      "BodyRef",
+      "Status",
+      "ProviderMsgID",
+      "TS_Queued",
+      "TS_Sent",
+      "TS_Open",
+      "TS_Click",
+      "TS_Bounce",
+      "TS_Complaint",
+      "Error",
+      "RetryCount",
+      "LastErrorTS"
+    ],
+    "rowCount": 1000,
+    "columnCount": 20
+  },
+  {
+    "name": "Suppression_List",
+    "sheetId": 1520733107,
+    "headers": [
+      "Key",
+      "Type",
+      "Reason",
+      "Source",
+      "TS"
+    ],
+    "rowCount": 1000,
+    "columnCount": 5
+  },
+  {
+    "name": "Email_Stats",
+    "sheetId": 23866451,
+    "headers": [
+      "StatsID",
+      "Day",
+      "CampID",
+      "Sent",
+      "Open",
+      "Click",
+      "Bounce",
+      "Complaint",
+      "Unsub"
+    ],
+    "rowCount": 1000,
+    "columnCount": 9
+  },
+  {
+    "name": "Unsubscribes",
+    "sheetId": 1168041057,
+    "headers": [
+      "Email",
+      "CampID",
+      "CampaignID",
+      "UnsubTS",
+      "Source",
+      "IPAddress",
+      "UserAgent"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "Bounce_Events",
+    "sheetId": 549536498,
+    "headers": [
+      "Email",
+      "CampaignID",
+      "ProviderMsgID",
+      "BounceType",
+      "Diagnostic",
+      "TS"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "Complaint_Events",
+    "sheetId": 2107385583,
+    "headers": [
+      "Email",
+      "CampaignID",
+      "ProviderMsgID",
+      "ComplaintType",
+      "TS"
+    ],
+    "rowCount": 1000,
+    "columnCount": 5
+  },
+  {
+    "name": "SEO_Pages",
+    "sheetId": 740760484,
+    "headers": [
+      "URL",
+      "KeywordPrimary",
+      "Locale",
+      "TitleTag",
+      "MetaDescription",
+      "H1",
+      "H2sCSV",
+      "WordCount",
+      "Canonical",
+      "IndexFlag",
+      "LastAuditTS",
+      "Score_Tech",
+      "Score_Content",
+      "Score_InternalLinks",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 16
+  },
+  {
+    "name": "Ads_Keywords",
+    "sheetId": 1302821766,
+    "headers": [
+      "Keyword",
+      "MatchType",
+      "Locale",
+      "Intent",
+      "Cluster",
+      "CPC_EUR",
+      "Est_CTR",
+      "Est_ConvRate",
+      "TargetCPA",
+      "NegativeFlag",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 11
+  },
+  {
+    "name": "Ads_Campaigns",
+    "sheetId": 1056444958,
+    "headers": [
+      "CampaignID",
+      "Name",
+      "Objective",
+      "Locale",
+      "Network",
+      "DailyBudget_EUR",
+      "BidStrategy",
+      "Status",
+      "StartDate",
+      "EndDate",
+      "UTM_Source",
+      "UTM_Medium",
+      "UTM_Campaign",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 14
+  },
+  {
+    "name": "Ads_AdGroups",
+    "sheetId": 512130193,
+    "headers": [
+      "AdGroupID",
+      "CampaignID",
+      "AdGroupName",
+      "Keywords",
+      "NegativeKeywords",
+      "MatchType",
+      "BidEUR",
+      "CreatedTS",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 10
+  },
+  {
+    "name": "Ads_Creatives",
+    "sheetId": 1158104329,
+    "headers": [
+      "CreativeID",
+      "AdGroupID",
+      "Format",
+      "Headlines",
+      "Descriptions",
+      "CallToAction",
+      "FinalURL",
+      "Language",
+      "CreatedTS",
+      "Status",
+      "LastAIUpdateTS",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 12
+  },
+  {
+    "name": "Ads_Exports",
+    "sheetId": 160686546,
+    "headers": [
+      "ExportID",
+      "CampaignID",
+      "Format",
+      "FileURL",
+      "Rows",
+      "CreatedTS",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 8
+  },
+  {
+    "name": "Ads_KPIs",
+    "sheetId": 499640950,
+    "headers": [
+      "CampaignID",
+      "Date",
+      "Impressions",
+      "Clicks",
+      "SpendEUR",
+      "Conversions",
+      "RevenueEUR",
+      "CTR",
+      "CPC",
+      "CPA",
+      "CPM",
+      "ROAS",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 13
+  },
+  {
+    "name": "Social_Calendar",
+    "sheetId": 1474677140,
+    "headers": [
+      "PostID",
+      "Date",
+      "Time",
+      "Channel",
+      "Locale",
+      "Line",
+      "Hook",
+      "Caption",
+      "HashtagsCSV",
+      "AssetRefsCSV",
+      "CTA",
+      "UTM_URL",
+      "Owner",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 15
+  },
+  {
+    "name": "Social_Assets",
+    "sheetId": 714140604,
+    "headers": [
+      "AssetID",
+      "Type",
+      "Storage",
+      "URL",
+      "AltText",
+      "Line",
+      "Locale",
+      "License",
+      "Owner",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 11
+  },
+  {
+    "name": "Social_Metrics",
+    "sheetId": 1994997157,
+    "headers": [
+      "PostID",
+      "Channel",
+      "TS",
+      "Impressions",
+      "Reach",
+      "Clicks",
+      "Likes",
+      "Comments",
+      "Shares",
+      "Saves",
+      "CTR",
+      "CPC",
+      "CPM",
+      "Cost_EUR",
+      "Revenue_EUR",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 16
+  },
+  {
+    "name": "UTM_Builder",
+    "sheetId": 1784954483,
+    "headers": [
+      "RefID",
+      "BaseURL",
+      "Source",
+      "Medium",
+      "Campaign",
+      "Term",
+      "Content",
+      "FinalURL",
+      "ShortURL",
+      "CreatedTS"
+    ],
+    "rowCount": 1000,
+    "columnCount": 10
+  },
+  {
+    "name": "Link_Shortener",
+    "sheetId": 1230289523,
+    "headers": [
+      "Key",
+      "Provider",
+      "APIKeyRef",
+      "Domain",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 6
+  },
+  {
+    "name": "AI_Agents_Log",
+    "sheetId": 1734772941,
+    "headers": [
+      "LogID",
+      "AgentID",
+      "RequestType",
+      "InputSheets",
+      "OutputSheets",
+      "Status",
+      "CreatedTS",
+      "CompletedTS",
+      "RowsCreated",
+      "PromptTokens",
+      "CompletionTokens",
+      "TotalTokens",
+      "CostEUR",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 14
+  },
+  {
+    "name": "SEO_Briefs",
+    "sheetId": 1215141618,
+    "headers": [
+      "BriefID",
+      "TargetURL",
+      "Language",
+      "Keywords",
+      "Title",
+      "MetaDescription",
+      "H1",
+      "ContentOutline",
+      "WordCount",
+      "ProductSKUs",
+      "CreatedTS",
+      "Status",
+      "LastAIUpdateTS",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 14
+  },
+  {
+    "name": "SEO_Audits",
+    "sheetId": 522896919,
+    "headers": [
+      "AuditID",
+      "PageURL",
+      "IssueType",
+      "Severity",
+      "CurrentValue",
+      "RecommendedFix",
+      "CreatedTS",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 9
+  },
+  {
+    "name": "SEO_Keywords",
+    "sheetId": 2050511111,
+    "headers": [
+      "KeywordID",
+      "Keyword",
+      "Locale",
+      "HarvestSource",
+      "HarvestParamsJSON",
+      "HarvestTS",
+      "Cluster",
+      "ClusterID",
+      "ClusterScore",
+      "LastClusteredTS",
+      "Intent",
+      "IntentConfidencePct",
+      "SearchVolume",
+      "Difficulty",
+      "CPC_EUR",
+      "Rank",
+      "TrafficEstimate",
+      "OpportunityScore",
+      "SERPFeaturesCSV",
+      "TopCompetitorsCSV",
+      "Priority",
+      "PriorityReason",
+      "AssignedURL",
+      "BriefID",
+      "CreatedTS",
+      "LastChecked",
+      "Status",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 28
+  },
+  {
+    "name": "Channels",
+    "sheetId": 2017377241,
+    "headers": [
+      "ChannelID",
+      "ChannelName",
+      "Active",
+      "Payment_Provider",
+      "Payment_Fee_Pct",
+      "Payment_Fee_Fixed_EUR",
+      "Amazon_Referral_Pct_Low",
+      "Amazon_Referral_Pct_High",
+      "Amazon_Referral_Min_EUR",
+      "FBA_Fee_Base_EUR",
+      "Returns_Pct",
+      "Loyalty_Accounting_Pct",
+      "Uses_DHL",
+      "Uses_FBA",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 15
+  },
+  {
+    "name": "AmazonSizeTiers",
+    "sheetId": 1265230095,
+    "headers": [
+      "TierKey",
+      "TierName",
+      "Weight_Min_g",
+      "Weight_Max_g",
+      "Dims_Max_cm",
+      "FBA_Fee_EUR",
+      "FBA_Surcharge_2025_EUR",
+      "Active",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 9
+  },
+  {
+    "name": "ShippingMatrix_DHL",
+    "sheetId": 2015375980,
+    "headers": [],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "DHL_Surcharges",
+    "sheetId": 401625911,
+    "headers": [],
+    "rowCount": 1000,
+    "columnCount": 9
+  },
+  {
+    "name": "QuantityDiscounts",
+    "sheetId": 168821479,
+    "headers": [],
+    "rowCount": 1000,
+    "columnCount": 8
+  },
+  {
+    "name": "DiscountCaps",
+    "sheetId": 885722484,
+    "headers": [
+      "CapID",
+      "PartnerTier",
+      "Max_Role_Discount_Pct",
+      "Max_Quantity_Discount_Pct",
+      "Max_Combined_Discount_Pct",
+      "Active",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "OrderDiscounts",
+    "sheetId": 943139530,
+    "headers": [
+      "DiscountID",
+      "Threshold_EUR",
+      "Discount_Pct",
+      "Discount_Fixed_EUR",
+      "AppliesTo",
+      "Active",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "Pricing_Line_Targets",
+    "sheetId": 1036992557,
+    "headers": [
+      "Line",
+      "Target_Margin_Pct",
+      "Floor_Multiplier",
+      "Guardrail_Margin_Pct",
+      "Rounding_Strategy",
+      "Active",
+      "Notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  },
+  {
+    "name": "ShippingMatrixDHL",
+    "sheetId": 336259938,
+    "headers": [
+      "WeightBand",
+      "MinWeight_g",
+      "MaxWeight_g",
+      "Zone_Domestic_EUR",
+      "Zone_EU_EUR",
+      "Zone_International_EUR"
+    ],
+    "rowCount": 1000,
+    "columnCount": 26
+  },
+  {
+    "name": "DHLSurcharge",
+    "sheetId": 107679346,
+    "headers": [
+      "SurchargeKey",
+      "Description",
+      "Type",
+      "Value"
+    ],
+    "rowCount": 1000,
+    "columnCount": 26
+  },
+  {
+    "name": "Partners",
+    "sheetId": 1937997872,
+    "headers": [
+      "PartnerID",
+      "CompanyName",
+      "TierKey",
+      "ContactName",
+      "Email",
+      "Phone",
+      "City",
+      "Country",
+      "Status",
+      "AssignedRepID"
+    ],
+    "rowCount": 1000,
+    "columnCount": 26
+  },
+  {
+    "name": "Invoices",
+    "sheetId": 71825363,
+    "headers": [
+      "InvoiceID",
+      "OrderID",
+      "InvoiceDate",
+      "DueDate",
+      "Status",
+      "TotalNet_EUR",
+      "TotalInc_EUR",
+      "PDFUrl"
+    ],
+    "rowCount": 1000,
+    "columnCount": 26
+  },
+  {
+    "name": "Stands",
+    "sheetId": 1747019999,
+    "headers": [
+      "StandID",
+      "StandName",
+      "PartnerID",
+      "Address",
+      "City",
+      "PostalCode",
+      "GPS_Lat",
+      "GPS_Lng",
+      "Status",
+      "QRCode"
+    ],
+    "rowCount": 1000,
+    "columnCount": 26
+  },
+  {
+    "name": "Leads",
+    "sheetId": 1125485536,
+    "headers": [
+      "LeadID",
+      "CompanyName",
+      "ContactName",
+      "Email",
+      "Phone",
+      "City",
+      "Country",
+      "PostalCode",
+      "Status",
+      "Source",
+      "AssignedRepID",
+      "LeadScore"
+    ],
+    "rowCount": 1000,
+    "columnCount": 26
+  },
+  {
+    "name": "Agent_Profiles",
+    "sheetId": 1570544170,
+    "headers": [
+      "AgentID",
+      "AgentName",
+      "Role",
+      "SystemPrompt",
+      "Model",
+      "Temperature",
+      "Active"
+    ],
+    "rowCount": 1000,
+    "columnCount": 26
+  },
+  {
+    "name": "AI_Jobs",
+    "sheetId": 1360695811,
+    "headers": [
+      "JobID",
+      "AgentID",
+      "TaskType",
+      "Status",
+      "CreatedAt",
+      "CompletedAt",
+      "InputData",
+      "OutputData",
+      "ErrorMessage"
+    ],
+    "rowCount": 1000,
+    "columnCount": 26
+  },
+  {
+    "name": "ShippingWeightBands",
+    "sheetId": 1780588407,
+    "headers": [
+      "carrierId",
+      "serviceLevel",
+      "zone",
+      "minKg",
+      "maxKg",
+      "baseEur",
+      "fuelPct",
+      "active"
+    ],
+    "rowCount": 1000,
+    "columnCount": 8
+  },
+  {
+    "name": "ShippingCostsFixed",
+    "sheetId": 257905654,
+    "headers": [
+      "costType",
+      "channel",
+      "costEur",
+      "notes"
+    ],
+    "rowCount": 1000,
+    "columnCount": 4
+  },
+  {
+    "name": "Admin_PowerMenu",
+    "sheetId": 784483595,
+    "headers": [
+      "Category",
+      "Tool",
+      "Description",
+      "Script",
+      "Status",
+      "LastRun",
+      "RunCount"
+    ],
+    "rowCount": 1000,
+    "columnCount": 7
+  }
+]

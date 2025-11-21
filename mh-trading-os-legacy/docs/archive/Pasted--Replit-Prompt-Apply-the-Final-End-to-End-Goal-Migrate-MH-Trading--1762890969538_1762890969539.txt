@@ -1,0 +1,218 @@
+.
+
+🚀 Replit Prompt — Apply the Final “القانون الشامل للمحرّك” End-to-End
+
+Goal:
+Migrate MH Trading OS to the final Hairoticmen pricing policy (“القانون الشامل للمحرّك”), unify to a single Google Sheet, remove legacy settings, enforce guardrails (MAP/PAngV/Channel ≥45%), update backend + UI, seed/validate data, and ship a full readiness report.
+Constraints:
+
+Idempotent, safe, one-click re-run.
+
+No secrets in Google Sheets. Read only from env (Replit Secrets).
+
+Keep rollback branch and write detailed reports.
+
+0) Safety & Snapshot
+
+Create a new branch: feat/pricing-law-final from the latest main.
+
+Write MIGRATION_PLAN.md and READINESS_CHECKLIST.md.
+
+Assert single spreadsheet usage:
+
+Normalize SHEETS_SPREADSHEET_ID (strip /edit?...), ensure one ID is used project-wide.
+
+If multiple IDs found, pick the one in env and warn; never write secrets to Sheets.
+
+Run the existing Clean-Secrets routine:
+
+Ensure all API_*, SMTP_*, EMAIL_*… are blank in Sheets and present in env.
+
+Harden sheetsService to block writing these keys back to Sheets.
+
+Artifacts: SAFETY_SNAPSHOT.md with grep results (IDs/keys), and a quick diff summary.
+
+1) Google Sheet Unification & Structure
+
+Ensure only one active spreadsheet ID (from env).
+
+De-dupe/merge any *-Table or _Table sheets into canonical names.
+
+Ensure/repair the following sheets with exact headers (create if missing):
+
+Settings, Pricing_Params, FinalPriceList, Channels, AmazonSizeTiers,
+ShippingMatrix_DHL, Boxes, SKUGifts/Gifts_Bank,
+QuantityDiscounts, DiscountCaps, OrderDiscounts,
+MAP_Guardrails, CompetitorPrices, AI_Crew, AI_Playbooks, OS_Logs, OS_Health.
+
+Add named ranges: LINE_LIST, CHANNEL_LIST, QUOTE_STATUS, ORDER_STATUS.
+
+Backfill seed rows where empty (conservative defaults).
+
+Artifacts: SHEETS_STRUCTURE_REPORT.md with per-sheet headers, counts, and any fixes applied.
+
+2) Apply the Final Pricing Law (Backend Engine Changes)
+
+Implement/verify the following in the pricing engine and calculators:
+
+2.1 FullCost model per SKU (columns in FinalPriceList)
+
+FactoryPriceUnit_EUR, Shipping_Inbound_per_unit, EPR_LUCID_per_unit, GS1_per_unit,
+Retail_Packaging_per_unit, QC_PIF_per_unit, Operations_per_unit, Marketing_per_unit.
+
+FullCost = SUM(all above); fail hard if any mandatory cost is missing.
+
+2.2 UVP & Grundpreis (PAngV)
+
+Compute UVP via line strategy (see 2.5) then round (web/salon rounding steps from Pricing_Params).
+
+Compute Grundpreis as €/L or €/kg (no €/100ml), always show on UI and export to Sheets.
+
+Add validator: Grundpreis must exist and be consistent with pack size/weight.
+
+2.3 Channel Costs & Guardrail ≥45%
+
+For each Channel (OwnStore/Amazon_FBM/Amazon_FBA), compute:
+
+Amazon Referral: 8% if Gross ≤€10 else 15% (min €0.30).
+
+FBA fees: pull from AmazonSizeTiers by Amazon_TierKey plus €0.26/Unit (DE 2025).
+
+Payments (OwnStore): Stripe 1.5%+€0.25, PayPal 2.49%+€0.39 (use Settings, adjustable).
+
+Returns% default 2–3% for B2C.
+
+Loyalty accounting% (e.g., 0.7% of net if enabled).
+
+DHL domestic (FBM): weight bands from ShippingMatrix_DHL + surcharges:
+LKW_CO2=€0.19, Peak=€0.19, Peak_in_Peak=€0.50, and Energy_Surcharge_Var monthly from Settings.
+
+Box cost allocation = Boxes.Cost / AvgUnitsPerOrder.
+
+Compute PostChannel Margin% for each channel and enforce guardrail:
+
+If < Target_PostChannel_Pct (≥45%): raise UVP or suggest bundle / reduce Ad% plan (produce suggestion in Pricing_Suggestions).
+
+2.4 MAP enforcement & competitors
+
+Prevent prices < MAP; log any competitor breach to MAP_Guardrails.
+
+Add scheduled job to refresh competitor deltas and flag drops.
+
+2.5 Line targets & floor multipliers
+
+From Pricing_Params:
+
+Target_GM_UVP_* per Line (Premium/Pro/Basic/Tools).
+
+Floor_Multiplier_* per Line; ensure UVP ≥ FullCost * Multiplier.
+
+When constraints collide, prioritize legality (MAP/PAngV) → Floor → Guardrail 45% → rounding.
+
+2.6 B2B roles & discounts (QuoteBuilder)
+
+Roles: Dealer Basic/Plus, Stand, Distributor with fixed nets (as agreed) and caps:
+
+Quantity tiers from QuantityDiscounts; caps from DiscountCaps; order-level from OrderDiscounts.
+
+Order of operations: Role → Qty discount → Caps → LineNet → Subtotal → OrderDiscount → VAT → Shipping.
+
+Deliverables:
+
+Update server calculators and shared types.
+
+Add unit tests for: UVP rounding, Grundpreis, FBA add-on, guardrail 45%, MAP, Stripe/PayPal fees, DHL surcharges, returns, loyalty.
+
+3) Data Migration & Backfill
+
+Map old columns → new schema; migrate once; keep idempotent.
+
+Backfill missing per-SKU fields with conservative defaults if empty.
+
+Compute derived fields; write to Pricing_Suggestions for anomalies.
+
+Generate Price Validation Report per SKU & channel:
+
+UVP_Inc, MinInc_99, PostChannel%, Guardrail_OK, MAP_OK, PAngV_OK.
+
+Save as docs/PRICE_VALIDATION_REPORT.md + CSV export in /exports.
+
+4) Frontend (UI/UX) Updates
+
+Pricing page:
+
+Editable grid for costs + live UVP/Grundpreis + per-channel margin bars (red when <45%).
+
+“Explain” drawer (shows drivers: MAP, FBA, DHL, Payment, Returns, Loyalty).
+
+Quote Builder:
+
+Keep partner drop-down; add “+ New Partner” inline modal;
+
+Support role discounts, quantity tiers, caps, order-level;
+
+Show guardrail warnings; export PDF + QR; log to OS_Logs.
+
+Shipping: weight-band selector preview + surcharges breakdown.
+
+AI Hub / AI Crew:
+
+Buttons: “Reprice SKU(s)”, “Audit PAngV”, “Suggest Bundle if guardrail fails”.
+
+All AI writes go to Draft → human approval → apply.
+
+5) Tests & Health
+
+Add unit tests for all calculators + integration tests for 3 sample SKUs (light/medium/heavy).
+
+E2E: create quote (Stand & Distributor), verify totals and guardrails.
+
+OS_Health entries: “Spreadsheet Validation PASS”, “Pricing Law PASS”.
+
+Lint, typecheck, and basic perf sanity.
+
+6) Reports & Hand-off
+
+PHASE_PRICING_LAW_DELIVERY.md: what changed, where, why, how to operate.
+
+SHEETS_DELTA_SUMMARY.md: columns added/removed, migrations.
+
+UI_CHANGELOG.md: new components and how to use them.
+
+Leave rollback instructions in MIGRATION_PLAN.md.
+
+Acceptance Criteria (must PASS)
+
+Single Sheet ID in env; no secrets in Sheets.
+
+All mandatory sheets/headers exist with seed rows.
+
+For each SKU:
+
+Grundpreis visible & correct;
+
+Guardrail PostChannel ≥45% for OwnStore;
+
+MAP never violated;
+
+Amazon referral & FBA (incl. €0.26) applied correctly;
+
+DHL surcharges applied;
+
+Stripe/PayPal & returns & loyalty accounted;
+
+Floor multiplier respected; rounding rules applied.
+
+QuoteBuilder: roles/tiers/caps/order-discount flow correct + PDF export OK.
+
+PRICE_VALIDATION_REPORT.md written with PASS/FAIL flags.
+
+No breaking console errors; logs in OS_Logs.
+
+Notes to follow while implementing
+
+Do not paste any secrets into Sheets. Use Replit Secrets only.
+
+Keep the migration idempotent and re-runnable.
+
+If any real contract numbers (DHL/Amazon) differ, leave clear TODOs in Settings and default to conservative values.

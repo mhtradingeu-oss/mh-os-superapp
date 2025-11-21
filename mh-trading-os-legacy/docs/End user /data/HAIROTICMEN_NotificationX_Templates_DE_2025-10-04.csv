@@ -1,0 +1,7 @@
+Trigger;Message (DE);Placement;Duration (s);Frequency/Window;Notes
+Trigger;Message (DE);Placement;Duration (s);Frequency/Window;Notes
+New Purchase;🛍️ {first_name} aus {city} hat gerade {product_name} bestellt.;Bottom Right;6;Last 24h, random 20–40s;Use anonymized city & first name
+New Review;⭐ Neue 5‑Sterne‑Bewertung für {product_name}.;Bottom Right;6;Last 7d, random 30–60s;Pull from Woo reviews
+New Registration;👋 Willkommen bei HAIROTICMEN! +20 Punkte gutgeschrieben.;Bottom Left;6;On signup;myCred event
+Points Redeemed;🎁 {first_name} hat soeben Punkte eingelöst und gespart!;Bottom Left;6;On redeem;myCred spend
+Back in Stock;📦 {product_name} ist wieder verfügbar!;Bottom Right;6;On restock;Optional stock notifier

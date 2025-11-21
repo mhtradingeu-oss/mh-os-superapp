@@ -1,0 +1,232 @@
+Goal:
+أكمِل بناء MH Trading OS كنظام B2B ذكي متكامل لإدارة التسعير، المبيعات (ميداني/أونلاين)، الأستاندات، الشحن، التسويق، CRM، خدمة العملاء، المالية والقانون، مع فريق AI تشغيلي.
+اقرأ الكود والمحادثات/الوثائق في المستودع، واقترح ونفّذ أفضل الأدوات وواجهات الاستخدام؛ اعمل بخريطة واضحة، اختبارات، وتقرير إنجاز نهائي.
+
+1) التحضير & الفحص
+
+اقرأ المستودع كاملًا (backend/frontend/scripts/docs).
+
+ثبّت الربط مع Google Sheets باستخدام المصدّر الحالي (GoogleSheetsService).
+
+استخرج SHEETS_SPREADSHEET_ID من البيئة، طبّق sanitize (إزالة /edit?...).
+
+تحقّق من الاتصال عبر قراءة Settings, FinalPriceList وكتابة Log إلى OS_Logs.
+
+تحقق من الـENV (استخدم أسرار Replit، لا تضع مفاتيح صريحة في الكود):
+
+SHEETS_SPREADSHEET_ID, OPENAI_API_KEY, EMAIL_PROVIDER, SMTP_* أو API Email،
+
+(اختياري) API_PLACES_KEY, API_WOO_*, API_ODOO_*.
+
+نسخ احتياطي فوري: أنشئ تصدير CSV لكل ورقة قبل أي تعديلات (Folder: /backups/initial/).
+
+المخرجات: تقرير فحص مختصر باسم READINESS_REPORT.md يوضح: الاتصال بالـSheet، المفاتيح المتاحة/الناقصة، وأي تحذيرات مبكرة.
+
+2) إنشاء/تأكيد هيكل Google Sheets (Idempotent)
+
+تأكد من وجود كل الأوراق المطلوبة (على الأقل 27+ أساسية و45 كاملة).
+
+أنشئ إن لزم:
+
+Core: Settings, Pricing_Params, FinalPriceList, PartnerTiers, PartnerRegistry, AuthorizedAssortment, StandSites.
+
+Sales: Deals, Quotes, QuoteLines, Orders, OrderLines, Sales_Users, Activities_Sales, SLA_Policies, SLA_Breaches, Sales_Targets, Commission_Ledger, Loyalty_Ledger.
+
+Shipping: DHL_Rates, DHL_Tariffs, Shipments_DHL, Shipping_Methods, Shipping_Rules, Packaging_Boxes, Shipment_Labels, Shipments.
+
+Market: CompetitorPrices, MAP_Guardrails, Pricing_Suggestions.
+
+Growth & CRM: CRM_Leads, Leads_Enriched, Outreach_Campaigns, Email_Outbox.
+
+Marketing: SEO_Keywords, Ads_Queue, Social_Calendar, Content_Bank.
+
+AI: AI_Crew, AI_Playbooks, AI_Tasks, AI_Inbox, AI_Outbox.
+
+Ops: OS_Logs, OS_Health, Enums, Audit_Trail.
+
+تأكد من الرؤوس لكل ورقة حسب الدليل؛ أضِف الأعمدة الناقصة (بدون حذف بيانات).
+
+عالج مشاكل البيانات تلقائيًا:
+
+تحويل COGS_EUR إلى رقم (إزالة €/نص).
+
+إصلاح أي #ERROR! في حقول الهاتف/غيرها إلى نص نظيف.
+
+أنشئ NamedRanges للواجهات: TIER_LIST, QUOTE_STATUS, ORDER_STATUS, AI_MODELS.
+
+المخرجات: SHEETS_STRUCTURE_REPORT.md + سجل إلى OS_Logs.
+
+3) صفوف الواجهة (Frontend UI) — اكتمال 100%
+
+بنفس الشِل الحالي (Dark/RTL/EN+AR) وباستخدام Tailwind + shadcn/ui + React Router:
+
+Dashboard
+
+Widgets: الإيراد/الطلبات/الـKPIs، حالة إعادة التسعير، الشحن اليومي، Guardrails.
+
+Pricing Studio
+
+جداول: FinalPriceList, Pricing_Params, CompetitorPrices, MAP_Guardrails.
+
+إجراءات: Reprice (SKU/مجموعة)، Export PDF Price List، Sync Woo/Odoo (عند تفعيل).
+
+Sales Desk
+
+Wizard: Partner → Basket → Totals (VAT/Discount/Loyalty) → Quote → Order → Invoice PDF (+QR).
+
+عرض النقاط والعمولات في الفاتورة.
+
+Stands Center
+
+إنشاء Stand، توليد QR، Starter Bundle، خطط Refill، زيارات وملاحظات، KPIs.
+
+توليد عقد Stand PDF + فاتورة اشتراك (إن وُجد).
+
+Shipping Center
+
+تكوين طرق/قواعد الشحن، أصناف التغليف، إنشاء شحنة (Salon/Dealer/Customer)، اختيار DHL/Factory Pickup/Company Delivery، طباعة Manifest/PDF.
+
+Growth & CRM
+
+Harvest (Google Places) → Leads، Enrichment، تصنيف، تحويل إلى Partner.
+
+قوائم اتصال + إرسال بريد تسلسلي (Outreach) مع بُنى GDPR.
+
+Marketing Studio (SEO/Ads/Social/Content)
+
+لوح موحّد: كلمات DE، تجميع Ads CSV، تقويم سوشيال 14 يوم، محتوى المنتج (وصف/USP/How-to).
+
+Helpdesk
+
+(اختياري الآن) تذاكر + SLA + ردود جاهزة من AI + تحويل للشحن/المبيعات.
+
+Finance & Legal
+
+كشوف العمولات، Aging، عقود PDF (Partner/Stand)، أرشفة في Docs.
+
+AI Crew Hub
+
+بطاقات Agents، تشغيل Playbooks (Man/Auto)، طابور مهام، Inbox/Outbox.
+
+Admin & Settings
+
+مفاتيح ENV (عرض حالة فقط)، Health, Logs, Backup/Restore CSV.
+
+المخرجات: ربط كامل لكل صفحة بالـAPI، جداول تفاعلية، نماذج تحقق، توست/حالة، وتقارير PDF.
+
+4) AI Crew — وكلاء + Playbooks + مهام
+
+أنشئ/أكمل 14 Agent بملفات تعريف في AI_Crew (اسم/دور/Model/Scopes).
+
+تسعير، أستاند، نمو، Outreach، SEO، Ads، Social، Merch/Ops E-com، Helpdesk، Moderation، Finance، Legal، EA، Orchestrator.
+
+فعّل Playbooks (AI_Playbooks) بجدولة: Daily/Weekly/Monthly + Manual.
+
+تدفق المهام:
+
+إدخال: Pricing/SEO/Ads/Leads/Moderation.
+
+مخرجات: AI_Outbox + تحديث جداول التشغيل (PriceList، Ads CSV، Social Calendar…).
+
+استخدم OpenAI عبر Replit Integrations (بدون مفاتيح صريحة في الكود).
+
+أضف صفحة إدارة المهام: Filter/Assign/Retry/Export.
+
+المخرجات: عمل تلقائي يومي (Guardrails/SEO/Leads/Ads/Social) + أزرار تشغيل يدوي.
+
+5) APIs — إتمام وربط
+
+استكمل أي endpoints ناقصة لكل الصفحات أعلاه.
+
+طبّق Validation & Sanitization لكل مدخلات الواجهة.
+
+طبّق Idempotency في الكتابة إلى الشيت:
+
+upsert by key (SKU, PartnerID, StandID, QuoteID, OrderID…).
+
+أضف Webhooks (اختياري): Email bounces، Woo/Odoo، Places usage log → Webhooks_Inbox.
+
+المخرجات: OPENAPI.md أو routes.md مُحدّثة بالمسارات والمعايير.
+
+6) الأتمتة (Cron & Jobs)
+
+جداول:
+
+Daily: Guardrails, SEO keywords refresh, Social calendar queue, Bug triage.
+
+Weekly: Catalog audit, Ads keywords/angles، Commission rollup.
+
+Monthly: Statements، Backup CSV.
+
+سجّل النتائج في OS_Health وOS_Logs.
+
+7) الاختبارات & القبول
+
+أضف E2E لمسارات حرجة (Quote→Order→Invoice PDF، Reprice، Create Stand).
+
+أضف API tests (unit + integration) لطبقة GoogleSheetsService.
+
+Definition of Done (DoD):
+
+كل الصفحات تعمل فعليًا (Create/Read/Update/Export).
+
+AI Playbooks تعمل تلقائيًا وتكتب نتائج.
+
+تسعير نهائي يحترم Margin/MAP + يظهر نقاط/عمولات صحيحة.
+
+شحن يُخرج تسعير ودليل PDF/Labels.
+
+لا أخطاء بالكونسول، والـLogs واضحة، وOS_Health = PASS.
+
+أرفق تقرير اختبار نهائي: FINAL_TEST_REPORT.md.
+
+8) الوثائق & التسليم
+
+حدّث/أنشئ:
+
+SETUP_GUIDE.md (Sheets + ENV + مفاتيح)
+
+USER_GUIDE.md (شرح الصفحات والعمليات)
+
+AI_GUIDE.md (الوكلاء والـPlaybooks)
+
+PROJECT_STATUS.md (ما اكتمل وما تبقّى)
+
+أنشئ فيديو قصير (إن أمكن) يشرح التدفق الأساسي.
+
+المخرجات: تقرير شامل IMPLEMENTATION_REPORT.md يلخّص ما تمّ، التحسينات المقترحة، وخارطة الطريق التالية.
+
+9) تحسينات مقترحة (دع Replit يقترح وينفّذ الأفضل)
+
+اقتراح تصميم UX أسرع (DataGrid افتراضي، Inline Edit، Bulk actions).
+
+إضافة Command-K Palette للبحث وتنفيذ الأوامر.
+
+Caching للقراءات الشائعة (in-memory مع invalidation بسيط).
+
+Rate limiting خفيف لحماية Sheet API.
+
+Feature flags لبعض الأدوات (SEO/Ads/Outreach) لتشغيلها لاحقًا بسلاسة.
+
+10) قواعد عامة
+
+لا تغيّر/تحذف بيانات قائمة؛ أي تحديث يكون غير هدّام (Non-Destructive).
+
+أي كتابة للشيت تكون عبر Upsert by key.
+
+استخدم Secrets لبيانات حساسة.
+
+أي تطبيق لعقود/قوالب PDF: احفظ نسخة URL في الشيت (Docs/Drive).
+
+سجّل كل خطوة إلى OS_Logs + OS_Health.
+
+عند الانتهاء:
+اعطني مخرجات واضحة:
+
+رابط التطبيق،
+
+روابط التقارير (READINESS_REPORT.md, SHEETS_STRUCTURE_REPORT.md, FINAL_TEST_REPORT.md, IMPLEMENTATION_REPORT.md),
+
+قائمة ما تمّ إنجازه وما تبقّى،
+
+مقترحات التحسين التالية.

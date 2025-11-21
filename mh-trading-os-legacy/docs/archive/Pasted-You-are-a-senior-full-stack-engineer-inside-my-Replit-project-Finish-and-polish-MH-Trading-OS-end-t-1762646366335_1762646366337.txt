@@ -1,0 +1,123 @@
+You are a senior full-stack engineer inside my Replit project. Finish and polish MH Trading OS end-to-end. We already have a production-ready backend and a Google Sheet. Your job: (1) complete all settings & connections, (2) build a professional, easy control panel UI, and (3) propose + implement smart AI features that make our team faster.
+
+Context (facts you must use)
+
+Google Sheet ID: 1xagoLr9vXnNEP5PMPmqlyaQutj-XkQDgjrz2TEbBvic
+
+Drive Root Folder ID: 1wMFVWg9bVliCP0JksrtFWFawnDaoT-3j
+
+Required tabs/headers were created by our Apps Script bootstrap (Settings, Pricing_Params, FinalPriceList, PartnerTiers, PartnerRegistry, Quotes, QuoteLines, Orders, StandSites, OS_Logs, OS_Health, Integrations_Config, Integrations_Endpoints, Sync_Queue, MAP_Guardrails, AI_* …).
+
+Backend: 50+ endpoints for pricing, stands, sales, ops, AI, admin. Pricing engine (MAP guardrails), PDF/QR, commissions & loyalty, DHL estimate, cron jobs.
+
+i18n: EN/AR with RTL support. Dark mode.
+
+Current gaps likely in Settings: HM_CURRENCY, VAT_Default_Pct, HM_DRIVE_ROOT_ID, HM_STAND_QR_BASE, (optional) EMAIL_PROVIDER, EMAIL_API_KEY, API_PLACES_KEY, AI_Default_Model.
+
+What to build now
+
+Connection & Settings Wizard (first-run + rerunnable)
+
+Detect missing/invalid settings from the Settings sheet and Replit Secrets.
+
+Step-by-step panels to configure:
+
+Google Sheets (confirm Spreadsheet ID, show sheet status).
+
+Drive Root (write HM_DRIVE_ROOT_ID, create/verify subfolders: Inbox, Exports, 06_Docs/Partners/{Contracts,Orders,Shipments,Marketing,Assets}).
+
+Currency/VAT (HM_CURRENCY, VAT_Default_Pct), Stand QR base (HM_STAND_QR_BASE).
+
+Email: support Brevo (API), Resend, SendGrid, or raw SMTP. Let me pick one and set EMAIL_PROVIDER + EMAIL_API_KEY (or SMTP creds) in Settings and Replit Secrets.
+
+AI: set AI_Default_Model (e.g., gpt-4o or gpt-4o-mini).
+
+Optional: API_PLACES_KEY for salon lead harvesting.
+
+“Test Connection” buttons for each integration. Write pass/fail + details to OS_Health and show green/yellow/red chips in the UI.
+
+Admin Control Panel (professional UX)
+
+Shell: left sidebar (icons + labels), top bar with global search, environment badge (prod), language toggle (EN/AR with RTL), dark mode.
+
+Pages (connected to backend APIs):
+
+Dashboard: system health (Sheets/OpenAI/Email/DHL), quick actions (New Quote, New Partner, Import CSV from Inbox, Run Playbook), KPIs (revenue, orders, MAP violations), and recent logs.
+
+Pricing: view/search FinalPriceList; show computed prices (web/salon/tier nets), MAP floor, margin. Actions: “Reprice All”, “Reprice Selected”, export PDF price list. Inline edit MAP/auto-price flag with optimistic updates. Badge competitor deltas from CompetitorPrices if present.
+
+Partners & Stands: CRUD Partner, Tier, and StandSites with map preview (if Places key set). Buttons: “Create Partner Folder in Drive”, “Link Stand↔Partner”, “Print Stand QR (PDF)”, “Load Starter Bundle”, “Authorize SKUs”.
+
+Sales: Quotes/QuoteLines, Convert → Order, PDF invoice/delivery note, loyalty earning & redemption calculator, commission preview (writes to Commission_Ledger).
+
+Logistics (DHL): show DHL_Rates, estimate by weight/zone, daily manifest builder, labels/returns (stub buttons if actual DHL API not configured).
+
+AI Crew: list AI_Crew, AI_Playbooks, AI_Tasks, with “Run Daily/Weekly/Monthly Playbooks” and “Dispatch Tasks” buttons. Live task status table and error column viewer.
+
+Health & Logs: read OS_Health and OS_Logs; filters for scope/level/date; “Run Health Check” button that calls backend health and appends to OS_Health.
+
+Integrations: view/edit Integrations_Config & Integrations_Endpoints, test buttons (Woo/Odoo/Email/OpenAI/Places). Show Sync_Queue with retry/cancel.
+
+Smart AI helpers (implement if low effort, otherwise propose)
+
+Pricing assistant: given SKU(s) and Pricing_Params, propose UVP/MAP updates, check MAP guardrails, and write Pricing_Suggestions.
+
+Sales assistant: summarize quote, generate email copy, attach PDF, and queue sending (honor the configured provider).
+
+Guardrails checker: scan MAP_Guardrails URLs and flag violations (status + delta), create CSV export.
+
+Quality & DX
+
+Type-safe API client, error toasts, loading states, retry on 429/500 with backoff.
+
+i18n keys for all labels; RTL switch verified.
+
+Use a clean component library or Tailwind utility classes with a consistent design system.
+
+All mutations persist to the Google Sheet via backend and immediately reflect in UI.
+
+Secrets & Config (create if missing, set defaults)
+
+SHEETS_SPREADSHEET_ID = 1xagoLr9vXnNEP5PMPmqlyaQutj-XkQDgjrz2TEbBvic
+
+APP_BASE_URL = current Replit URL
+
+Email (pick any):
+
+EMAIL_PROVIDER = brevo|resend|sendgrid|smtp
+
+EMAIL_API_KEY (or SMTP_* equivalents)
+
+OPENAI_API_KEY (already linked via Replit Integrations, but support env fallback)
+
+Optional: API_PLACES_KEY
+
+Acceptance criteria (must pass)
+
+Connection Wizard shows all required settings, writes missing keys into Settings, validates Drive root, and logs to OS_Health.
+
+Dashboard shows real live counts from the sheet (products, partners, quotes, orders, MAP alerts).
+
+Pricing page can reprice selected SKUs and export a PDF price list.
+
+Partner page can create a partner, auto-create Drive folder path, and authorize SKUs.
+
+Sales page can create Quote → Convert to Order and generate invoice PDF with QR.
+
+AI Crew page can run a playbook and create tasks records in AI_Tasks.
+
+Health & Logs page executes a live health check and appends a row into OS_Health.
+
+Full EN/AR toggle with RTL and dark mode behaves correctly across all pages.
+
+What I want from you
+
+If any setting/secret is missing, prompt me in the UI wizard and continue with sane defaults.
+
+If you see a simpler/better UI/flow, suggest it first in a short note, then implement.
+
+Keep everything idempotent and safe: no destructive writes to Sheets.
+
+When done, produce a short CHANGELOG and a CHECKLIST of what you implemented with links to the key files/components.
+
+Start by scaffolding the Connection & Settings Wizard, then wire the Dashboard tiles to live data, and proceed page by page.

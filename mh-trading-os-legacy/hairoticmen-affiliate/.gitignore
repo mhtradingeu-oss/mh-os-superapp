@@ -1,0 +1,42 @@
+# WordPress Plugin .gitignore
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# Node modules (if you add any build tools)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build files
+/build/
+/dist/
+
+# Environment files
+.env
+.env.local
+
+# ZIP files (plugin releases)
+*.zip
+
+# WordPress specific
+wp-content/uploads/

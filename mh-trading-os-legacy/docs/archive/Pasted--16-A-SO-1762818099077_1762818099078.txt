@@ -1,0 +1,59 @@
+ما الذي نكمله الآن (الأولوية العاجلة)
+
+استكمال الوكلاء الأساسيين للوصول إلى 16 وكيل (بالترتيب):
+A-SOC (Social) → A-SEO → A-CRM → A-ADS → A-ECM (Merch) → A-STN (Stand Ops) → A-SHP (Logistics) → A-FIN → A-LGL → A-EA → A-QA → A-MOD.
+
+واجهة AI Hub: تبويبات لكل وكيل (إعدادات/أوامر/مسودات/Diff/تقارير).
+
+تحسين الداتا لرفع دقة التسعير والـ Outreach:
+
+CompetitorPrices: تأكد من تعبئة (SKU, Competitor, URL, Price, Currency, Country, CollectedAt).
+
+Outreach_Contacts: (Email, ConsentStatus, Source, QualityScore, Tags).
+
+Pricing_Params: محدثة وفق استراتيجيتنا النهائية (الهامش/التقريب/السقوف).
+
+CSV — AI_Agents (جاهز للنسخ واللصق)
+
+الأعمدة: AgentID,Name,Role,Model,ReadScopes,WriteScopes,RequiresApproval,Schedule,Guardrails,ActiveFlag,Notes
+
+A-MGR-000,Orchestrator,Supervisor,gpt-4o-mini,"Settings|AI_Playbooks|OS_Logs|OS_Health","AI_Crew|AI_Outbox",FALSE,"daily 08:00","no-direct-prod-writes",TRUE,"Route jobs & health"
+A-PRC-100,Pricing Analyst,Pricing,gpt-4o-mini,"FinalPriceList|Pricing_Params|MAP_Guardrails|CompetitorPrices","Pricing_Suggestions_Draft",TRUE,"daily 08:15","MAP|FloorMargin|PromoCap",TRUE,"Reprice & MAP guard"
+A-OUT-101,Outreach Writer,Outreach,gpt-4o-mini,"Outreach_Templates|Outreach_Sequences|Outreach_Contacts","Outreach_Templates_Draft|Outreach_Sequences_Draft",TRUE,"manual","GDPR|BrandVoice|RateLimit",TRUE,"Email templates & sequences"
+A-SOC-102,Social Producer,Social,gpt-4o-mini,"FinalPriceList|Social_Calendar","Social_Calendar_Draft",TRUE,"weekly Mon 09:00","BrandVoice",TRUE,"14-day calendar"
+A-SEO-103,SEO Architect,SEO,gpt-4o-mini,"FinalPriceList|SEO_Keywords|Woo_Map","SEO_Assets_Draft",TRUE,"weekly Tue 10:00","NoBlackHat",TRUE,"Keywords & meta/schema"
+A-CRM-104,CRM Enricher,CRM,gpt-4o-mini,"CRM_Leads|Enums","CRM_Leads_Draft",TRUE,"weekly Wed 11:00","GDPR",TRUE,"Harvest & enrich salon leads"
+A-ADS-105,Ads Strategist,Ads,gpt-4o-mini,"Ads_Campaigns|SEO_Keywords","Ads_Campaigns_Draft",TRUE,"weekly Thu 10:00","BudgetCap|BrandVoice",TRUE,"Google Ads CSV & negatives"
+A-ECM-106,Merchandiser,Ecom,gpt-4o-mini,"Woo_Map|Odoo_Map|FinalPriceList","Catalog_Fixes_Draft|Sync_Queue",TRUE,"daily 12:00","NoDirectProdWrite",TRUE,"Catalog audit & sync fixes"
+A-STN-107,Stand Ops Bot,Distribution,gpt-4o-mini,"StandSites|AuthorizedAssortment|Orders|FinalPriceList","Stand_Refill_Plans_Draft|Contracts_Draft",TRUE,"weekly Wed 14:00","ContractTemplates",TRUE,"Refill plans + contracts"
+A-SHP-108,Logistics Planner,Shipping,gpt-4o-mini,"DHL_Rates|Packaging_Boxes|Orders|Shipments","Shipments_DHL_Draft",TRUE,"daily 13:00","LabelRules",TRUE,"Rates/boxes/labels"
+A-FIN-109,Finance Ops,Finance,gpt-4o-mini,"Orders|Commission_Ledger|Loyalty_Ledger","Commission_Statements_Draft|Reports_Finance",TRUE,"monthly 01 09:00","NoPIIExposure",TRUE,"AR aging & commissions"
+A-LGL-110,Legal Counsel,Legal,gpt-4o-mini,"Legal_Contracts|MAP_Guardrails","Legal_Contracts_Draft",TRUE,"manual","ClauseLibrary|GDPR",TRUE,"Contracts & clauses"
+A-EA-111,Executive Assistant,EA,gpt-4o-mini,"OS_Logs|OS_Health|Sales_KPIs","AI_Outbox|Notifications_Draft",FALSE,"daily 08:30","InfoOnly",TRUE,"Daily brief & alerts"
+A-QA-112,DevOps QA,QA,gpt-4o-mini,"OS_Logs|Sync_Queue","AI_Outbox|Fixes_Draft",TRUE,"daily 18:00","NoProdWrite",TRUE,"Error triage & fixes"
+A-MOD-113,Moderator,Moderation,gpt-4o-mini,"AI_Inbox|Outreach_Contacts|Social_Calendar","AI_Outbox|Flags_Draft",TRUE,"continuous","Toxicity|Spam",TRUE,"Spam/flagging"
+A-CS-114,Helpdesk,Support,gpt-4o-mini,"Support_Tickets|SLA_Policies","Tickets_Draft|AI_Outbox",TRUE,"continuous","SLA|GDPR",TRUE,"Summaries & replies"
+
+CSV — AI_Playbooks (لبدء التشغيل)
+
+الأعمدة: PlaybookID,Name,AgentID,TriggerType,Cron,SourceSheet,TargetSheet,PromptTemplate,ActiveFlag,Notes
+
+PB-PRC-001,Reprice All,A-PRC-100,SCHEDULED,"daily 08:15","FinalPriceList","Pricing_Suggestions_Draft","reprice_by_params_map",TRUE,"Global reprice w/ MAP"
+PB-OUT-010,Template Pack,A-OUT-101,MANUAL,"","Outreach_Templates","","write_3_stage_intro",TRUE,"3-email intro pack"
+PB-SOC-020,14d Calendar,A-SOC-102,SCHEDULED,"weekly Mon 09:00","FinalPriceList","Social_Calendar_Draft","calendar_14d_beardcare",TRUE,"Posts DE/EN"
+PB-SEO-030,Keyword Cluster,A-SEO-103,MANUAL,"","FinalPriceList","SEO_Assets_Draft","keyword_cluster_intent",TRUE,"Buyer intent DE"
+PB-CRM-040,Harvest Berlin+HH,A-CRM-104,SCHEDULED,"weekly Wed 11:00","CRM_Leads","CRM_Leads_Draft","harvest_places_salon_de",TRUE,"200 leads/week"
+PB-ADS-050,Ads CSV,A-ADS-105,MANUAL,"","SEO_Keywords","Ads_Campaigns_Draft","ads_csv_builder",TRUE,"Google Ads export"
+PB-STN-060,Refill Plans,A-STN-107,SCHEDULED,"weekly Wed 14:00","StandSites","Stand_Refill_Plans_Draft","refill_by_sellthrough",TRUE,"Predict stockouts"
+PB-SHP-070,Shipping Estimator,A-SHP-108,MANUAL,"","Orders","Shipments_DHL_Draft","estimate_dhl_box_rate",TRUE,"Label ready"
+PB-FIN-080,Commission Month,A-FIN-109,SCHEDULED,"monthly 01 09:00","Orders|Commission_Ledger","Commission_Statements_Draft","commission_by_rules",TRUE,"Prior month"
+PB-EA-090,Daily Brief,A-EA-111,SCHEDULED,"daily 08:30","OS_Logs|OS_Health","AI_Outbox","daily_executive_brief",TRUE,"KPI/alerts"
+
+تحسين الداتا سريعًا (لرفع دقة التسعير والبريد)
+
+CompetitorPrices (أضِف أمثلة فورية):
+HM-BB-50,Amazon DE,https://...,13.99,EUR,DE,2025-11-10T10:00:00Z
+HM-BS-150,DM Drogerie,https://...,15.45,EUR,DE,2025-11-10T10:05:00Z
+
+Outreach_Contacts:
+email,consentStatus(OPT_IN/PENDING),source(GMaps/Website),qualityScore(0-100),tags("salon,berlin")

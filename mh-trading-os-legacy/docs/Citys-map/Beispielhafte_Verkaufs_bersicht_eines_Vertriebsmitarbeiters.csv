@@ -1,0 +1,12 @@
+Transaktion,Nettoumsatz (€),Provision (%),Fixe Bonus (€),Loyalty-Punkte,Provision (€),Gesamteinnahmen (€)
+Verkauf an Einzelhändler,2500,25,0,250,625.0,625.0
+Verkauf an Friseursalon,1800,25,0,180,450.0,450.0
+Neuer Standpartner,0,0,100,100,0.0,100.0
+Verkauf über Regal,1200,0,0,120,0.0,0.0
+Monatsziel erreicht,0,0,200,300,0.0,200.0
+Exklusivverkauf,3000,30,0,300,900.0,900.0
+Rückgabe,-200,0,0,-20,0.0,0.0
+Folgeverkauf,1300,25,0,130,325.0,325.0
+Promoaktion,800,20,50,80,160.0,210.0
+Sonderverkauf,4000,30,0,400,1200.0,1200.0
+GESAMT,14400,,350,1840,3660.0,4010.0

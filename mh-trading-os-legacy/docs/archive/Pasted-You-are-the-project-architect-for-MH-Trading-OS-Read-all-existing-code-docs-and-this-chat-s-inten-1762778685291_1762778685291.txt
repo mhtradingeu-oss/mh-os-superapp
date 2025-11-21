@@ -1,0 +1,71 @@
+You are the project architect for MH Trading OS. Read all existing code, docs, and this chat’s intent. Perform a non-destructive, idempotent upgrade to complete the AI Crew & AI Hub with the following DONE criteria.
+
+GOALS
+1) Unify a single Google Sheet as system source-of-truth. Use SHEETS_SPREADSHEET_ID (sanitize URL suffix). If multiple sheets are referenced, detect and prompt to pick exactly one; then cache it and write a note in OS_Health.
+2) Finalize AI Crew engine:
+   - Read agents from the AI_Crew sheet (columns: AgentID,Name,Role,Model,Permissions(Read),Permissions(Write),ActiveFlag,Prompt).
+   - Implement endpoints:
+     * GET /ai/agents      -> list agents + last-run stats
+     * POST /ai/chat/:id   -> chat with agent using its prompt and READ scopes only
+     * POST /ai/run-playbook/:playbookId -> enqueue an AI_Tasks job
+     * GET /ai/tasks       -> list tasks with status and logs
+   - Add Orchestrator service that:
+     * Routes intents to the right agent.
+     * Enforces guardrails: MAP (no below MAP), GDPR (no unsolicited outreach), human approval before any WRITE.
+     * Writes ONLY to draft sheets (Pricing_Suggestions, Outreach_Queue, SEO_Content, Ads_Creatives, Social_Calendar, Legal_Contracts) until user presses “Approve → Apply”.
+     * Logs every action to OS_Logs and AI_Tasks.
+
+3) Strengthen Google Sheets layer:
+   - Before any write, call validateSheetStructure() and ensure headers.
+   - Provide safe upsert (by key) + retryWithBackoff + in-memory cache for 60s to avoid API quotas.
+   - Implement ensureSheetsIfMissing() to create missing support sheets with headers:
+     CRM_Leads, Outreach_Campaigns, Outreach_Queue, Outreach_Results,
+     SEO_Keywords, SEO_Content, Ads_Keywords, Ads_Creatives, Social_Calendar,
+     Support_Tickets, Legal_Contracts, AI_Inbox, AI_Outbox, AI_Tasks.
+
+4) Frontend upgrades (no breaking changes):
+   - AI Hub: tabs for Pricing Analyst, Stand Ops, Growth Writer, Ops Assistant.
+     * Each tab shows chat panel, context selector (sheet ranges), and “Explain math”.
+     * “Send to Crew” button turns chat into a task (PB selection).
+   - AI Crew: four sections
+     * Agents Grid (cards with status, prompts, scopes, enable/disable).
+     * Playbooks: list (Daily/Weekly/Monthly + manual). Button “Run Now”.
+     * Task Status: live table (id, agent, playbook, started, status, outputs).
+     * Outbox Review: tables for each draft sheet with Approve/Reject/Apply buttons.
+
+5) Email & Places integrations (optional but ready):
+   - If EMAIL_PROVIDER/SMTP_* are present: enable “Send Approved” from Email_Outbox.
+   - If API_PLACES_KEY exists: enable Growth Hunter to harvest 20-50 barbers/salons per run (dedup by phone/domain/city).
+   - If Woo/Odoo secrets present: show “Sync Audit” report only (no writes yet), with a one-click “Apply Changes” placeholder.
+
+6) Guardrails & security:
+   - MAP: Pricing writes go to Pricing_Suggestions only. The “Apply” step updates FinalPriceList after confirmation.
+   - GDPR: outreach only for leads with ConsentFlag=true or lawful basis; otherwise keep as draft.
+   - Never write credentials into logs or sheets. Use Replit Secrets UI.
+   - Add OS_Health checks for required keys and warn if missing (EMAIL_PROVIDER, API_PLACES_KEY, AI_Default_Model, HM_DRIVE_ROOT_ID, HM_STAND_QR_BASE).
+
+7) Migration & docs:
+   - Provide a one-time bootstrap/migration function that is idempotent and safe.
+   - Update SETUP_GUIDE.md with new sheets/headers and screenshots.
+   - Update README (AI Hub & Crew usage), and add a QUICK_START.md.
+
+ACCEPTANCE TESTS (must pass)
+- Reprice All (PB-PRC-001): creates rows in Pricing_Suggestions with formulas explained (no direct price writes).
+- Lead Harvest (PB-GRW-020): appends deduped leads to CRM_Leads when API_PLACES_KEY exists.
+- Outreach Sequence (PB-OUT-030): creates Email_Outbox drafts; “Send Approved” sends via SMTP when configured.
+- Social 14-Day (PB-SOC-060): writes Social_Calendar rows; Apply publishes to Outbox only.
+- Commission Draft (PB-FIN-120): writes to Commission_Ledger as Draft; Apply finalizes.
+- Logs: OS_Logs records WARN/ERROR/INFO for all flows; OS_Health shows green.
+
+CONSTRAINTS
+- Zero breaking changes. Keep existing endpoints and pages working.
+- All writes are idempotent. Never duplicate headers or data.
+- Treat Drive provisioning failures as WARN, not FAIL.
+- If Google Sheets quota exceeded, backoff and show non-blocking warnings.
+
+DELIVERABLES
+- Updated backend (routes, services), frontend (pages/components), docs (README, SETUP_GUIDE, QUICK_START).
+- A summary “WHAT_CHANGED.md” with files, endpoints, and instructions.
+- A dashboard banner “AI Crew Ready” when all checks pass.
+
+Now analyze the repo and implement. When done, print a concise release note with remaining todos and suggestions for Phase 2C (Marketing Studio).

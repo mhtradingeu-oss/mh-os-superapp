@@ -1,0 +1,58 @@
+Act as lead engineer. Build a production-grade Outreach Engine tightly integrated with our AI Orchestrator (draft → human approve → apply), GDPR-safe, and Google Sheets–driven.
+
+GOAL
+- Enable compliant outreach at scale (email templates, sequences, sending, tracking) with AI-assisted drafting and human approvals.
+- Keep one spreadsheet as the single source of truth.
+
+SCOPE (DO build)
+1) Data model (ensure or auto-create headers only, no destructive ops):
+   - Sheets:
+     • Outreach_Templates: TemplateID, Name, Channel(Email), Lang, Tier, Subject, Body, Tokens[], Version, Status, Owner, CreatedTS, UpdatedTS
+     • Outreach_Sequences: SeqID, Name, Purpose, StepsJSON, Lang, Tier, WarmupFlag, Owner, Status, CreatedTS, UpdatedTS
+     • Outreach_Contacts: ContactID, Email, Name, Company, City, Country, TierGuess, Source, OptInFlag, UnsubscribedFlag, LastContactTS, Notes
+     • Outreach_Campaigns: CampID, Name, SeqID, AudienceQueryJSON, ScheduleUTC, Status, Owner, CreatedTS, ApprovedTS, AppliedTS
+     • Email_Outbox: MsgID, CampID, SeqStep, To, Subject, Body, Status, Error, ProviderID, SentTS, OpenTS, ClickTS, BounceTS, ComplaintTS
+     • Email_Stats: Day, CampID, Sent, Open, Click, Bounce, Complaint, Unsub
+     • Unsubscribes: Email, Reason, TS, Source
+   - Wire to existing AISheetsService (draft-only), apply via orchestrator on approval.
+
+2) Backend APIs (new module `routes-outreach.ts`):
+   - POST /api/outreach/ai/draft-template  → creates AI_Crew job (draft)
+   - POST /api/outreach/ai/draft-sequence  → AI drafts multi-step sequence (guard GDPR)
+   - POST /api/outreach/campaigns/create    → create campaign in DRAFT (requires approval)
+   - POST /api/outreach/campaigns/approve/:id → approve & materialize to prod sheets
+   - POST /api/outreach/send-step           → enqueue send for a specific step (rate-limit safe)
+   - POST /api/outreach/webhooks/:provider  → Brevo/Resend/SMTP webhooks (bounces/complaints/unsubs)
+   - GET  /api/outreach/stats               → aggregate Email_Stats (+ caching)
+
+3) Frontend (/outreach):
+   - Tabs: Templates | Sequences | Campaigns | Sending | Stats
+   - “Draft with AI” buttons → open form, preview OutputJSON, submit via /ai/submit (requiresApproval=true)
+   - Campaign builder: audience filter (from Outreach_Contacts), pick sequence, schedule, summary of GDPR checks
+   - Approvals drawer: approve/reject with notes, then apply handlers (writes to prod sheets)
+   - Stats: day-level aggregation + drill-down to Email_Outbox
+
+4) Compliance & Guardrails:
+   - validateGDPR(): enforce unsubscribe footer, avoid pressure language, log findings
+   - Unsubscribe endpoint + write to Unsubscribes + hard-stop future sends
+   - Rate limiting + retry/backoff + idempotency keys for sending
+   - Secrets ONLY from env (Replit Secrets). Never write secrets back to Settings
+
+SMART SUGGESTIONS (please propose + implement if safe)
+- Tokenized templates: {{first_name}}, {{salon_city}}, {{intro_offer}}
+- A/B versioning (Template v1/v2) + simple winner logic
+- Deliverability checklist (SPF/DKIM/DMARC status banner)
+- CSV export for campaigns & stats
+
+ACCEPTANCE CRITERIA
+- I can draft a template/sequence with AI → appears as job in AI Crew → approve → saved in Outreach_* sheets.
+- I can create a campaign in DRAFT, approve it, and see queued emails in Email_Outbox.
+- Webhooks record bounces/complaints/unsubs and update stats; unsub suppresses future sends.
+- OS_Health shows PASS for Outreach Engine; logs capture all key events.
+
+NON-GOALS
+- No destructive changes to existing pricing/shipping logic.
+- No writing secrets to sheets.
+
+POST-WORK
+- Produce OUTREACH_DELIVERY_REPORT.md: endpoints, UI screenshots, data flow, next steps (warm-up, A/B, CRM sync).

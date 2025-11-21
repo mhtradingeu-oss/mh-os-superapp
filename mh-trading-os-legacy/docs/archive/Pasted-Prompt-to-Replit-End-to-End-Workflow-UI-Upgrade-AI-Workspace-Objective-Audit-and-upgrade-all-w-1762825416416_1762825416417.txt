@@ -1,0 +1,115 @@
+Prompt to Replit — End-to-End Workflow UI Upgrade + AI Workspace
+
+Objective:
+Audit and upgrade all workflow modals/pages so users can complete sales, pricing, stands, shipping, outreach, and AI approvals without leaving the flow. Keep the Select Partner dropdown, add inline Partner creation, and support Quote → Order → Invoice PDF → Shipment. Ensure EN/AR + RTL, EU formats, guardrails, and Sheets wiring.
+
+1) Global UX Standards (apply everywhere)
+
+Stack: Tailwind + shadcn/ui + lucide-react. Add Cmd+K command palette.
+
+i18n: EN/AR toggle, full RTL mirroring, EU numbers/dates (Europe/Berlin).
+
+States: loading / empty / error / success toasts, skeletons, optimistic update with rollback.
+
+A11y: keyboard nav, aria-labels, focus rings, Lighthouse ≥90 (Perf/Access/BP).
+
+2) Core Modals & Flows (implement or refactor)
+A) Create/Edit Partner (re-usable drawer)
+
+Invoke from: Quotes, Orders, Stands, Outreach.
+
+Fields ↔ PartnerRegistry: PartnerID (auto HM-P-####), PartnerName, Tier, Email, Phone, Address, CountryCode, Status, Owner, Notes.
+
+On save: write to sheet, select newly-created partner in the invoking form.
+
+B) Create Quote (modal like screenshot)
+
+Keep Select Partner (searchable combobox). Add “➕ New partner…” → opens drawer A.
+
+Quote lines table: SKU search (FinalPriceList), Qty, Unit (UVP/Net), auto Tier discount, MAP guardrail, VAT, COGS margin, loyalty points preview.
+
+Summary panel: Subtotal, Discount, Tax, Total, Margin%, MAP warnings, Points.
+
+Actions: Save Draft, Create Quote, Email PDF, Convert to Order, Convert to Invoice.
+
+Writes: Quotes, QuoteLines; PDFs to Exports; logs to OS_Logs.
+
+C) Convert Quote → Order (wizard)
+
+Pull quote data, allow shipping method selection, payment terms, notes.
+
+Writes: Orders, OrderLines; status transitions (QUOTE → ORDER).
+
+D) Order → Invoice PDF + Email
+
+Generate invoice number, PDF (template keys from Settings), QR code (QR_BASE_PRODUCT or invoice link).
+
+Email via configured provider (SMTP/Brevo); track in Email_Outbox.
+
+Writes: OS_Logs, Sales_Statements roll-up when applicable.
+
+E) Create Shipment (drawer)
+
+Choose DHL / Company Car / Pickup; compute rate via DHL_Rates; weight auto-sum from products (Weight_g).
+
+Label fields: recipient, product code, services; save Shipments_DHL; optional label URL.
+
+Status sync & tracking fields (LastTrackTS).
+
+F) Stand Actions (drawer set)
+
+Create Stand, Assign Partner, Create Starter Bundle, Refill Plan, Visit Report.
+
+Writes: StandSites, AuthorizedAssortment, Stand_Refill_Plans, Stand_Visits, Stand_KPIs.
+
+G) Outreach (page + modals)
+
+Templates/Sequences/Campaigns tabs. AI Draft → Approval → Apply via orchestrator.
+
+GDPR guardrails (unsubscribe, no pressure tactics). Writes to *_Draft then production on approval.
+
+3) Pricing/MAP Guardrails (enforced in UI)
+
+On each line: compute Net, Margin, MAP floor. If price < MAP or margin < Floor → block create/convert; show actionable explanation.
+
+Respect PartnerTier discounts & commission visibility.
+
+4) AI Hub & AI Crew — Profiles + Workspace
+
+AI Hub (/ai): cards/tabs for agents (Pricing, Stand Ops, Growth Writer, Ops Assistant).
+
+Add Copilot side panel (chat+actions) with “Suggest lines/upsell/bundles”, “Reprice quote”, “Draft outreach mail for this partner”.
+
+AI Crew (/ai-crew):
+
+Agent Profiles drawer: Name, Role, Model, Temperature, MaxTokens, Permissions (Sheets read/write), Schedule (cron), Budget/day.
+
+Workspace: Pending Jobs table (Status=DRAFT), job detail dialog (InputJSON/OutputJSON diff), Approve/Reject with notes; auto-refresh 5s.
+
+All AI writes go to *_Draft via aiSheetsService; approve → apply handlers write to production sheets.
+
+5) Data Wiring (use existing services/endpoints)
+
+Read/write via GoogleSheetsService; AI via orchestrator endpoints; email via Email_Outbox worker.
+
+Sheet mappings to confirm:
+
+PartnerRegistry, PartnerTiers, FinalPriceList, Pricing_Params, Quotes/QuoteLines, Orders/OrderLines, Commission_Ledger, Loyalty_Ledger, Shipments_DHL, Email_Outbox, OS_Logs, OS_Health.
+
+Secrets pulled from Replit Secrets only (not Settings).
+
+6) Acceptance Criteria (must pass)
+
+Create Quote: partner select (with inline create), add lines, guardrails enforced, Save Draft, Create Quote, Convert → Order/Invoice, email PDF. All rows written to sheets; logs present.
+
+Shipping: rate computed; shipment saved; status fields editable; logs present.
+
+Stands: create stand, assign bundle/refill; writes to all stand sheets.
+
+Outreach: AI Draft → pending job in AI Crew → Approve → template appears in production sheet.
+
+AI Crew Profiles: editable; schedules and permissions stored and respected by orchestrator.
+
+i18n/RTL fully working; Lighthouse ≥90 across categories.
+
+Health entry: OS_Health “UI Workflows PASS” + endpoint smoke tests

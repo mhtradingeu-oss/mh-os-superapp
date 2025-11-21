@@ -1,0 +1,222 @@
+1) الهدف النهائي (ملخّص تنفيذي)
+
+تسعير ذكي كامل: من COGS → UVP → MAP → خصومات القناة/الكمية/الاشتراك → مقارنة منافسين → تقريب نفسي مع حماية الهامش.
+
+حلقة بيع مكتملة: عرض سعر → طلب → فاتورة/سند تسليم/إيصال PDF + QR → شحنة (DHL/شركة/استلام مصنع) → تتبّع.
+
+برامج الشركاء: خصومات حسب Tier، عمولات مندوبي المبيعات، أفلييت، أرصدة النقاط، باقات وهدايا، اشتراك صالون شهري يمنح مزايا.
+
+ذكاء اصطناعي تشغيلي: مساعدين (Crew) للبريد/التسعير/التدقيق/المحتوى/التحصيل؛ بلايبكات يومية/أسبوعية/شهرية.
+
+لوحة تحكم عمليّة: واجهة مهنية تغطي كل قسم، باللغتين EN/AR مع RTL، تربط كل هذا بـ Google Sheets (مصدر الحقيقة).
+
+2) ما الذي سنُكمله الآن على Replit (قائمة العمل)
+A) واجهات (Frontend) — صفحات ووُرش عمل
+
+Sales Desk
+
+إنشاء عرض/طلب/فاتورة فورية.
+
+إدخال عميل/شريك جديد أو اختيار قائم.
+
+تسعير مباشر لكل صنف (يعرض UVP، MAP، سعر القناة، الهامش، نقاط الولاء المكتسبة، الهدايا، الخصم).
+
+تطبيق اشتراك الصالون إن وُجد (خصومات ومزايا تلقائيًا).
+
+إنشاء PDF (فاتورة/سند/إيصال) + QR، وتسجيل في Sheets.
+
+Pricing Lab
+
+محرّك التسعير: Reprice Selected / Reprice All حسب Pricing_Params.
+
+مقارنة منافسين (إن توفّرت بيانات) مع احترام MAP/الهامش الأدنى.
+
+تصدير Price List PDF.
+
+Partners & CRM
+
+سجل الشركاء، تصنيفات/قنوات/مستويات، حالة KYC.
+
+اشتراكات الصالونات (جديدة): خطط، فوترة، مزايا، حالة الدفع.
+
+أفلييت + تتبّع الإحالات (UTM/Code).
+
+Stands Center
+
+إنشاء Stand، تحديد الموقع (خرائط)، توليد عقد PDF، ربط بالحساب/الشريك.
+
+خطة التعبئة/إعادة التعبئة (Starter Bundle، Thresholds)، وطباعة QR.
+
+Shipping & Ops
+
+إنشاء شحنة: وجهة (تاجر/ستاند/عميل نهائي)، طريقة (DHL/شركة/استلام مصنع).
+
+تقدير كلفة الشحن (DHL_Rates أو تقدير بسيط)، طباعة مانيفست/ليبل (عند الربط).
+
+Commissions & Loyalty
+
+Commission Rules للمندوب/الأفلييت، إنشاء قيود العمولة، حساب تلقائي حسب الفاتورة والقناة/التير.
+
+Loyalty Ledger: كسب/حرق/انتهاء صلاحية، ربط بالفواتير.
+
+AI Crew Hub
+
+تشغيل Playbooks (يومي/أسبوعي/شهري).
+
+صف مهام AI_Tasks، صندوق وارد/صادر (AI_Inbox/AI_Outbox)، تقارير تدقيق/أخطاء.
+
+Admin & Settings
+
+إدارة الإعدادات (Settings)، الفهارس (Enums)، الربط (Integrations_Config/Endpoints).
+
+صحّة النظام (OS_Health)، سجلات (OS_Logs).
+
+مهم: كل صفحة تُنفّذ نماذج + جداول + “وصفات عمل” واضحة، وتكتب/تقرأ من Google Sheets عبر الـ APIs التي جهّزناها.
+
+B) نموذج البيانات — أي شيتات إضافية نوصي بها (إن لم تكن موجودة)
+
+لديك الأساس جاهز. نضيف هذه لتغطية الحلقة كاملة (أسماء + أعمدة مقتَرَحة):
+
+AI_Inbox: MessageID, TS, From, Channel, Text, AttachedRef, Status
+
+AI_Outbox: MessageID, TS, To, Channel, Text, AttachedRef, Status
+
+Enums: List, Key, Label, Sort, Active
+
+Loyalty_Ledger: EntryID, TS, PartnerID, OrderID, Points(+/-), Reason, ExpireAt, Status
+
+Bundles: BundleID, Name, ItemsJSON, Channel, Active, Notes
+
+Gifts_Bank: GiftID, SKU, Threshold_EUR, Channel, Active, Notes
+
+Salon_Subscriptions: SubID, PartnerID, Plan, BillingCycle, Price, DiscountPct, BenefitsJSON, StartTS, Status
+
+Subscription_Invoices: SubID, InvoiceID, PeriodStart, PeriodEnd, Amount, Status, PaidTS, Notes
+
+Affiliate_Programs: AffID, Name, RatePct, CookieDays, Channel, Active
+
+Affiliate_Leads: LeadID, AffID, PartnerID/Email, Source, TS, Status
+
+Commission_Rules: RuleID, Role, Tier, Channel, BaseRatePct, BonusPct, CapPct, Notes
+
+Email_Outbox: MsgID, TS, To, Subject, Template, PayloadJSON, Status, Error
+
+Audit_Trail: TS, Actor, Action, RefType, RefID, DetailJSON
+
+كل هذه تعمل فوق ما لديك (PartnerTiers/Registry, FinalPriceList, Pricing_Params, …). إذا ورّدتها لاحقًا، محرّكاتنا لا تتضرّر.
+
+C) المنطق التجاري (الحسابات) — مختصر تنفيذي
+1) التسعير
+
+Cost Adjusted = COGS + (COGS_Buffer_Pct × COGS) + (Weight_g/1000 × Freight_Inbound_EURkg) + Packaging + Labeling + PickPack + Payment fees + Returns reserve.
+
+UVP_Target (per channel) = Cost Adjusted ÷ (1 − Target_Margin_Channel).
+
+MAP = أعظم (MAP الحالي، UVP_Target − MAP_Delta_EUR) أو حسب النسبة.
+
+Rounding: تطبيق خطوات ونهايات نفسية (web: .49 / salon: .90) مع احترام Floor_Margin + MAP.
+
+Competitors (اختياري): إن ≥3 أسعار خلال نافذة Comp_Window_Days → استهداف median−Comp_Target_Pct (لا يكسر MAP/الهامش).
+
+Volume Discount Ladder: تطبيق سلم الخصم على صافي الفاتورة (سقف Promo_Max_Discount_Pct).
+
+Write-back: كتابة Price_Web / Price_Salon / UVP_Recommended / MAP إلى FinalPriceList إن كانت مفاتيح الكتابة = TRUE.
+
+2) الولاء (نقاط)
+
+Earn = NetAfterDiscount × LOYALTY_RATE → تُسجَّل في Loyalty_Ledger.
+
+Redeem عند طلب/فاتورة: تتحوّل إلى خصم بسعر LOYALTY_REDEEM_RATE مع سقف (اختياري).
+
+Expiry: يمكن ضبطه بسياسة (مثلاً 12 شهرًا) في المجلد نفسه.
+
+3) العمولات (مندوبي مبيعات/أفلييت)
+
+Sales Rep Commission = BaseRatePct من BaseGross (عادة TotalGross قبل الضرائب/أو حسب إعدادك) + BonusPct (يحكمه Tier/قناة/اشتراك).
+
+Affiliate = RatePct من NetRevenue المنسوب إلى الكود/الرابط.
+
+تُسجَّل كل حركة في Commission_Ledger.
+
+4) اشتراك الصالونات
+
+خطة (Plan) تُنشئ خصمًا دائمًا (DiscountPct) + مزايا (BenefitsJSON: شحن مجاني، باقة شهرية…).
+
+فوترة دورية (Subscription_Invoices)، حالة الدفع، وخصم تلقائي في Sales Desk عند التعريف بـ PartnerID.
+
+5) الهدايا والباقات
+
+Gifts_Bank: هدية تلقائية فوق Threshold_EUR (قابلة للتخصيص لكل قناة).
+
+Bundles: ItemsJSON (SKU/Qty) مع خصم مُخصص أو تسعير خاص.
+
+6) الشحن
+
+DHL_Rates أولًا (إن مفعّل Use_DHL_Table)؛ وإلا تقدير بسيط عبر Shipping_Base_Cost + Addl_kg.
+
+اختيار طريقة (DHL/شركة/استلام مصنع)، وإنشاء شحنة/مانيفست، تسجيل في Shipments_DHL.
+
+3) مهام Replit (تنفيذ سريع ومنظّم)
+Sprint 1 — ربط الواجهات بالـ APIs
+
+Sales Desk: نماذج + جدول العناصر + حساب فوري + PDF + تسجيل.
+
+Pricing Lab: البحث/التصفية + Reprice Selected/All + Save back.
+
+Partners & CRM: CRUD الشركاء + اشتراك صالون + رفع العقود PDF.
+
+Stands Center: إنشاء/تعبئة/QR/عقد/ربط شريك.
+
+Shipping & Ops: إنشاء شحنة وتقدير كلفة + سجل الشحنات.
+
+Sprint 2 — برامج الحوافز
+
+Loyalty ledger مع Earn/Redeem/Expiry.
+
+Commission rules + تسوية عمولات (تقرير شهري).
+
+Affiliate tracking (UTM/Code) + Leads.
+
+Sprint 3 — AI Crew & الأتمتة
+
+تشغيل Playbooks (daily/weekly/monthly).
+
+صناديق Inbox/Outbox + موافقات (Approvals Queue).
+
+سكافولد/سانتي تشيك للمصدر (OS_Health/OS_Logs).
+
+Sprint 4 — التقارير والحوكمة
+
+لوحات KPI: مبيعات/هامش/ولاء/عمولات/اشتراكات/شحن.
+
+نسخ احتياطي CSV + تدقيق تغييرات (Audit_Trail).
+
+4) معايير القبول (DoD) السريعة
+
+إنشاء عرض→طلب→فاتورة PDF من Sales Desk وكتابتها في Sheets.
+
+تحديث الأسعار من Pricing Lab مع احترام MAP/Floor.
+
+خصم الاشتراك/السلم/الهدايا/النقاط يظهر ويُسجَّل في الفاتورة.
+
+عمولة مندوبي المبيعات والأفلييت تُحتسب وتُسجَّل.
+
+إنشاء Stand بعقد PDF + QR + خطة تعبئة.
+
+شحنة تُنشأ وتظهر في Shipments_DHL وتُقدّر كلفتها.
+
+5) فحوصات تلقائية (Unit/Smoke)
+
+حساب UVP/NET/MAP/ROUND على 5 عينات (COGS/وزن/فئات مختلفة).
+
+فحص Loyalty earn/redeem على فواتير عينات.
+
+فحص عمولة مندوب/أفلييت على قنوات/تيرز مختلفة.
+
+قراءة/كتابة لكل شيت أساسي (Settings, FinalPriceList, PartnerRegistry…).
+
+6) الحماية والأسرار
+
+استخدم Replit Secrets لكل المفاتيح (لا تُدوّن في الكود).
+
+تحقق من Setting

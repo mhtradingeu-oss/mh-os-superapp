@@ -1,0 +1,13 @@
+Bundesland,Kreis,Type,Area_km2,Population,Distance_from_Berlin_km
+Baden-Württemberg,Stuttgart,Stadtkreis,207.4,632743,630
+Baden-Württemberg,Karlsruhe,Stadtkreis,173.5,311919,670
+Baden-Württemberg,Mannheim,Stadtkreis,144.96,307997,620
+Baden-Württemberg,Freiburg im Breisgau,Stadtkreis,153.1,229636,800
+Baden-Württemberg,Heidelberg,Stadtkreis,108.8,160601,620
+Baden-Württemberg,Ulm,Stadtkreis,118.7,125596,600
+Baden-Württemberg,Esslingen,Landkreis,641.5,536027,630
+Baden-Württemberg,Ludwigsburg,Landkreis,687.0,534808,630
+Baden-Württemberg,Rhein-Neckar-Kreis,Landkreis,1061.9,557819,620
+Baden-Württemberg,Ortenaukreis,Landkreis,1860.8,443482,750
+Baden-Württemberg,Alb-Donau-Kreis,Landkreis,1358.9,201769,610
+Baden-Württemberg,Bodenseekreis,Landkreis,664.9,221208,750

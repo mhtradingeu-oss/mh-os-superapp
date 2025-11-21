@@ -1,0 +1,218 @@
+ الصفحتان واضحتان (AI Hub و AI Crew). أدناه اقتراح عملي ومباشر لتحويلهما إلى مركز ذكاء تشغيلي كامل—من دون هدم ما بُني—مع عناصر UI جاهزة للتنفيذ، ومطالب (prompts) قصيرة لكل وكيل، وربط دقيق مع Google Sheets.
+اقتراح تحسين AI Hub
+الهدف: مساحة تفاعلية “تشات + أوامر فورية” لكل وكيل، مع سياق بيانات حي، وقيود كتابة آمنة.
+تغييرات واجهة سريعة:
+
+
+شريط سياق علوي (Context Bar):
+
+
+فلاتر سريعة: Products | Partners | Stands | Orders.
+
+
+عدّادات حية: SKUs، MAP Violations، Active Stands، Open Quotes.
+
+
+زر “Reload from Sheets”.
+
+
+
+
+بطاقات الوكلاء (Cards → أقسام 2×2 كما بالصورة) تضيف أزرار:
+
+
+Chat (دردشة حيّة مع سجل محفوظ في AI_Inbox/AI_Outbox).
+
+
+Explain (شرح آخر نتيجة + المعادلات/مصادر البيانات).
+
+
+Run on Selection (يشغّل الوكيل على عناصر محددة من الفلاتر).
+
+
+Draft → Review → Apply (افتراضي: الوضع قراءة فقط، ثم مسودّة، ثم تنفيذ بعد موافقة بشرية).
+
+
+
+
+نافذة إعداد الوكيل (Agent Drawer):
+
+
+Model (افتراضي gpt-4o-mini)، Temperature، Max tokens.
+
+
+صلاحيات القراءة/الكتابة (checkbox لمصفوفة الشيتات).
+
+
+أدوات مسموحة: Sheets, HTTP, Email (SMTP/Brevo), PDF, QR.
+
+
+حواجز: Dry-Run، Require Approval، MAP Guardrails دائمًا ON.
+
+
+
+
+لوحة مخرجات سريعة أسفل كل وكيل:
+
+
+جداول نتائج، روابط PDFs/CSVs التي أنشأها الوكيل، مع زر “Export to Exports/…”.
+
+
+
+
+مطالب (Prompts) قصيرة للوكلاء الحاليين:
+
+
+Pricing Analyst – System Prompt (قصير):
+«أنت محلّل تسعير لشركة MH Trading (EUR, VAT=19%). استعن بـ Settings, Pricing_Params, FinalPriceList, MAP_Guardrails, CompetitorPrices. اشرح الحسابات (COGS→UVP→MAP→NET لكل تيّر). لا تقترح سعراً تحت MAP. أعِد مخرجاتك كجدول جاهز للكتابة مع الحقول: SKU, UVP_Suggested, Reason, Risks.»
+
+
+Stand Ops Bot – System Prompt:
+«تخطّط للتغذية وإعادة التعبئة للستاندات. استخدم StandSites, AuthorizedAssortment, FinalPriceList, Orders, Shipments_DHL. أخرج خطة Refill لكل Stand: SKU, Qty, NextVisit, سبب, أثر على نفاد المخزون.»
+
+
+Growth Writer – System Prompt:
+«أنشئ محتوى تسويقي ألماني/إنجليزي لمنتجات العناية باللحية/الشعر. اعتمد USP من المواد، والتزم بالقوانين (لا ادّعاءات طبية). الناتج: Calendar 14 يوم (موضوع، نص، هاشتاغ، رابط منتج).»
+
+
+Ops Assistant – System Prompt:
+«صِغ رسائل بريد وتشغيل تقارير عمليات (PDF/CSV)، لخص سجلات OS_Logs، وأنشئ قوائم مهام بتواريخ تسليم.»
+
+
+اقتراح تحسين AI Crew
+الهدف: الأتمتة والجدولة والمراقبة.
+أقسام الصفحة:
+
+
+Scheduler Bar (أعلى): Daily / Weekly / Monthly toggles + زر “Run Now”.
+
+
+Playbooks Gallery: كروت صغيرة مع وصف قصير ومؤشر أخضر/رمادي (Enabled/Disabled).
+
+
+Task Status Table:
+
+
+الأعمدة: RunID, PlaybookID, Trigger(Manual/Cron/Webhook), StartedTS, Duration, Items, Status, Errors, Outputs.
+
+
+صف قابل للتوسيع: لوج مختصر + روابط الملفات إلى Drive/Exports.
+
+
+
+
+Create Playbook Wizard:
+
+
+اختر الوكيل → اختر مصدر البيانات (شيت + فلتر) → نموذج مخرجات (Sheet/PDF/Email) → قواعد الحماية (Dry-Run/Approval) → الجدولة.
+
+
+
+
+Playbooks المقترحة (جاهزة للمرحلة القادمة):
+
+
+Daily: Reprice All (MAP Guard), Scan Guardrails, Stand Refill Planner.
+
+
+Weekly: Commission Draft, Partner Tier Upgrade Suggestions, Product Catalog Audit.
+
+
+Monthly: Loyalty Bonuses, AR Aging Summary, Marketing Calendar Export.
+
+
+شيتات لازمة لتكميل AI Crew (الأولوية):
+
+
+AI_Inbox, AI_Outbox, AI_Tasks (إن لم تكن موجودة—أنشئ تلقائياً).
+
+
+Outreach_* لاحقاً لـ 2B (Campaigns, Queue, Results).
+
+
+ربط دقيق مع Google Sheets
+
+
+الدردشة والمخرجات تُسجل إلى:
+AI_Inbox(From, AgentID, Prompt, Context, TS) و AI_Outbox(AgentID, OutputType, OutputRef, TS, Status, Notes).
+
+
+التنفيذ المجدول يُسجل إلى: AI_Tasks(TaskID, PlaybookID, AgentID, Trigger, StartedTS, CompletedTS, Status, OutputRef, Error).
+
+
+عناصر تجربة استخدام (UX) سريعة
+
+
+Command-K لفتح “Command Palette” (Run playbook, Open agent, Search SKU).
+
+
+Badge “READ-ONLY / DRAFT / APPLIED” على كل نتيجة يكتبها الوكيل.
+
+
+زر Compare vs Current عندما يقترح Pricing Analyst سعراً جديداً.
+
+
+حواجز الأمان (لا تغيير في البيانات بدون موافقة)
+
+
+الوضع الافتراضي لجميع الوكلاء: قراءة فقط.
+
+
+تغيير أي سعر/عقد/خصم يمر عبر مرحلة Draft (صف جديد في Pricing_Suggestions) ثم “Apply Changes”.
+
+
+ما الذي نُضيفه كخطوة تالية (قابلة للتنفيذ الآن)
+
+
+AI Hub
+
+
+إضافة Agent Drawer (إعدادات + صلاحيات).
+
+
+تفعيل Chat مع حفظ إلى AI_Inbox/Outbox.
+
+
+أزرار Explain / Run on Selection / Draft→Apply.
+
+
+
+
+AI Crew
+
+
+تفعيل Scheduler toggles (cron) لثلاثة Playbooks (اليومية/الأسبوعية/الشهرية).
+
+
+بناء Task Status Table مع روابط Outputs.
+
+
+
+
+Sheets
+
+
+تأكد من وجود: AI_Inbox, AI_Outbox, AI_Tasks (وإن غابت أنشئها تلقائياً عند فتح الصفحات أول مرة).
+
+
+
+
+ملاحظات تقنية خاطفة (للمطوّر)
+
+
+احفظ إعدادات كل وكيل في AI_Crew (Model, Tools, Read/Write Scopes, Guardrails).
+
+
+اجعل واجهة Chat تستخدم stream مع حفظ الرسائل الطرفية إلى Inbox/Outbox.
+
+
+استخدم نفس طبقة sheetsService الحالية، مع فحص هيكل الأعمدة قبل الكتابة (function validateSheetStructure موجودة).
+
+
+
+إذا وافقت على هذا التصوّر:
+
+
+أزوّدك مباشرةً بـ نصوص Prompts قصيرة إضافية للوكلاء المقترحين (Growth Hunter, Outreach Sequencer, SEO Architect, Ads Strategist, Merchandiser، Finance Ops، Legal، Executive Assistant) + قوالب أعمدة الشيتات الداعمة لهم، لتُدرجها فوراً في التطبيق.
+
+

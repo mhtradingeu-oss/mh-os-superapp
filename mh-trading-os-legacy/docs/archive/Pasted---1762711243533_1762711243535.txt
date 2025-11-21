@@ -1,0 +1,172 @@
+هذه الخلاصة التنفيذية النهائية مع هيكل مُتكامل “من-المصنع إلى المستخدم” يغطي التسعير، التوزيع (الستاند)، التسويق، المتاجر، المبيعات، المالية، القانون، خدمة العملاء، والموديريشن — مع فريق AI Crew مُعزَّز بقدرات ذكاء واسعة لالتقاط العملاء المحتملين، الإثراء، التواصل، الإعلان، والتحويل. الهدف: أن يصبح التطبيق (Replit + Google Sheets) محرك التشغيل الذكي لـ MH Trading في السوق الألماني.
+
+1) الهدف التنفيذي
+
+تسعير تنافسي تلقائي يراعي COGS، الشحن، التغليف، الضرائب، رسوم القنوات، وMAP، مع جداول Tier للشركاء، وولاء/عمولات.
+
+تنمية سوق عبر التقاط Leads من خرائط Google، إثرائها، تسلسل تواصل ذكي، وتحويلها إلى شركاء/طلبات.
+
+توزيع ذكي للستاند: إنشاء/تعبئة/تغذية/مسارات/عقود/فواتير/QR، مع مراقبة الأداء.
+
+تسويق شامل: SEO (كلمات ألمانية عنقودية)، Ads (زوايا/كرياتيف/CSV للمنصات)، Social (تقويم 14 يوم).
+
+تشغيل متاجر (Woo/Odoo) متكامل مع خرائط الحقول، تدقيق الكتالوج والصور والباركود.
+
+ماليات وقانون: فواتير/مدفوعات/عمولات/ولاء، عقود ومطابقة امتثال (GDPR/Email).
+
+خدمة عملاء وموديريشن: تذاكر SLA، ردود مقترحة، كشف سبام/إساءة.
+
+2) هيكل AI Crew (قدرات موسَّعة)
+
+لكل وكيل: Prompt/Policy + صلاحيات قراءة/كتابة محددة على الأوراق + مخرجات واضحة (AI_Tasks/Outbox).
+
+الوكيل	الدور	أهم القدرات الذكية	مخرجاته
+A-MGR-000 Orchestrator	تنسيق وإشراف	جدولة البلايبكات، التحقق الآلي من جودة النتائج، إعادة التوجيه	تقارير صحّة يومية + AI_Tasks
+A-PRC-003 Pricing Brain	تسعير & MAP	UVP/MAP/NET، حساسية السعر، حزم وترقيات، guardrails	Pricing_Suggestions، تحديث FinalPriceList
+A-GROW-100 Growth Hunter	جلب Leads	بحث Places API (DE)، تحديد نوع المنشأة، dedupe، الإكمال	CRM_Leads، Enrichment_Log
+A-OUT-101 Outreach Sequencer	تواصل وتحويل	تصميم وتسلسل بريد/واتساب، توقيت مثالي، A/B موضوع	Outreach_Log، تحديث حالات Leads
+A-SEO-110 SEO Architect	SEO (DE)	عنقدة كلمات، خرائط محتوى، عناوين/Meta/FAQ، مد خلقي	SEO_Keywords، SEO_Content
+A-ADS-120 Ads Strategist	Ads	زوايا ورسائل، بنية حملات، اقتراح ميزانيات، CSV جاهز	Ads_Campaigns، ملفات رفع
+A-SOC-010 Social Producer	محتوى اجتماعي	تقويم 14 يوم DE/EN، Hooks/CTA/هاشتاغ، توليد تنويعات	Social_Calendar، Asset_Library
+A-ECOM-022 Merchandiser	Woo/Odoo	تدقيق كتالوج، خرائط حقول، فجوات صور/باركود/وزن	تقارير تدقيق + Sync_Queue
+A-DIST-097 Distribution Planner	الستاند/المسارات	خطة Refill، Min/Max، جداول زيارات، تحسين مسارات	Stand_Refill_Plan، Routes
+A-SALES-020 Sales Copilot	مكتب المبيعات	تسعير لحظي، Quote/Order/PDF، نقاط/عمولات/هدايا	Quotes/Orders/PDFs
+A-CS-020 Helpdesk	دعم وسعادة العملاء	تصنيف الوارد، ردود مقترحة، فرض SLA، تصعيد	Support_Tickets
+A-MOD-021 Moderator	موديريشن	رصد إساءة/سبام، سياسات المنصات، قرارات آلية/بشرية	Moderation_Queue
+A-FIN-040 Finance Ops	مالية	مطابقة المدفوعات، تنبيهات فواتير، ملخصات شهرية	Payments/AR Reports
+A-LGL-090 Legal & Compliance	قانون/امتثال	عقود/تجديد، إشعارات، DPIA/GDPR، قالب عقود	Legal_Contracts, Compliance_Registry
+A-EA-001 Executive Assistant	سكرتارية ذكية	بريد/جدولة، ملخصات، تحضير اجتماعات وتقارير	AI_Outbox + لوائح تنفيذية
+
+لاحقًا (اختياري): IVR ذكي مدمج مع Helpdesk لفرز المكالمات وجدولة الزيارات.
+
+3) تدفّقات العمل المغلقة (خطوة-بخطوة)
+3.1 التقاط وتحويل العملاء (Leads → Partner/Order)
+
+Harvest (A-GROW-100): مدن/كلمات ألمانية → CRM_Leads (dedupe بالبريد/الهاتف/الدومين).
+
+Enrich: موقع/موقع إلكتروني/ساعات عمل/حجم؛ يسجل الاختلاف في Enrichment_Log.
+
+Score & Segment: صالون/Barber/Shop + مدينة/إقليم + أولوية.
+
+Outreach (A-OUT-101): اختيار Sequence مناسب → إرسال مؤتمت مع تتبع فتح/رد/ارتداد.
+
+Qualify: الردود/الحجوزات → PartnerRegistry أو تحويل مباشر لـ Sales Desk.
+
+Quote → Order (A-SALES-020): تسعير ذكي (Tier/Promo/MAP) → PDF + QR → نقاط/عمولات.
+
+3.2 التسعير (COGS→UVP→MAP→NET)
+
+إدخال COGS/وزن/فئة/ضريبة في FinalPriceList.
+
+A-PRC-003 يحتسب UVP وMAP وأربعة NET (Basic/Plus/Stand/Distributor) وفق Pricing_Params، ويقارن المنافسين، ويحترم MAP.
+
+اقتراحات إلى Pricing_Suggestions ومزامنة إلى Woo/Odoo عبر Odoo_Map/Woo_Map وSync_Queue.
+
+3.3 الستاند والتوزيع
+
+إنشاء Stand + QR + عقد + Starter Bundle (من Settings).
+
+خطة Refill (Min/Max/Window) + Routes للمندوبين (A-DIST-097).
+
+قياس الأداء: مبيعات، نفاد، التزام بالزيارات، نقاط الشركاء.
+
+3.4 التسويق (SEO/Ads/Social)
+
+SEO: كلمات DE عنقودية + خرائط محتوى + وصف منتجات للمتاجر.
+
+Ads: زوايا وإبداعات ورسائل (DE)، CSV جاهز للرفع، توصية بميزانيات.
+
+Social: تقويم 14 يوم مع نصوص DE/EN وHashtags وصور/فيديو من Asset_Library.
+
+3.5 الشحن واللوجستيات
+
+تقدير DHL (حسب الوزن/المنطقة)؛ أوامر شحن: مصنع→مخزن/Stand/زبون.
+
+Manifests يومية + إرفاق PDF وثائق.
+
+3.6 المالية والقانون
+
+Orders→Invoices→Payments (مطابقة يومية)، عمولات المندوبين/الشركاء، نقاط الولاء.
+
+عقود الستاند/الشركاء وتجديد تلقائي وتنبيهات (A-LGL-090).
+
+3.7 خدمة العملاء والموديريشن
+
+Inbox (Email/Web) → تصنيف ذكي، ردود مقترحة، SLA، تصعيد.
+
+Moderation_Queue للمحتوى/المراجعات.
+
+4) نموذج البيانات الأساسي (Sheets المؤثرة في السعر)
+
+FinalPriceList، Pricing_Params، PartnerTiers، PartnerRegistry، AuthorizedAssortment، MAP_Guardrails، DHL_Rates، Sales_Users، Quotes/QuoteLines/Orders، Commission_Ledger، Loyalty_Ledger (إن لم تكن موجودة نضيفها)، Integrations_Config/Endpoints، Odoo_Map/Woo_Map.
+
+للتوسّع الذكي: CRM_Leads / Enrichment_Log / Outreach_… / SEO_… / Ads_… / Social_Calendar / Asset_Library / Stand_Refill_Plan / Routes.
+
+أي ورقة ناقصة: التطبيق ينشئها idempotent ويملأ الرؤوس ويُلحق Missing فقط (لا يدمّر بياناتك).
+
+5) الجداول الزمنية (Triggers/Playbooks)
+
+يومي: Harvest/Enrich (خفيف)، Outreach Follow-ups، MAP Scan، DHL Manifest، QA Triage، تحصيل AR.
+
+أسبوعي: Reprice All، SEO Keywords Batch، e-Com Audit، Social 14D Plan.
+
+شهري: Finance Close، Legal Renewals، Executive Dashboard.
+
+6) الواجهة (UI) — لوحة تحكم موحّدة
+
+Sidebar: Dashboard / Growth / Outreach / Pricing / Sales Desk / Stands & Distribution / Marketing Studio / Helpdesk & Moderation / Finance & Legal / AI Crew.
+
+Command-K: أوامر سريعة (مثال: “Reprice selected”, “Harvest Berlin salons”, “Build sales route”).
+
+لوحات: جداول تفاعلية + إجراءات Bulk + معاينات PDF/QR + خرائط للستاند والمسارات.
+
+لغتين EN/AR + RTL + Dark Mode.
+
+7) الامتثال والحماية
+
+GDPR: حق السحب/الحذف، إدارة Consent في CRM_Leads، امتثال Email (Unsubscribe).
+
+Email Deliverability: SPF/DKIM/DMARC، معالجة Bounces/Complaints عبر Webhooks.
+
+MAP: منع أي سعر دون الحد الأدنى.
+
+أمان المفاتيح: كل المفاتيح داخل Replit Secrets فقط.
+
+8) مؤشرات الأداء (KPIs) للمراجعة التنفيذية
+
+نمو القاعدة: Leads/Qualified/Conversion%.
+
+التسعير: هامش UVP/Net، مخالفات MAP، Elasticity Signals.
+
+المبيعات: Win-Rate، متوسط الطلب، نقاط/عمولات مُستحقة.
+
+الستاند: التغطية، الالتزام بالزيارات، Out-of-Stock، المبيعات/Stand.
+
+التسويق: CTR/CPA، ترتيب كلمات DE المستهدفة، نمو الجمهور الاجتماعي.
+
+الخدمة: SLA التزام، CSAT/DSAT، زمن الحل.
+
+الصحة: أخطاء/تحذيرات/وقت الاستجابة، تكاملات جاهزية.
+
+9) “طلبات جاهزة” (Examples) — داخل التطبيق
+
+لـ A-GROW-100:
+“Harvest barbers in Hamburg (radius 15km), enrich phones & websites, tag: ‘HH-BARBER-Q4’.”
+
+لـ A-OUT-101:
+“Launch 3-step email sequence for segment ‘BERLIN-SALONS-A’, pause on reply or bounce.”
+
+لـ A-PRC-003:
+“Reprice all Beard Care SKUs for DE Web & Salon with Target_Margin_Web/Salon, respect MAP, round steps.”
+
+لـ A-DIST-097:
+“Build refill plan for ST-0001, min/max from AuthorizedAssortment, schedule visit this week.”
+
+لـ A-SALES-020:
+“Create quote for Partner HMP-0012 with Starter Bundle + 5 free testers; export PDF & email.”
+
+لـ A-SEO-110:
+“Cluster DE keywords for ‘Bartöl, Bartbalsam’, generate product descriptions and FAQs (EN/DE).”
+
+لـ A-ADS-120:
+“Draft Google Ads CSV: exact/phrase keywords, 3 angles, 5 headlines, 4 desc, negatives.”

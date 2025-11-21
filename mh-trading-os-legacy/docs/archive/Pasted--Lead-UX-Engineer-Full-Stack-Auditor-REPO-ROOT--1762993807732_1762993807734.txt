@@ -1,0 +1,82 @@
+أنت Lead UX Engineer + Full-Stack Auditor. مهمتك: تحديث كل الواجهات في مشروع {{REPO_ROOT أو "هذا الـ Repl"}} لتصبح جاهزة بالكامل للإطلاق، مع اقتراحات ترقية واجهة ذكية، واختبارات شاملة لتدفقات العمل، وتمكين أدوات AI مفيدة للفريق بدون تعريض الإنتاج للخطر. سلّم نتائجك على شكل: ديفات ملفات، مكوّنات جاهزة، أوامر تشغيل واختبارات، و"قائمة قبول" نهائية.
+
+== سياق سريع ==
+- المنتج: Hairoticmen / MH Trading OS (لوحات تشغيل + تسعير + تكامل Google Sheets).
+- جمهور المستخدمين: فريق داخلي (مبيعات/تسعير/عمليات) + شركاء B2B (لوحات قراءة وتحميل فقط).
+- لغات الواجهة: العربية (RTL) + الإنجليزية (LTR).
+- هوية بصرية: {{BRAND_PRIMARY=#111}}, {{BRAND_ACCENT=#7C3AED}}, {{LOGO_PATH=/assets/logo.svg}}.
+- صفحات متوقعة (اكتشف كل ما يوجد): /dashboard, /pricing, /catalog, /orders, /partners, /reports, /settings, /ai-assist, /auth/*.
+
+== المطلوب إنجازه ==
+1) جرد الصفحات والتدفّقات
+   - امسح src/app أو src/pages أو routes/* واعرض خريطة الصفحات + روابطها + الحماية (auth/role).
+   - حدّد الثغرات (صفحات ناقصة، روابط مكسورة، حالات عدم تغطية empty/error/loading).
+
+2) نظام تصميم موحّد (Design System)
+   - أنشئ طبقة Tokens (colors, spacing, radius, shadows, typography) في ملف واحد: src/design/tokens.ts.
+   - أنشئ Theme RTL/LTR + Dark/Light مع تذكّر خيار المستخدم (localStorage + prefers-color-scheme).
+   - اعتمد مكتبة مكوّنات حديثة (إذا React: shadcn/ui + Tailwind) وولّد مكوّنات أساسية:
+     Button, Input, Select, Dialog, Drawer, Tabs, DataTable, FormField, Toast, EmptyState, Skeleton.
+
+3) الوصولية والتجاوب
+   - ضمان A11y (أدوار/aria، تبويب لوحة المفاتيح، تباين ألوان ≥ 4.5:1).
+   - تصميم Responsive: Mobile-First، شبكات CSS (grid) وقواعد min/max/overflow.
+   - دعم العربية RTL بالكامل: اتجاه، محاذاة، انعكاس الأيقونات عند الحاجة.
+
+4) تحسين الصفحات الجوهرية
+   - Dashboard: بطاقات KPI + جداول أحدث (Quotes/Orders) + فلاتر تاريخ + روابط سريعة.
+   - Pricing: جدول قابل للبحث/الفرز/الترشيح (SKU، Line، Guardrail، UVP، MAP، Net_*) + محرر bulk مع حماية MAP + معاينة تأثير التغييرات قبل الحفظ.
+   - Catalog: بطاقات منتجات + حقل بحث فوري + استيراد/تصدير CSV/TSV بعقد واضح.
+   - Orders: حالة/خط زمني، فواتير، إشعارات، حالات فارغة وسجلّ أحداث.
+   - Partners: إدارة Tiers وخصومات، تحميل اتفاقيات PDF، صلاحيات عرض فقط.
+   - Reports: رسوم بيانية (مبيعات، هوامش، أفضل قنوات)، تنزيل CSV.
+   - Settings: Secrets placeholders (لا تعرض أسرار) + مفاتيح تشغيل AI/Features.
+   - AI-Assist: مساحة جانبية Chat-like تُقترح إجراءات على البيانات (ملخّص، تنقية، توصية أسعار) مع Guardrails: تكتب إلى *_Draft فقط.
+
+5) تكامل أدوات الذكاء الاصطناعي بأمان
+   - موحّد AI Client src/ai/client.ts مع مزوّد مجرّد LLM_PROVIDER={{"openai"|"anthropic"|...}} ومفاتيح من env.
+   - Guardrails: أي تعديل على بيانات الإنتاج → يذهب إلى Sheets Draft أو DB Draft، ويحتاج موافقة من Admin UI (زر “Promote to Production”).
+   - سجل AI Actions في ActionLog مع (actor, promptHash, diff, approvalStatus).
+
+6) الأداء
+   - تقسيم الحِزم (code-splitting) + lazy routes + prefetch للروابط المهمة.
+   - ضغط gzip/deflate + Cache-Control للثابتات + صور responsive (srcset).
+   - قياس حجم الحزمة قبل/بعد وإخراج تقرير.
+
+7) الاختبارات
+   - Unit tests لمكوّنات التصميم (Button, Dialog, DataTable) + Hooks.
+   - E2E عبر Playwright: سيناريوهات
+     (Auth → Dashboard → Pricing bulk edit draft → Approval → Catalog search → Partner view-only → Reports export → Settings toggle).
+   - Visual Regression أساسية لصفحات رئيسية (dark/light, RTL/LTR).
+
+8) التسليم
+   - قدّم ديفات موحّدة لملفات: 
+     src/design/tokens.ts, src/design/theme.css, src/components/ui/*, src/features/pricing/*,
+     src/features/ai/*, src/routes/* أو app/*, src/ai/client.ts, tests/e2e/*.spec.ts, tests/unit/*.
+   - أوامر التشغيل:
+     dev, build, preview, test:unit, test:e2e, test:vr, lint, typecheck.
+   - ملفات توثيق مختصرة:
+     UI_GUIDE.md (التصميم/الأنماط/RTL/Dark)،
+     AI_GUARDRAILS.md (مسارات الدرافْت والموافقة)،
+     WORKFLOWS.md (سيناريوهات الاستخدام، اختصارات لوحة المفاتيح).
+
+== معايير القبول (اقبل/ارفض تلقائيًا) ==
+- التغطية: ≥ 60% وحدة للـ UI ونجاح جميع اختبارات E2E المذكورة.
+- Lighthouse (محلي): Performance ≥ 85، Accessibility ≥ 90، Best Practices ≥ 90.
+- RTL: جميع الصفحات تعمل بالعربية دون انكسارات، وكل النصوص قابلة للبحث/النسخ بشكل صحيح.
+- Dark/Light: لا فقدان تباين ولا عناصر “مخفية”.
+- لا كتابة AI مباشرة للإنتاج: كل عمليات AI تُسجّل وتذهب إلى *_Draft حتى الموافقة.
+- لا أسرار واضحة في UI/الكونسول.
+
+== الذي أحتاجه منك الآن ==
+1) نفّذ الجرد والاقتراحات، ثم أعطني:
+   - جدول الصفحات (Route, Purpose, Protected?, Gaps).
+   - خطة UI Tokens وTheme.
+2) قدّم ديفات المكونات الأساسية والصفحات بحسب الأولوية (Dashboard, Pricing, AI-Assist ثم الباقي).
+3) أنشئ الاختبارات (Unit + Playwright) وشغّلها واطبع النتائج.
+4) أعطني تقريرًا نهائيًا “قبل/بعد” (حجم الحزمة، نقاط Lighthouse، لقطات بصرية للصفحات الأساسية).
+
+مهم: 
+- لا تغيّر منطق الأعمال إلا إذا كان خطأ واضحًا؛ ركّز على واجهة/تجربة/حماية/اختبارات.
+- إن وجدت ملفات مفقودة، أنشئ أفضل افتراضات آمنة واذكرها في تقرير التسليم.
+- قدّم كل شيء في PR واحد مع وصف تفصيلي وفواصل "Changes / Tests / Screenshots".

@@ -1,0 +1,65 @@
+Act as lead engineer. Finish Phase 2A Outreach Engine by delivering:
+(1) OUTREACH-7: Production-grade Email Delivery Worker
+(2) OUTREACH-8: Final docs (OUTREACH_DELIVERY_REPORT.md)
+
+GOAL
+A robust, GDPR-safe sending pipeline integrated with the AI Orchestrator (draft → human approve → apply), using one Google Sheet as the SoT. No destructive ops.
+
+SCOPE
+A) Worker Service (server/workers/outreach-worker.ts)
+- Source: Email_Outbox (Status in {QUEUED,SENDING}), only rows tied to APPROVED campaigns.
+- Concurrency: configurable (OUTREACH_WORKER_CONCURRENCY, default 3).
+- Rate limits:
+  • Per-recipient: ≤ 20 emails/hour
+  • Global throttle: OUTREACH_RPM (requests/min, default 60)
+  • Backoff: exponential (250ms, 500ms, 1s, 2s, 4s; max 5 attempts)
+- Idempotency:
+  • Compute MessageKey = sha256(CampID|SeqStep|To|Subject|Body)
+  • If same key already has SentTS or ProviderID → skip
+- Personalization:
+  • Merge tokens from Outreach_Contacts + Settings (e.g., {{first_name}}, {{salon_city}}, {{brand}})
+  • Generate text+HTML multipart
+- Providers (pluggable adapters under server/lib/email-providers/):
+  • Brevo (default if EMAIL_PROVIDER=brevo)
+  • Resend (EMAIL_PROVIDER=resend)
+  • SMTP relay (EMAIL_PROVIDER=smtp)
+- Writes:
+  • On success: set ProviderID, Status='SENT', SentTS=now
+  • Stats rollup to Email_Stats (Day, CampID: Sent/Open/Click/Bounce/Complaint/Unsub)
+- Safety:
+  • Strict GDPR checks enforced (unsubscribe footer, no pressure language)
+  • Respect Unsubscribes + Complaints supression
+  • Secrets ONLY from env; never write secrets to Settings
+- Health:
+  • OS_Health entry “Outreach Worker” PASS/FAIL with last run TS and counters
+  • OS_Logs for errors/warns per message
+
+B) Webhooks (routes-outreach.ts)
+- POST /api/outreach/webhooks/:provider
+  • Brevo/Resend/SMTP adapters normalize events → update Email_Outbox row (OpenTS, ClickTS, BounceTS, ComplaintTS)
+  • Update Unsubscribes + suppress future sends
+
+C) UI polish (/outreach → “Sending” tab)
+- Live queue: counts by Status {QUEUED,SENDING,SENT,FAILED}
+- Throttle gauge (rpm used/limit)
+- Error stream (last 50 errors)
+- “Dry-run” toggle (OUTREACH_DRY_RUN=TRUE writes logs only)
+
+D) Docs (OUTREACH_DELIVERY_REPORT.md)
+- Architecture, sequence diagrams, env vars, rate limits, rollback plan
+- Admin guide: warm-up best practices, deliverability checklist (SPF/DKIM/DMARC)
+
+ACCEPTANCE CRITERIA
+- I can approve a campaign → emails flow from QUEUED to SENT with ProviderID & SentTS
+- Webhooks update opens/clicks/bounces/complaints; unsub stops future sends
+- Stats aggregate daily; OS_Health shows PASS; OS_Logs include send traces
+- Dry-run works without sending (still logs)
+
+NON-GOALS
+- No destructive changes to pricing/shipping
+- No secrets in Google Sheets
+
+SUGGEST & IMPLEMENT if safe
+- Domain warm-up policy, sending windows (e.g., 09:00–18:00 local)
+- A/B template versioning with simple winner selection
+- Bounce/complaint thresholds to auto-pause campaigns

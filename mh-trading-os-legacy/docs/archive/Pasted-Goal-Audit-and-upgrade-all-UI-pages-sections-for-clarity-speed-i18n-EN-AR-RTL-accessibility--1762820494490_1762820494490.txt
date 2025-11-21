@@ -1,0 +1,57 @@
+Goal: Audit and upgrade all UI pages/sections for clarity, speed, i18n (EN/AR + RTL), accessibility, and direct wiring to existing APIs — before adding more agents.
+
+Do:
+
+Scan & Report
+
+Crawl the app and list all pages/sections: Dashboard, Pricing, Products (FinalPriceList), Partners, Stands, Outreach, AI Hub, AI Crew, Orders, Shipping, Admin, Reports/Analytics, Settings.
+
+Produce UI_AUDIT.md with: found issues, UX risks, missing states (empty/loading/error), RTL gaps, broken forms, table problems, and perf warnings.
+
+Propose Best UI
+
+In UI_AUDIT.md include your recommended UI patterns (components/layout/flows) using our stack (Tailwind + shadcn/ui + lucide-react).
+
+Standardize: page headers, breadcrumbs, toolbars (Search/Filters/Export), data tables (sticky header, pagination, row actions), forms (zod-like validation, inline errors), modals/drawers, toasts, skeletons, empty states, and Cmd+K command palette.
+
+Implement the Refresh
+
+Apply fixes across pages with consistent design tokens (spacing/typography), dark mode, RTL mirroring, and responsive breakpoints (sm/md/lg/xl).
+
+Wire all forms/tables to existing endpoints (read/write) using our Google Sheets service; preserve guardrails and approval workflows (AI writes → *_Draft only).
+
+Add loading/error/empty states everywhere; ensure date/number formats EU (Europe/Berlin).
+
+AI Pages First-Class
+
+/ai (AI Hub): tabs per agent (Pricing, Stand Ops, Growth Writer, Ops Assistant). Show Quick Actions, Job Queue, Draft Diff, Run History.
+
+/ai-crew: pending approvals table, job detail dialog (InputJSON/OutputJSON), Approve/Reject with notes, auto-refresh.
+
+Accessibility & Perf
+
+Achieve Lighthouse: Performance ≥ 90, Accessibility ≥ 90, Best Practices ≥ 90.
+
+Add keyboard focus states, aria labels, and skip links; debounce table filters; memoize heavy lists.
+
+Deliverables
+
+UI_AUDIT.md (issues + proposals + before/after screenshots).
+
+UI_STATUS.md (what changed per page, endpoints wired).
+
+Commit set with clear messages feat(ui): … + screenshots in /docs/ui/.
+
+Acceptance Criteria:
+
+All listed pages render with consistent shells, EN/AR toggle, RTL support, and responsive layouts.
+
+Every form/table has loading/empty/error states and client-side validation.
+
+AI Hub & AI Crew fully usable (submit → draft → approve → apply).
+
+Logs in OS_Logs, health entry in OS_Health = PASS “UI audit & refresh”.
+
+No backend/guardrail regressions.
+
+If any ambiguity arises, propose the better UX in UI_AUDIT.md, implement it, and note rationale.

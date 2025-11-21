@@ -1,0 +1,48 @@
+أنت الآن Architect. أنشئ/حدّث (idempotent) أوراق Marketing التالية مع الأعمدة، دون حذف بيانات، وأضِف seed بسيط:
+
+[SEO]
+1) SEO_Keywords
+   - Keyword, Locale, Intent, Cluster, Volume, KD, CPC, DifficultyScore, PriorityScore, LandingURL, Status, Notes
+2) SEO_Briefs
+   - BriefID, Keyword, Locale, Persona, H1, TitleTag, MetaDescription, OutlineJSON, InternalLinksCSV, ExternalLinksCSV, ReadingLevel, Status, Notes
+3) SEO_Pages
+   - URL, KeywordPrimary, Locale, TitleTag, MetaDescription, H1, H2sCSV, WordCount, Canonical, IndexFlag, LastAuditTS, Score_Tech, Score_Content, Score_InternalLinks, Status, Notes
+4) SEO_Audits
+   - AuditID, URL, IssueType, Severity, Detail, SuggestedFix, Owner, Status, CreatedTS, ResolvedTS
+
+[ADS]
+5) Ads_Keywords
+   - Keyword, MatchType, Locale, Intent, Cluster, CPC_EUR, Est_CTR, Est_ConvRate, TargetCPA, NegativeFlag, Notes
+6) Ads_Campaigns
+   - CampaignID, Name, Objective, Locale, Network, DailyBudget_EUR, BidStrategy, Status, StartDate, EndDate, UTM_Source, UTM_Medium, UTM_Campaign, Notes
+7) Ads_AdGroups
+   - AdGroupID, CampaignID, Name, MaxCPC, DefaultLandingURL, Status, Notes
+8) Ads_Creatives
+   - CreativeID, AdGroupID, Type, Headline1, Headline2, Headline3, Description1, Description2, Path1, Path2, FinalURL, Status, Notes
+9) Ads_Exports
+   - ExportID, CampaignID, Format, FileURL, Rows, CreatedTS, Status, Notes
+
+[SOCIAL]
+10) Social_Calendar
+    - PostID, Date, Time, Channel, Locale, Line, Hook, Caption, HashtagsCSV, AssetRefsCSV, CTA, UTM_URL, Owner, Status, Notes
+11) Social_Assets
+    - AssetID, Type, Storage, URL, AltText, Line, Locale, License, Owner, Status, Notes
+12) Social_Metrics
+    - PostID, Channel, TS, Impressions, Reach, Clicks, Likes, Comments, Shares, Saves, CTR, CPC, CPM, Cost_EUR, Revenue_EUR, Notes
+
+[COMMON]
+13) UTM_Builder
+    - RefID, BaseURL, Source, Medium, Campaign, Term, Content, FinalURL, ShortURL, CreatedTS
+14) Link_Shortener
+    - Key, Provider, APIKeyRef, Domain, Status, Notes
+
+Seed:
+- 10 Keywords DE (Hair/Beard/Skincare) مع Intent وCluster مبدئي.
+- حملة Ads واحدة: CMP-DE-DEMO-01 (Search، DailyBudget=20 EUR).
+- AdGroup واحد + 5 كلمات (Exact/Broad).
+- 3 منشورات Social أسبوعية لقناة Instagram (Line=Beard Care).
+- 3 أصول Social_Assets (صور توضيحية).
+
+Acceptance:
+- /admin/ensure-sheets يعرض PASS لهذه الأوراق.
+- صف في OS_Health: "2C-1 Marketing sheets ensured" مع PASS/WARN.

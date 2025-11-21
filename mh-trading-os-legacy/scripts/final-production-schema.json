@@ -1,0 +1,1741 @@
+[
+  {
+    "name": "Settings",
+    "headers": [
+      "Key",
+      "Value",
+      "Description",
+      "Category",
+      "LastModified"
+    ],
+    "protected": true
+  },
+  {
+    "name": "Pricing_Params",
+    "headers": [
+      "ParamKey",
+      "Value",
+      "Unit",
+      "Category",
+      "Type",
+      "AppliesTo",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "CompetitorPrices",
+    "headers": [
+      "SKU",
+      "CompetitorName",
+      "Price",
+      "URL",
+      "LastChecked",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "PartnerTiers",
+    "headers": [
+      "Tier",
+      "MinOrderVolume",
+      "DiscountPct",
+      "CommissionPct",
+      "Benefits",
+      "Payment Terms (Days)",
+      "CommissionRate_Pct"
+    ],
+    "protected": false
+  },
+  {
+    "name": "PartnerRegistry",
+    "headers": [
+      "PartnerID",
+      "PartnerName",
+      "Tier",
+      "PartnerType",
+      "Email",
+      "Phone",
+      "Owner",
+      "Status",
+      "Street",
+      "Postal",
+      "City",
+      "CountryCode",
+      "ShippingStreet",
+      "ShippingPostal",
+      "ShippingCity",
+      "ShippingCountryCode",
+      "Notes",
+      "PartnerFolderID",
+      "PartnerFolderURL"
+    ],
+    "protected": false
+  },
+  {
+    "name": "StandSites",
+    "headers": [
+      "StandID",
+      "PartnerID",
+      "Location",
+      "Address",
+      "City",
+      "GooglePlaceID",
+      "Lat",
+      "Lng",
+      "OpenedDate",
+      "Status",
+      "QR_URL",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Stand_Inventory",
+    "headers": [
+      "StandID",
+      "SKU",
+      "Qty",
+      "LastRefill",
+      "NextRefill",
+      "Status",
+      "LastUpdated"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Stand_Refill_Plans",
+    "headers": [
+      "PlanID",
+      "StandID",
+      "SKU",
+      "MinQty",
+      "RefillQty",
+      "Frequency",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Stand_Visits",
+    "headers": [
+      "VisitID",
+      "StandID",
+      "VisitDate",
+      "RepName",
+      "Notes",
+      "PhotoURLs",
+      "Notes",
+      "PhotoUrls"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Stand_KPIs",
+    "headers": [
+      "StandID",
+      "Month",
+      "Sales",
+      "Footfall",
+      "ConversionRate",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "AuthorizedAssortment",
+    "headers": [
+      "PartnerID",
+      "SKU",
+      "Authorized",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "StarterBundles",
+    "headers": [
+      "BundleID",
+      "Tier",
+      "SKU",
+      "Qty",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "RefillPlans",
+    "headers": [
+      "PlanID",
+      "PartnerID",
+      "SKU",
+      "MinQty",
+      "RefillQty",
+      "Frequency",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Quotes",
+    "headers": [
+      "QuoteID",
+      "PartnerID",
+      "QuoteDate",
+      "ExpiryDate",
+      "Subtotal",
+      "DiscountPct",
+      "DiscountAmt",
+      "VATRate",
+      "VATAmt",
+      "Total",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "QuoteLines",
+    "headers": [
+      "QuoteID",
+      "LineNum",
+      "SKU",
+      "Qty",
+      "UnitPrice",
+      "Discount",
+      "LineTotal"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Orders",
+    "headers": [
+      "OrderID",
+      "QuoteID",
+      "PartnerID",
+      "OrderDate",
+      "Subtotal",
+      "DiscountAmt",
+      "VATAmt",
+      "ShippingCost",
+      "Total",
+      "PaymentMethod",
+      "PaymentStatus",
+      "FulfillmentStatus",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "OrderLines",
+    "headers": [
+      "OrderID",
+      "LineNum",
+      "SKU",
+      "Qty",
+      "UnitPrice",
+      "Discount",
+      "LineTotal"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Commission_Ledger",
+    "headers": [
+      "TxID",
+      "PartnerID",
+      "OrderID",
+      "TxDate",
+      "Amount",
+      "Rate",
+      "Status",
+      "PaidDate",
+      "MonthlyTargetMet",
+      "Multiplier",
+      "PaymentStage",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Loyalty_Ledger",
+    "headers": [
+      "TxID",
+      "PartnerID",
+      "OrderID",
+      "TxDate",
+      "Points",
+      "Type",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "DHL_Rates",
+    "headers": [
+      "Zone",
+      "Weight_g_Max",
+      "Price",
+      "Currency",
+      "EffectiveFrom"
+    ],
+    "protected": false
+  },
+  {
+    "name": "DHL_Tariffs",
+    "headers": [
+      "Zone",
+      "WeightMax_g",
+      "BasePrice_EUR",
+      "Surcharge_EUR",
+      "EffectiveFrom"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Shipments_DHL",
+    "headers": [
+      "ShipmentID",
+      "OrderID",
+      "PartnerID",
+      "ManifestID",
+      "TrackingNumber",
+      "Carrier",
+      "Weight_g",
+      "Zone",
+      "ShippingCost",
+      "Status",
+      "ShippedDate",
+      "DeliveryDate",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "MAP_Guardrails",
+    "headers": [
+      "SKU",
+      "RaisedTS",
+      "Type",
+      "CurrentValue",
+      "ThresholdValue",
+      "Message",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Pricing_Suggestions",
+    "headers": [
+      "SKU",
+      "CreatedTS",
+      "SuggestedUVP",
+      "SuggestedMAP",
+      "Reason",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Pricing_Suggestions_Draft",
+    "headers": [
+      "DraftID",
+      "SourceAgent",
+      "ActorType",
+      "RequestID",
+      "Status",
+      "CreatedAt",
+      "ReviewedBy",
+      "ReviewedAt",
+      "PromotionRef",
+      "Notes",
+      "SKU",
+      "SuggestionID",
+      "Name",
+      "Category",
+      "Brand",
+      "Barcode",
+      "ProductStatus",
+      "ProductNotes",
+      "Factory_Cost_EUR",
+      "Packaging_Cost_EUR",
+      "Freight_kg_EUR",
+      "Import_Duty_Pct",
+      "Overhead_Pct",
+      "COGS_EUR",
+      "Shipping_Inbound_per_unit",
+      "EPR_LUCID_per_unit",
+      "GS1_per_unit",
+      "Retail_Packaging_per_unit",
+      "QC_PIF_per_unit",
+      "Operations_per_unit",
+      "Marketing_per_unit",
+      "FullCost_EUR",
+      "Weight_g",
+      "Content_ml",
+      "Dims_cm",
+      "VAT%",
+      "Grundpreis",
+      "Grundpreis_Unit",
+      "Amazon_TierKey",
+      "Line",
+      "PostChannel_Margin_Pct",
+      "Guardrail_OK",
+      "UVP_Recommended",
+      "UVP",
+      "MAP",
+      "AutoPriceFlag",
+      "Price_Web",
+      "Price_Amazon",
+      "Price_Salon",
+      "Net_Dealer_Basic",
+      "Net_Dealer_Plus",
+      "Net_Stand",
+      "Net_Distributor",
+      "Competitor_Min",
+      "Competitor_Median",
+      "Pricing_Version",
+      "QRUrl"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Sales_Suggestions_Draft",
+    "headers": [
+      "DraftID",
+      "SourceAgent",
+      "ActorType",
+      "RequestID",
+      "Status",
+      "CreatedAt",
+      "ReviewedBy",
+      "ReviewedAt",
+      "PromotionRef",
+      "Notes",
+      "QuoteID",
+      "PartnerID",
+      "PartnerName",
+      "LinesJSON",
+      "TotalBeforeTax",
+      "TotalAfterTax",
+      "Currency",
+      "Lang",
+      "ValidUntil",
+      "PaymentTerms",
+      "SuggestionReason"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Outreach_Drafts",
+    "headers": [
+      "DraftID",
+      "SourceAgent",
+      "ActorType",
+      "RequestID",
+      "Status",
+      "CreatedAt",
+      "ReviewedBy",
+      "ReviewedAt",
+      "PromotionRef",
+      "Notes",
+      "CampaignID",
+      "Subject",
+      "BodyText",
+      "BodyHTML",
+      "RecipientEmail",
+      "RecipientName",
+      "Lang",
+      "ScheduledFor",
+      "HasUnsubscribe",
+      "Tags"
+    ],
+    "protected": false
+  },
+  {
+    "name": "OS_Logs",
+    "headers": [
+      "Timestamp",
+      "Level",
+      "Scope",
+      "Message",
+      "Ref"
+    ],
+    "protected": true
+  },
+  {
+    "name": "OS_Health",
+    "headers": [
+      "CheckTS",
+      "Component",
+      "Status",
+      "Message",
+      "Details"
+    ],
+    "protected": true
+  },
+  {
+    "name": "FinalPriceList",
+    "headers": [
+      "SKU",
+      "Name",
+      "Category",
+      "Brand",
+      "Barcode",
+      "Status",
+      "Factory_Cost_EUR",
+      "Packaging_Cost_EUR",
+      "Freight_kg_EUR",
+      "Import_Duty_Pct",
+      "Overhead_Pct",
+      "COGS_EUR",
+      "Shipping_Inbound_per_unit",
+      "EPR_LUCID_per_unit",
+      "GS1_per_unit",
+      "Retail_Packaging_per_unit",
+      "QC_PIF_per_unit",
+      "Operations_per_unit",
+      "Marketing_per_unit",
+      "FullCost_EUR",
+      "FactoryPriceUnit_Manual",
+      "TotalFactoryPriceCarton",
+      "UnitsPerCarton",
+      "FX_BufferPct",
+      "Weight_g",
+      "Content_ml",
+      "Net_Content_ml",
+      "Dims_cm",
+      "VAT%",
+      "Grundpreis",
+      "Grundpreis_Net",
+      "Grundpreis_Unit",
+      "Amazon_TierKey",
+      "Line",
+      "Manual_UVP_Inc",
+      "UVP_Net",
+      "UVP_Inc",
+      "UVP_Inc_99",
+      "UVP_vs_Floor_Flag",
+      "Guardrail_OwnStore_Inc",
+      "Guardrail_Amazon_FBM_Inc",
+      "Guardrail_Amazon_FBA_Inc",
+      "Box_Size",
+      "Box_Cost_Per_Unit",
+      "Gift_Cost_Expected_Unit",
+      "Grundpreis_Inc_Per_L",
+      "Pricing_Engine_Version",
+      "Shipping_Actual_Kg",
+      "Shipping_Volumetric_Kg",
+      "Shipping_Chargeable_Kg",
+      "Shipping_CarrierID",
+      "ShipCost_per_Unit_OwnStore",
+      "ShipCost_per_Unit_FBM",
+      "ShipCost_per_Unit_FBA",
+      "ShipCost_per_Unit_B2B",
+      "Ad_Pct",
+      "Returns_Pct",
+      "Loyalty_Pct",
+      "Payment_Pct",
+      "Amazon_Referral_Pct",
+      "DHL_WeightBand",
+      "DHL_Zone",
+      "Gift_SKU",
+      "Gift_SKU_Cost",
+      "Gift_Attach_Rate",
+      "Gift_Funding_Pct",
+      "Gift_Shipping_Increment",
+      "PostChannel_Margin_Pct",
+      "Floor_B2C_Net",
+      "Guardrail_OK",
+      "UVP_Recommended",
+      "UVP",
+      "MAP",
+      "AutoPriceFlag",
+      "Price_Web",
+      "Price_Amazon",
+      "Price_Salon",
+      "Net_Dealer_Basic",
+      "Net_Dealer_Plus",
+      "Net_Stand",
+      "Net_Distributor",
+      "Competitor_Min",
+      "Competitor_Median",
+      "Pricing_Version",
+      "QRUrl",
+      "Notes",
+      "Carton_L_cm",
+      "Carton_W_cm",
+      "Carton_H_cm",
+      "Carton_Weight_g",
+      "Carton_Cost_EUR",
+      "Unit_From_Carton_Cost",
+      "Carton_UVP_Inc_99",
+      "Carton_Discount_Pct"
+    ],
+    "protected": true
+  },
+  {
+    "name": "AI_Playbooks",
+    "headers": [
+      "PlaybookID",
+      "Name",
+      "Schedule",
+      "Description",
+      "LastRun",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "AI_Tasks",
+    "headers": [
+      "TaskID",
+      "PlaybookID",
+      "CreatedTS",
+      "Prompt",
+      "Response",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Sync_Queue",
+    "headers": [
+      "QueueID",
+      "Integration",
+      "Operation",
+      "Payload",
+      "Status",
+      "CreatedTS",
+      "ProcessedTS"
+    ],
+    "protected": false
+  },
+  {
+    "name": "AI_Inbox",
+    "headers": [
+      "MessageID",
+      "TS",
+      "From",
+      "Channel",
+      "Text",
+      "AttachedRef",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "AI_Outbox",
+    "headers": [
+      "MessageID",
+      "TS",
+      "To",
+      "Channel",
+      "Text",
+      "AttachedRef",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "AI_Crew",
+    "headers": [
+      "JobID",
+      "CreatedTS",
+      "AgentID",
+      "Task",
+      "InputJSON",
+      "OutputJSON",
+      "Status",
+      "GuardrailsPassed",
+      "RequiresApproval",
+      "ApprovedBy",
+      "ApprovedTS",
+      "AppliedTS",
+      "ErrorMsg",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Enums",
+    "headers": [
+      "List",
+      "Key",
+      "Label",
+      "Sort",
+      "Active",
+      "Categories",
+      "Subcategories"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Bundles",
+    "headers": [
+      "BundleID",
+      "Name",
+      "ItemsJSON",
+      "Channel",
+      "Active",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Gifts_Bank",
+    "headers": [
+      "GiftID",
+      "SKU",
+      "Threshold_EUR",
+      "Channel",
+      "Active",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Salon_Subscriptions",
+    "headers": [
+      "SubID",
+      "PartnerID",
+      "Plan",
+      "BillingCycle",
+      "Price",
+      "DiscountPct",
+      "BenefitsJSON",
+      "StartTS",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Subscription_Invoices",
+    "headers": [
+      "InvoiceID",
+      "SubID",
+      "PeriodStart",
+      "PeriodEnd",
+      "Amount",
+      "Status",
+      "PaidTS",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Affiliate_Programs",
+    "headers": [
+      "AffID",
+      "Name",
+      "RatePct",
+      "CookieDays",
+      "Channel",
+      "Active"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Affiliate_Leads",
+    "headers": [
+      "LeadID",
+      "AffID",
+      "PartnerID_Email",
+      "Source",
+      "TS",
+      "Status"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Commission_Rules",
+    "headers": [
+      "RuleID",
+      "Role",
+      "Tier",
+      "Channel",
+      "BaseRatePct",
+      "BonusPct",
+      "CapPct",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Email_Queue",
+    "headers": [
+      "MsgID",
+      "TS",
+      "To",
+      "Subject",
+      "Template",
+      "PayloadJSON",
+      "Status",
+      "Error",
+      "CampID",
+      "SeqStep",
+      "Body",
+      "ProviderID",
+      "SentTS",
+      "OpenTS",
+      "ClickTS",
+      "BounceTS",
+      "ComplaintTS",
+      "MessageKey",
+      "Attempts",
+      "NextRetryTS",
+      "LastError"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Audit_Trail",
+    "headers": [
+      "TS",
+      "Actor",
+      "Action",
+      "RefType",
+      "RefID",
+      "DetailJSON"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Shipping_Methods",
+    "headers": [
+      "MethodID",
+      "MethodName_EN",
+      "MethodName_AR",
+      "Active",
+      "DefaultCostEUR",
+      "MinDays",
+      "MaxDays",
+      "Icon",
+      "Description_EN",
+      "Description_AR",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Shipping_Rules",
+    "headers": [
+      "RuleID",
+      "RuleName",
+      "MethodID",
+      "PartnerTier",
+      "PartnerType",
+      "MinOrderEUR",
+      "MaxOrderEUR",
+      "Zone",
+      "ShippingCostEUR",
+      "FreeShipping",
+      "Priority",
+      "Active",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Packaging_Boxes",
+    "headers": [
+      "code",
+      "name",
+      "boxType",
+      "inner_L_cm",
+      "inner_W_cm",
+      "inner_H_cm",
+      "outer_L_cm",
+      "outer_W_cm",
+      "outer_H_cm",
+      "tare_weight_g",
+      "unit_cost_eur",
+      "is_carton",
+      "units_per_carton",
+      "carton_cost_eur",
+      "max_units",
+      "max_weight_kg",
+      "active"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Shipment_Labels",
+    "headers": [
+      "LabelID",
+      "ShipmentID",
+      "OrderID",
+      "GeneratedTS",
+      "QRCode",
+      "Barcode",
+      "LabelPDF_URL",
+      "PrintedTS",
+      "PrintedBy",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Shipments",
+    "headers": [
+      "ShipmentID",
+      "OrderID",
+      "PartnerID",
+      "CreatedTS",
+      "ShippingMethod",
+      "Zone",
+      "Weight_g",
+      "BoxID",
+      "BoxCostEUR",
+      "PackagingCostEUR",
+      "ShippingCostEUR",
+      "TotalCostEUR",
+      "TrackingNumber",
+      "Status",
+      "PickupAddress",
+      "DeliveryAddress",
+      "DriverID",
+      "EstimatedDeliveryDate",
+      "ActualDeliveryDate",
+      "LabelGenerated",
+      "LabelPrinted",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "CRM_Leads",
+    "headers": [
+      "LeadID",
+      "CreatedTS",
+      "Source",
+      "Keyword",
+      "City",
+      "Postal",
+      "CountryCode",
+      "Name",
+      "Category",
+      "Phone",
+      "Email",
+      "Website",
+      "Address",
+      "Lat",
+      "Lng",
+      "Status",
+      "Owner",
+      "Score",
+      "TierHint",
+      "Notes",
+      "LastTouchTS"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Lead_Touches",
+    "headers": [
+      "TouchID",
+      "TS",
+      "LeadID",
+      "Channel",
+      "Action",
+      "Actor",
+      "Notes",
+      "Outcome"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Territories",
+    "headers": [
+      "TerritoryID",
+      "Name",
+      "Owner",
+      "CountryCode",
+      "CitiesCSV",
+      "PostalRangesJSON",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Assignment_Rules",
+    "headers": [
+      "RuleID",
+      "TerritoryID",
+      "When",
+      "ConditionJSON",
+      "AssignTo",
+      "Priority",
+      "ActiveFlag",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Enrichment_Queue",
+    "headers": [
+      "JobID",
+      "CreatedTS",
+      "LeadID",
+      "Task",
+      "ParamsJSON",
+      "Status",
+      "Attempts",
+      "LastError"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Dedupe_Index",
+    "headers": [
+      "IndexKey",
+      "LeadID",
+      "Type",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Outreach_Campaigns",
+    "headers": [
+      "CampID",
+      "CampaignID",
+      "Name",
+      "SeqID",
+      "SequenceID",
+      "AudienceQueryJSON",
+      "Goal",
+      "Owner",
+      "Channel",
+      "Locale",
+      "ScheduleUTC",
+      "Status",
+      "CreatedTS",
+      "ApprovedTS",
+      "AppliedTS",
+      "StartedTS",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Outreach_Sequences",
+    "headers": [
+      "SeqID",
+      "Name",
+      "Purpose",
+      "StepsJSON",
+      "Lang",
+      "Tier",
+      "WarmupFlag",
+      "Status",
+      "Owner",
+      "CreatedTS",
+      "UpdatedTS",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Outreach_Templates",
+    "headers": [
+      "TemplateID",
+      "Name",
+      "Channel",
+      "Lang",
+      "Locale",
+      "Tier",
+      "Subject",
+      "Body",
+      "BodyMarkdown",
+      "TokensCSV",
+      "Version",
+      "Status",
+      "Owner",
+      "CreatedTS",
+      "UpdatedTS",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Outreach_Contacts",
+    "headers": [
+      "ContactID",
+      "Email",
+      "Name",
+      "Company",
+      "City",
+      "Country",
+      "TierGuess",
+      "Source",
+      "OptInFlag",
+      "UnsubscribedFlag",
+      "LastContactTS",
+      "CreatedTS",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Outreach_Recipients",
+    "headers": [
+      "RecipientID",
+      "CampaignID",
+      "SourceType",
+      "SourceID",
+      "Email",
+      "Phone",
+      "Name",
+      "City",
+      "CountryCode",
+      "Status",
+      "OptInFlag",
+      "OptInTS",
+      "UnsubFlag",
+      "UnsubTS",
+      "SuppressedFlag",
+      "SuppressReason",
+      "LastSendTS",
+      "LastResult",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Outreach_Sends",
+    "headers": [
+      "SendID",
+      "CampaignID",
+      "SequenceID",
+      "RecipientID",
+      "SequenceStep",
+      "TemplateID",
+      "Channel",
+      "Subject",
+      "BodyRef",
+      "Status",
+      "ProviderMsgID",
+      "TS_Queued",
+      "TS_Sent",
+      "TS_Open",
+      "TS_Click",
+      "TS_Bounce",
+      "TS_Complaint",
+      "Error",
+      "RetryCount",
+      "LastErrorTS"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Suppression_List",
+    "headers": [
+      "Key",
+      "Type",
+      "Reason",
+      "Source",
+      "TS"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Email_Stats",
+    "headers": [
+      "StatsID",
+      "Day",
+      "CampID",
+      "Sent",
+      "Open",
+      "Click",
+      "Bounce",
+      "Complaint",
+      "Unsub"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Unsubscribes",
+    "headers": [
+      "Email",
+      "CampID",
+      "CampaignID",
+      "UnsubTS",
+      "Source",
+      "IPAddress",
+      "UserAgent"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Bounce_Events",
+    "headers": [
+      "Email",
+      "CampaignID",
+      "ProviderMsgID",
+      "BounceType",
+      "Diagnostic",
+      "TS"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Complaint_Events",
+    "headers": [
+      "Email",
+      "CampaignID",
+      "ProviderMsgID",
+      "ComplaintType",
+      "TS"
+    ],
+    "protected": false
+  },
+  {
+    "name": "SEO_Pages",
+    "headers": [
+      "URL",
+      "KeywordPrimary",
+      "Locale",
+      "TitleTag",
+      "MetaDescription",
+      "H1",
+      "H2sCSV",
+      "WordCount",
+      "Canonical",
+      "IndexFlag",
+      "LastAuditTS",
+      "Score_Tech",
+      "Score_Content",
+      "Score_InternalLinks",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Ads_Keywords",
+    "headers": [
+      "Keyword",
+      "MatchType",
+      "Locale",
+      "Intent",
+      "Cluster",
+      "CPC_EUR",
+      "Est_CTR",
+      "Est_ConvRate",
+      "TargetCPA",
+      "NegativeFlag",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Ads_Campaigns",
+    "headers": [
+      "CampaignID",
+      "Name",
+      "Objective",
+      "Locale",
+      "Network",
+      "DailyBudget_EUR",
+      "BidStrategy",
+      "Status",
+      "StartDate",
+      "EndDate",
+      "UTM_Source",
+      "UTM_Medium",
+      "UTM_Campaign",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Ads_AdGroups",
+    "headers": [
+      "AdGroupID",
+      "CampaignID",
+      "AdGroupName",
+      "Keywords",
+      "NegativeKeywords",
+      "MatchType",
+      "BidEUR",
+      "CreatedTS",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Ads_Creatives",
+    "headers": [
+      "CreativeID",
+      "AdGroupID",
+      "Format",
+      "Headlines",
+      "Descriptions",
+      "CallToAction",
+      "FinalURL",
+      "Language",
+      "CreatedTS",
+      "Status",
+      "LastAIUpdateTS",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Ads_Exports",
+    "headers": [
+      "ExportID",
+      "CampaignID",
+      "Format",
+      "FileURL",
+      "Rows",
+      "CreatedTS",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Ads_KPIs",
+    "headers": [
+      "CampaignID",
+      "Date",
+      "Impressions",
+      "Clicks",
+      "SpendEUR",
+      "Conversions",
+      "RevenueEUR",
+      "CTR",
+      "CPC",
+      "CPA",
+      "CPM",
+      "ROAS",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Social_Calendar",
+    "headers": [
+      "PostID",
+      "Date",
+      "Time",
+      "Channel",
+      "Locale",
+      "Line",
+      "Hook",
+      "Caption",
+      "HashtagsCSV",
+      "AssetRefsCSV",
+      "CTA",
+      "UTM_URL",
+      "Owner",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Social_Assets",
+    "headers": [
+      "AssetID",
+      "Type",
+      "Storage",
+      "URL",
+      "AltText",
+      "Line",
+      "Locale",
+      "License",
+      "Owner",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Social_Metrics",
+    "headers": [
+      "PostID",
+      "Channel",
+      "TS",
+      "Impressions",
+      "Reach",
+      "Clicks",
+      "Likes",
+      "Comments",
+      "Shares",
+      "Saves",
+      "CTR",
+      "CPC",
+      "CPM",
+      "Cost_EUR",
+      "Revenue_EUR",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "UTM_Builder",
+    "headers": [
+      "RefID",
+      "BaseURL",
+      "Source",
+      "Medium",
+      "Campaign",
+      "Term",
+      "Content",
+      "FinalURL",
+      "ShortURL",
+      "CreatedTS"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Link_Shortener",
+    "headers": [
+      "Key",
+      "Provider",
+      "APIKeyRef",
+      "Domain",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "AI_Agents_Log",
+    "headers": [
+      "LogID",
+      "AgentID",
+      "RequestType",
+      "InputSheets",
+      "OutputSheets",
+      "Status",
+      "CreatedTS",
+      "CompletedTS",
+      "RowsCreated",
+      "PromptTokens",
+      "CompletionTokens",
+      "TotalTokens",
+      "CostEUR",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "SEO_Briefs",
+    "headers": [
+      "BriefID",
+      "TargetURL",
+      "Language",
+      "Keywords",
+      "Title",
+      "MetaDescription",
+      "H1",
+      "ContentOutline",
+      "WordCount",
+      "ProductSKUs",
+      "CreatedTS",
+      "Status",
+      "LastAIUpdateTS",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "SEO_Audits",
+    "headers": [
+      "AuditID",
+      "PageURL",
+      "IssueType",
+      "Severity",
+      "CurrentValue",
+      "RecommendedFix",
+      "CreatedTS",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "SEO_Keywords",
+    "headers": [
+      "KeywordID",
+      "Keyword",
+      "Locale",
+      "HarvestSource",
+      "HarvestParamsJSON",
+      "HarvestTS",
+      "Cluster",
+      "ClusterID",
+      "ClusterScore",
+      "LastClusteredTS",
+      "Intent",
+      "IntentConfidencePct",
+      "SearchVolume",
+      "Difficulty",
+      "CPC_EUR",
+      "Rank",
+      "TrafficEstimate",
+      "OpportunityScore",
+      "SERPFeaturesCSV",
+      "TopCompetitorsCSV",
+      "Priority",
+      "PriorityReason",
+      "AssignedURL",
+      "BriefID",
+      "CreatedTS",
+      "LastChecked",
+      "Status",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Channels",
+    "headers": [
+      "ChannelID",
+      "ChannelName",
+      "Active",
+      "Payment_Provider",
+      "Payment_Fee_Pct",
+      "Payment_Fee_Fixed_EUR",
+      "Amazon_Referral_Pct_Low",
+      "Amazon_Referral_Pct_High",
+      "Amazon_Referral_Min_EUR",
+      "FBA_Fee_Base_EUR",
+      "Returns_Pct",
+      "Loyalty_Accounting_Pct",
+      "Uses_DHL",
+      "Uses_FBA",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "AmazonSizeTiers",
+    "headers": [
+      "TierKey",
+      "TierName",
+      "Weight_Min_g",
+      "Weight_Max_g",
+      "Dims_Max_cm",
+      "FBA_Fee_EUR",
+      "FBA_Surcharge_2025_EUR",
+      "Active",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "ShippingMatrix_DHL",
+    "headers": [],
+    "protected": false
+  },
+  {
+    "name": "DHL_Surcharges",
+    "headers": [],
+    "protected": false
+  },
+  {
+    "name": "QuantityDiscounts",
+    "headers": [],
+    "protected": false
+  },
+  {
+    "name": "DiscountCaps",
+    "headers": [
+      "CapID",
+      "PartnerTier",
+      "Max_Role_Discount_Pct",
+      "Max_Quantity_Discount_Pct",
+      "Max_Combined_Discount_Pct",
+      "Active",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "OrderDiscounts",
+    "headers": [
+      "DiscountID",
+      "Threshold_EUR",
+      "Discount_Pct",
+      "Discount_Fixed_EUR",
+      "AppliesTo",
+      "Active",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Pricing_Line_Targets",
+    "headers": [
+      "Line",
+      "Target_Margin_Pct",
+      "Floor_Multiplier",
+      "Guardrail_Margin_Pct",
+      "Rounding_Strategy",
+      "Active",
+      "Notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "ShippingMatrixDHL",
+    "headers": [
+      "WeightBand",
+      "MinWeight_g",
+      "MaxWeight_g",
+      "Zone_Domestic_EUR",
+      "Zone_EU_EUR",
+      "Zone_International_EUR"
+    ],
+    "protected": false
+  },
+  {
+    "name": "DHLSurcharge",
+    "headers": [
+      "SurchargeKey",
+      "Description",
+      "Type",
+      "Value"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Partners",
+    "headers": [
+      "PartnerID",
+      "CompanyName",
+      "TierKey",
+      "ContactName",
+      "Email",
+      "Phone",
+      "City",
+      "Country",
+      "Status",
+      "AssignedRepID"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Invoices",
+    "headers": [
+      "InvoiceID",
+      "OrderID",
+      "InvoiceDate",
+      "DueDate",
+      "Status",
+      "TotalNet_EUR",
+      "TotalInc_EUR",
+      "PDFUrl"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Stands",
+    "headers": [
+      "StandID",
+      "StandName",
+      "PartnerID",
+      "Address",
+      "City",
+      "PostalCode",
+      "GPS_Lat",
+      "GPS_Lng",
+      "Status",
+      "QRCode"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Leads",
+    "headers": [
+      "LeadID",
+      "CompanyName",
+      "ContactName",
+      "Email",
+      "Phone",
+      "City",
+      "Country",
+      "PostalCode",
+      "Status",
+      "Source",
+      "AssignedRepID",
+      "LeadScore"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Agent_Profiles",
+    "headers": [
+      "AgentID",
+      "AgentName",
+      "Role",
+      "SystemPrompt",
+      "Model",
+      "Temperature",
+      "Active"
+    ],
+    "protected": false
+  },
+  {
+    "name": "AI_Jobs",
+    "headers": [
+      "JobID",
+      "AgentID",
+      "TaskType",
+      "Status",
+      "CreatedAt",
+      "CompletedAt",
+      "InputData",
+      "OutputData",
+      "ErrorMessage"
+    ],
+    "protected": false
+  },
+  {
+    "name": "ShippingWeightBands",
+    "headers": [
+      "carrierId",
+      "serviceLevel",
+      "zone",
+      "minKg",
+      "maxKg",
+      "baseEur",
+      "fuelPct",
+      "active"
+    ],
+    "protected": false
+  },
+  {
+    "name": "ShippingCostsFixed",
+    "headers": [
+      "costType",
+      "channel",
+      "costEur",
+      "notes"
+    ],
+    "protected": false
+  },
+  {
+    "name": "Admin_PowerMenu",
+    "headers": [
+      "Category",
+      "Tool",
+      "Description",
+      "Script",
+      "Status",
+      "LastRun",
+      "RunCount"
+    ],
+    "protected": false
+  }
+]
