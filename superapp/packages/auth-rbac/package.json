@@ -1,0 +1,13 @@
+{
+  "name": "@mh-superapp/auth-rbac",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"build auth-rbac\"",
+    "dev": "echo \"dev auth-rbac\"",
+    "lint": "echo \"lint auth-rbac\"",
+    "typecheck": "tsc --noEmit"
+  }
+}

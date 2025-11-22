@@ -1,0 +1,26 @@
+{
+  "name": "mh-superapp-root",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.23.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "prisma:validate": "pnpm --filter @mh-superapp/prisma prisma:validate",
+    "prisma:generate": "pnpm --filter @mh-superapp/prisma prisma:generate",
+    "prisma:migrate": "pnpm --filter @mh-superapp/prisma prisma:migrate"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "turbo": "^2.6.1",
+    "typescript": "^5.9.3",
+    "eslint": "^8.57.1",
+    "prettier": "^3.6.2"
+  }
+}

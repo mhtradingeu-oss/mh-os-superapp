@@ -1,0 +1,13 @@
+{
+  "name": "@mh-superapp/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"build worker\"",
+    "dev": "echo \"dev worker\"",
+    "lint": "echo \"lint worker\"",
+    "typecheck": "tsc --noEmit"
+  }
+}

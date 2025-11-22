@@ -1,0 +1,13 @@
+{
+  "name": "@mh-superapp/contracts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"build contracts\"",
+    "dev": "echo \"dev contracts\"",
+    "lint": "echo \"lint contracts\"",
+    "typecheck": "tsc --noEmit"
+  }
+}

@@ -1,8 +1,22 @@
-.DS_Store
-*/.DS_Store
-.DS_Store
-*/.DS_Store
-.DS_Store
-*/.DS_Store
+# Node & Workspaces
 node_modules/
-*/node_modules/
+.pnpm-store/
+.turbo/
+.next/
+dist/
+build/
+.vercel/
+
+# Environment
+.env
+.env.*
+*.log
+
+# OS junk
+.DS_Store
+
+# Legacy (not part of active code)
+back-end/
+front-end/
+mh-os-superapp/
+90MB/

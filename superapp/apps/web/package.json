@@ -1,0 +1,13 @@
+{
+  "name": "@mh-superapp/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"build web\"",
+    "dev": "echo \"dev web\"",
+    "lint": "echo \"lint web\"",
+    "typecheck": "tsc --noEmit"
+  }
+}

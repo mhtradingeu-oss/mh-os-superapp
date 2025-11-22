@@ -1,0 +1,13 @@
+{
+  "name": "@mh-superapp/ui-kit",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"build ui-kit\"",
+    "dev": "echo \"dev ui-kit\"",
+    "lint": "echo \"lint ui-kit\"",
+    "typecheck": "tsc --noEmit"
+  }
+}

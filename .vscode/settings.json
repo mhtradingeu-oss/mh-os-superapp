@@ -1,8 +1,19 @@
 {
   "files.exclude": {
-    ".DS_Store": "explorerExcludedFiles",
-    "*/.DS_Store": "explorerExcludedFiles",
     "node_modules/": "explorerExcludedFiles",
-    "*/node_modules/": "explorerExcludedFiles"
+    ".pnpm-store/": "explorerExcludedFiles",
+    ".turbo/": "explorerExcludedFiles",
+    ".next/": "explorerExcludedFiles",
+    "dist/": "explorerExcludedFiles",
+    "build/": "explorerExcludedFiles",
+    ".vercel/": "explorerExcludedFiles",
+    ".env": "explorerExcludedFiles",
+    ".env.*": "explorerExcludedFiles",
+    "*.log": "explorerExcludedFiles",
+    ".DS_Store": "explorerExcludedFiles",
+    "back-end/": "explorerExcludedFiles",
+    "front-end/": "explorerExcludedFiles",
+    "mh-os-superapp/": "explorerExcludedFiles",
+    "90MB/": "explorerExcludedFiles"
   }
 }

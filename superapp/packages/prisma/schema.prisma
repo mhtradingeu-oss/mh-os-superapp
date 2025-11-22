@@ -1,0 +1,567 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------------------------------
+//  ENUMS
+// ----------------------------------------------------
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  MANAGER
+  SALES_REP
+  DEALER
+  DISTRIBUTOR
+  PARTNER
+  STAND_PARTNER
+  AFFILIATE
+  CUSTOMER
+  USER
+}
+
+// ----------------------------------------------------
+//  USER & IDENTITY
+// ----------------------------------------------------
+
+model User {
+  id       String  @id @default(cuid())
+  email    String  @unique
+  password String
+  name     String?
+  phone    String?
+  role     Role    @default(USER)
+  status   String?
+
+  salesRepProfile   SalesRepProfile?
+  dealerProfile     DealerProfile?
+  partnerProfile    PartnerProfile?
+  affiliateProfile  AffiliateProfile?
+  loyaltyAccount    LoyaltyAccount?
+  activities        ActivityLog[]
+  notifications     Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  actorType String?
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  body      String?
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+// ----------------------------------------------------
+//  SALES REP, PARTNER, AFFILIATE PROFILES
+// ----------------------------------------------------
+
+model SalesRepProfile {
+  id       String  @id @default(cuid())
+  userId   String  @unique
+  region   String?
+  target   Float?
+  achieved Float?
+
+  user    User        @relation(fields: [userId], references: [id])
+  clients CRMClient[]
+  visits  RepVisit[]
+  quotes  SalesQuote[]
+  orders  Order[]
+  interactions CRMInteraction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DealerProfile {
+  id            String  @id @default(cuid())
+  userId        String? @unique
+  companyName   String?
+  contactName   String?
+  country       String?
+  city          String?
+  productsRange String?
+  pricingLevel  String?
+  contract      String?
+  performance   String?
+  aiScore       Float?
+
+  user User? @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PartnerProfile {
+  id            String  @id @default(cuid())
+  userId        String? @unique
+  partnerType   String? // dealer, distributor, stand_partner, salon_partner, white_label
+  companyName   String?
+  contactName   String?
+  country       String?
+  city          String?
+  productsRange String?
+  pricingLevel  String?
+  contract      String?
+  performance   String?
+  aiScore       Float?
+
+  user User? @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AffiliateProfile {
+  id             String  @id @default(cuid())
+  userId         String? @unique
+  handle         String?
+  platform       String?
+  trackingLink   String?
+  affiliateCode  String? @unique
+  commissionRate Float?
+  performance    String?
+
+  user User? @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ----------------------------------------------------
+//  BRAND SYSTEM
+// ----------------------------------------------------
+
+model Brand {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String?
+
+  categories BrandCategory[]
+  products   BrandProduct[]
+
+  identity BrandIdentity?
+  rules    BrandRules?
+  pricing  BrandPricing?
+  aiConfig BrandAIConfig?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BrandCategory {
+  id      String @id @default(cuid())
+  name    String
+  slug    String @unique
+  brandId String
+
+  brand    Brand         @relation(fields: [brandId], references: [id])
+  products BrandProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BrandProduct {
+  id             String  @id @default(cuid())
+  name           String
+  slug           String  @unique
+  description    String?
+  price          Float
+  imageUrl       String?
+  sku            String? @unique
+  upc            String?
+  line           String?
+  status         String?
+  weightGrams    Float?
+  netContentMl   Float?
+  unitsPerCarton Int?
+  qrUrl          String?
+
+  brandId String
+  brand   Brand  @relation(fields: [brandId], references: [id])
+
+  categoryId String?
+  category   BrandCategory? @relation(fields: [categoryId], references: [id])
+
+  pricing     ProductPricing?
+  competitors CompetitorPrice[]
+  drafts      ProductPriceDraft[]
+  aiHistory   AIPricingHistory[]
+  aiLearning  AILearningJournal[]
+  orderItems  OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BrandIdentity {
+  id      String @id @default(cuid())
+  brandId String @unique
+
+  brand Brand @relation(fields: [brandId], references: [id])
+
+  vision         String?
+  mission        String?
+  values         String?
+  toneOfVoice    String?
+  persona        String?
+  brandStory     String?
+  keywords       String?
+  colorPalette   String?
+  guidelineUrl   String?
+  packagingStyle String?
+  socialProfiles String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BrandRules {
+  id      String @id @default(cuid())
+  brandId String @unique
+
+  brand Brand @relation(fields: [brandId], references: [id])
+
+  namingRules      String?
+  descriptionRules String?
+  messagingRules   String?
+  marketingRules   String?
+  discountRules    String?
+  pricingRules     String?
+  stockRules       String?
+  restrictedWords  String?
+  allowedWords     String?
+  aiRestrictions   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BrandPricing {
+  id      String @id @default(cuid())
+  brandId String @unique
+
+  brand Brand @relation(fields: [brandId], references: [id])
+
+  costMultiplier      Float?
+  wholesaleMultiplier Float?
+  retailMultiplier    Float?
+  standDiscount       Float?
+  onlineDiscount      Float?
+  dealerDiscount      Float?
+  loyaltyEarnRate     Float?
+  loyaltyRedeemRate   Float?
+  aiDynamicPricing    Boolean @default(false)
+  aiMarketFactor      Float?
+  aiCompetitionFactor Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BrandAIConfig {
+  id      String @id @default(cuid())
+  brandId String @unique
+
+  brand Brand @relation(fields: [brandId], references: [id])
+
+  aiPersonality    String?
+  aiVoiceStyle     String?
+  aiContentStyle   String?
+  aiPricingStyle   String?
+  aiEnabledActions String?
+  aiBlockedTopics  String?
+  aiModelVersion   String?
+  aiTone           String?
+  aiWritingRules   String?
+  aiPricingRules   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ----------------------------------------------------
+//  PRICING SYSTEM
+// ----------------------------------------------------
+
+model ProductPricing {
+  id                    String       @id @default(cuid())
+  productId             String       @unique
+  factoryPriceUnit        Float?
+  totalFactoryPriceCarton Float?
+  eprLucidPerUnit         Float?
+  shippingInboundPerUnit  Float?
+  gs1PerUnit              Float?
+  retailPackagingPerUnit  Float?
+  qcPifPerUnit            Float?
+  operationsPerUnit       Float?
+  marketingPerUnit        Float?
+  cogsEur                 Float?
+  fullCostEur             Float?
+  uvpNet                  Float?
+  uvpInc                  Float?
+  map                     Float?
+  grundpreis              String?
+  vatPct                  Float?
+  b2cStoreNet             Float?
+  b2cStoreInc             Float?
+  b2cMarginPct            Float?
+  amazonTierKey           String?
+  amazonNet               Float?
+  amazonInc               Float?
+  amazonMarginPct         Float?
+  dealerBasicNet          Float?
+  dealerPlusNet           Float?
+  standPartnerNet         Float?
+  distributorNet          Float?
+
+  product   BrandProduct @relation(fields: [productId], references: [id])
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model ProductPriceDraft {
+  id        String   @id @default(cuid())
+  productId String
+  channel   String
+  oldNet    Float?
+  oldGross  Float?
+  oldMargin Float?
+  newNet    Float?
+  newGross  Float?
+  newMargin Float?
+  changePct Float?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product BrandProduct @relation(fields: [productId], references: [id])
+}
+
+model CompetitorPrice {
+  id        String       @id @default(cuid())
+  productId String
+  competitor String
+  channel    String?
+  url        String?
+  netPrice   Float?
+  grossPrice Float?
+  currency   String  @default("EUR")
+  source     String?
+  confidence Float?
+  collectedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  product BrandProduct @relation(fields: [productId], references: [id])
+}
+
+model AIPricingHistory {
+  id            String  @id @default(cuid())
+  productId     String
+  channel       String
+  oldNet        Float?
+  newNet        Float?
+  recommendedPct Float?
+  appliedPct     Float?
+  aiScore       Float?
+  mode          String?
+  marginBefore  Float?
+  marginAfter   Float?
+  competitorBefore Float?
+  competitorAfter  Float?
+  stockBefore   Float?
+  stockAfter    Float?
+  demandBefore  Float?
+  demandAfter   Float?
+  salesChangePct Float?
+  decision      String?
+  reasoning     String?
+  confidence    Float?
+  createdAt     DateTime @default(now())
+
+  product BrandProduct @relation(fields: [productId], references: [id])
+}
+
+model AIPricingWeights {
+  id            String @id @default(cuid())
+  mode          String @unique
+  marginWeight     Float @default(0.3)
+  costWeight       Float @default(0.25)
+  competitorWeight Float @default(0.3)
+  stockWeight      Float @default(0.15)
+  lastUpdated      DateTime @default(now())
+}
+
+model AILearningJournal {
+  id        String   @id @default(cuid())
+  productId String
+  channel   String?
+  eventType String?
+  signal    String?
+  value     Float?
+  inputData Json?
+  outputData Json?
+  result    String?
+  effectiveness Float?
+  notes     String?
+  createdAt DateTime @default(now())
+
+  product BrandProduct @relation(fields: [productId], references: [id])
+}
+
+// ----------------------------------------------------
+//  CRM & SALES
+// ----------------------------------------------------
+
+model CRMClient {
+  id        String   @id @default(cuid())
+  type      String?  // b2c, dealer, stand, salon, affiliate
+  name      String
+  email     String?
+  phone     String?
+  country   String?
+  city      String?
+  source    String?
+  tags      String[] @default([])
+  status    String?  // new, hot, warm, cold, closed
+  stage     String?  // lead stages
+  notes     String?
+  lastContact DateTime?
+  nextAction String?
+
+  ownerId String?
+  owner   SalesRepProfile? @relation(fields: [ownerId], references: [id])
+
+  interactions CRMInteraction[]
+  visits       RepVisit[]
+  quotes       SalesQuote[]
+  orders       Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CRMInteraction {
+  id        String   @id @default(cuid())
+  clientId  String
+  repId     String?
+  channel   String?  // email, whatsapp, sms, call, chat
+  direction String?  // inbound, outbound
+  subject   String?
+  content   String?
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  client CRMClient @relation(fields: [clientId], references: [id])
+  rep    SalesRepProfile? @relation(fields: [repId], references: [id])
+}
+
+model RepVisit {
+  id         String   @id @default(cuid())
+  repId      String
+  clientId   String?
+  scheduledAt DateTime?
+  status     String?
+  notes      String?
+  location   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  rep    SalesRepProfile @relation(fields: [repId], references: [id])
+  client CRMClient?      @relation(fields: [clientId], references: [id])
+}
+
+model SalesQuote {
+  id        String   @id @default(cuid())
+  repId     String
+  clientId  String?
+  totalNet  Float?
+  totalGross Float?
+  status    String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rep    SalesRepProfile @relation(fields: [repId], references: [id])
+  client CRMClient?      @relation(fields: [clientId], references: [id])
+}
+
+model Order {
+  id            String  @id @default(cuid())
+  clientId      String?
+  repId         String?
+  type          String   // rep, dealer, stand, affiliate, online
+  totalNet      Float?
+  totalGross    Float?
+  status        String?
+  paymentStatus String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  client CRMClient?       @relation(fields: [clientId], references: [id])
+  rep    SalesRepProfile? @relation(fields: [repId], references: [id])
+  items  OrderItem[]
+}
+
+model OrderItem {
+  id        String @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+
+  order   Order        @relation(fields: [orderId], references: [id])
+  product BrandProduct @relation(fields: [productId], references: [id])
+}
+
+// ----------------------------------------------------
+//  LOYALTY
+// ----------------------------------------------------
+
+model LoyaltyAccount {
+  id     String @id @default(cuid())
+  userId String @unique
+  points Int    @default(0)
+  level  String?
+
+  user        User                  @relation(fields: [userId], references: [id])
+  history     LoyaltyTransaction[]
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+}
+
+model LoyaltyTransaction {
+  id        String   @id @default(cuid())
+  accountId String
+  type      String
+  points    Int
+  reference String?
+  notes     String?
+  createdAt DateTime @default(now())
+
+  account LoyaltyAccount @relation(fields: [accountId], references: [id])
+}
